@@ -111,8 +111,9 @@
                 </div>
             </div>
         </div>
+        
         <!-- Overlay sombre pour la lisibilité -->
-        <div class="absolute inset-0 bg-gradient-to-r from-deep-brown/50 to-deep-brown/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-deep-brown/70 to-deep-brown/50"></div>
         
         <div class="relative z-10 text-center max-w-6xl mx-auto px-4">
             <div class="floating mb-8">
@@ -741,8 +742,340 @@
     </footer>
 
     <script>
-        // Gestion améliorée de la vidéo Vimeo
+        // Système de traduction automatique
+        const translations = {
+            fr: {
+                // Navigation
+                navInvest: "Pourquoi investir",
+                navSolutions: "Solutions",
+                navPerformance: "Performance",
+                navContact: "Contact",
+                
+                // Hero
+                heroTitle: "Investissez dans l'avenir du <span class='text-warm-gold'>tourisme de luxe</span> avec Amaru Resorts",
+                heroSubtitle: "Découvrez des opportunités d'investissement exceptionnelles dans l'hôtellerie de prestige. Rendements attractifs, expertise reconnue, croissance durable.",
+                heroButton: "Demandez plus d'informations",
+                
+                // Pourquoi investir
+                whyTitle: "Pourquoi choisir Amaru Resorts ?",
+                whySubtitle: "Une opportunité unique d'investir dans le secteur du tourisme de luxe avec des garanties solides",
+                
+                card1Title: "Rendement Attractif",
+                card1Text: "ROI moyen de 12-15% par an avec une croissance constante du secteur du luxe",
+                card2Title: "Expertise Immobilière",
+                card2Text: "Plus de 15 ans d'expérience dans le développement de projets immobiliers de prestige",
+                card3Title: "Costa del Sol & Blanca",
+                card3Text: "Expansion stratégique sur les côtes espagnoles les plus prisées avec acquisition de terrains premium",
+                card4Title: "Sécurité Maximale",
+                card4Text: "Investissements garantis par des actifs immobiliers de premier plan",
+                
+                // Solutions
+                solutionsTitle: "Solutions d'Investissement",
+                solutionsSubtitle: "Choisissez la formule qui correspond à vos objectifs financiers",
+                
+                planEssential: "Plan Essentiel",
+                planPremium: "Plan Premium",
+                planExclusive: "Plan Exclusif",
+                annualReturn: "Rendement annuel",
+                recommended: "Recommandé",
+                learnMore: "En savoir plus",
+                
+                // Projets
+                projectsTitle: "Nos Projets en Développement",
+                projectsSubtitle: "Découvrez nos acquisitions de terrains premium sur les côtes espagnoles les plus prisées",
+                
+                // Performance
+                performanceTitle: "Performance & Chiffres Clés",
+                performanceSubtitle: "Des résultats qui parlent d'eux-mêmes",
+                
+                // Témoignages
+                testimonialsTitle: "Témoignages d'Investisseurs",
+                partnersTitle: "Nos Partenaires Financiers",
+                
+                // Contact
+                contactTitle: "Contactez-nous",
+                contactSubtitle: "Nos experts vous accompagnent dans votre projet d'investissement",
+                
+                // Formulaire
+                formName: "Nom complet",
+                formEmail: "Email",
+                formPhone: "Téléphone",
+                formCompany: "Société",
+                formSolution: "Solution d'investissement ciblée",
+                formMessage: "Message",
+                formSubmit: "Envoyer ma demande",
+                formRequired: "* Champs obligatoires. Vos données sont protégées et ne seront jamais partagées.",
+                
+                // Options select
+                selectOption: "Sélectionnez une option",
+                optionEssential: "Plan Essentiel (50k€ - 8-10%)",
+                optionPremium: "Plan Premium (150k€ - 12-15%)",
+                optionExclusive: "Plan Exclusif (500k€ - 15-20%)",
+                optionCustom: "Solution sur-mesure"
+            },
+            
+            en: {
+                // Navigation
+                navInvest: "Why invest",
+                navSolutions: "Solutions",
+                navPerformance: "Performance",
+                navContact: "Contact",
+                
+                // Hero
+                heroTitle: "Invest in the future of <span class='text-warm-gold'>luxury tourism</span> with Amaru Resorts",
+                heroSubtitle: "Discover exceptional investment opportunities in luxury hospitality. Attractive returns, recognized expertise, sustainable growth.",
+                heroButton: "Request more information",
+                
+                // Pourquoi investir
+                whyTitle: "Why choose Amaru Resorts?",
+                whySubtitle: "A unique opportunity to invest in the luxury tourism sector with solid guarantees",
+                
+                card1Title: "Attractive Returns",
+                card1Text: "Average ROI of 12-15% per year with consistent growth in the luxury sector",
+                card2Title: "Real Estate Expertise",
+                card2Text: "Over 15 years of experience in developing prestigious real estate projects",
+                card3Title: "Costa del Sol & Blanca",
+                card3Text: "Strategic expansion on Spain's most sought-after coasts with premium land acquisition",
+                card4Title: "Maximum Security",
+                card4Text: "Investments guaranteed by top-tier real estate assets",
+                
+                // Solutions
+                solutionsTitle: "Investment Solutions",
+                solutionsSubtitle: "Choose the plan that matches your financial objectives",
+                
+                planEssential: "Essential Plan",
+                planPremium: "Premium Plan",
+                planExclusive: "Exclusive Plan",
+                annualReturn: "Annual return",
+                recommended: "Recommended",
+                learnMore: "Learn more",
+                
+                // Projets
+                projectsTitle: "Our Development Projects",
+                projectsSubtitle: "Discover our premium land acquisitions on Spain's most coveted coasts",
+                
+                // Performance
+                performanceTitle: "Performance & Key Figures",
+                performanceSubtitle: "Results that speak for themselves",
+                
+                // Témoignages
+                testimonialsTitle: "Investor Testimonials",
+                partnersTitle: "Our Financial Partners",
+                
+                // Contact
+                contactTitle: "Contact us",
+                contactSubtitle: "Our experts guide you through your investment project",
+                
+                // Formulaire
+                formName: "Full name",
+                formEmail: "Email",
+                formPhone: "Phone",
+                formCompany: "Company",
+                formSolution: "Target investment solution",
+                formMessage: "Message",
+                formSubmit: "Send my request",
+                formRequired: "* Required fields. Your data is protected and will never be shared.",
+                
+                // Options select
+                selectOption: "Select an option",
+                optionEssential: "Essential Plan (€50k - 8-10%)",
+                optionPremium: "Premium Plan (€150k - 12-15%)",
+                optionExclusive: "Exclusive Plan (€500k - 15-20%)",
+                optionCustom: "Custom solution"
+            },
+            
+            es: {
+                // Navigation
+                navInvest: "Por qué invertir",
+                navSolutions: "Soluciones",
+                navPerformance: "Rendimiento",
+                navContact: "Contacto",
+                
+                // Hero
+                heroTitle: "Invierta en el futuro del <span class='text-warm-gold'>turismo de lujo</span> con Amaru Resorts",
+                heroSubtitle: "Descubra oportunidades de inversión excepcionales en hostelería de prestigio. Rendimientos atractivos, experiencia reconocida, crecimiento sostenible.",
+                heroButton: "Solicite más información",
+                
+                // Pourquoi investir
+                whyTitle: "¿Por qué elegir Amaru Resorts?",
+                whySubtitle: "Una oportunidad única de invertir en el sector del turismo de lujo con garantías sólidas",
+                
+                card1Title: "Rendimiento Atractivo",
+                card1Text: "ROI promedio del 12-15% anual con crecimiento constante del sector de lujo",
+                card2Title: "Experiencia Inmobiliaria",
+                card2Text: "Más de 15 años de experiencia en el desarrollo de proyectos inmobiliarios de prestigio",
+                card3Title: "Costa del Sol y Blanca",
+                card3Text: "Expansión estratégica en las costas españolas más codiciadas con adquisición de terrenos premium",
+                card4Title: "Máxima Seguridad",
+                card4Text: "Inversiones garantizadas por activos inmobiliarios de primer nivel",
+                
+                // Solutions
+                solutionsTitle: "Soluciones de Inversión",
+                solutionsSubtitle: "Elija el plan que corresponda a sus objetivos financieros",
+                
+                planEssential: "Plan Esencial",
+                planPremium: "Plan Premium",
+                planExclusive: "Plan Exclusivo",
+                annualReturn: "Rendimiento anual",
+                recommended: "Recomendado",
+                learnMore: "Saber más",
+                
+                // Projets
+                projectsTitle: "Nuestros Proyectos en Desarrollo",
+                projectsSubtitle: "Descubra nuestras adquisiciones de terrenos premium en las costas españolas más codiciadas",
+                
+                // Performance
+                performanceTitle: "Rendimiento y Cifras Clave",
+                performanceSubtitle: "Resultados que hablan por sí mismos",
+                
+                // Témoignages
+                testimonialsTitle: "Testimonios de Inversores",
+                partnersTitle: "Nuestros Socios Financieros",
+                
+                // Contact
+                contactTitle: "Contáctenos",
+                contactSubtitle: "Nuestros expertos le acompañan en su proyecto de inversión",
+                
+                // Formulaire
+                formName: "Nombre completo",
+                formEmail: "Email",
+                formPhone: "Teléfono",
+                formCompany: "Empresa",
+                formSolution: "Solución de inversión objetivo",
+                formMessage: "Mensaje",
+                formSubmit: "Enviar mi solicitud",
+                formRequired: "* Campos obligatorios. Sus datos están protegidos y nunca serán compartidos.",
+                
+                // Options select
+                selectOption: "Seleccione una opción",
+                optionEssential: "Plan Esencial (50k€ - 8-10%)",
+                optionPremium: "Plan Premium (150k€ - 12-15%)",
+                optionExclusive: "Plan Exclusivo (500k€ - 15-20%)",
+                optionCustom: "Solución personalizada"
+            }
+        };
+
+        // Détection automatique de la langue
+        function detectLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langCode = browserLang.substring(0, 2).toLowerCase();
+            
+            // Langues supportées
+            const supportedLangs = ['fr', 'en', 'es'];
+            
+            // Retourne la langue détectée si supportée, sinon français par défaut
+            return supportedLangs.includes(langCode) ? langCode : 'fr';
+        }
+
+        // Application des traductions
+        function applyTranslations(lang) {
+            const t = translations[lang];
+            
+            // Navigation
+            document.querySelector('a[href="#investir"]').textContent = t.navInvest;
+            document.querySelector('a[href="#solutions"]').textContent = t.navSolutions;
+            document.querySelector('a[href="#performance"]').textContent = t.navPerformance;
+            document.querySelector('nav a[href="#contact"]').textContent = t.navContact;
+            
+            // Hero section
+            document.querySelector('h1').innerHTML = t.heroTitle;
+            document.querySelector('h1 + p').textContent = t.heroSubtitle;
+            document.querySelector('button[onclick="scrollToContact()"]').textContent = t.heroButton;
+            
+            // Section Pourquoi investir
+            document.querySelector('#investir h2').textContent = t.whyTitle;
+            document.querySelector('#investir h2 + p').textContent = t.whySubtitle;
+            
+            const cards = document.querySelectorAll('#investir .card-hover');
+            cards[0].querySelector('h3').textContent = t.card1Title;
+            cards[0].querySelector('p').textContent = t.card1Text;
+            cards[1].querySelector('h3').textContent = t.card2Title;
+            cards[1].querySelector('p').textContent = t.card2Text;
+            cards[2].querySelector('h3').textContent = t.card3Title;
+            cards[2].querySelector('p').textContent = t.card3Text;
+            cards[3].querySelector('h3').textContent = t.card4Title;
+            cards[3].querySelector('p').textContent = t.card4Text;
+            
+            // Section Solutions
+            document.querySelector('#solutions h2').textContent = t.solutionsTitle;
+            document.querySelector('#solutions h2 + p').textContent = t.solutionsSubtitle;
+            
+            const plans = document.querySelectorAll('#solutions .card-hover');
+            plans[0].querySelector('h3').textContent = t.planEssential;
+            plans[0].querySelector('p').textContent = t.annualReturn;
+            plans[1].querySelector('h3').textContent = t.planPremium;
+            plans[1].querySelector('p').textContent = t.annualReturn;
+            plans[2].querySelector('h3').textContent = t.planExclusive;
+            plans[2].querySelector('p').textContent = t.annualReturn;
+            
+            // Badge recommandé
+            document.querySelector('.bg-warm-gold').textContent = t.recommended;
+            
+            // Boutons "En savoir plus"
+            document.querySelectorAll('#solutions button').forEach(btn => {
+                if (btn.textContent.includes('savoir') || btn.textContent.includes('more') || btn.textContent.includes('más')) {
+                    btn.textContent = t.learnMore;
+                }
+            });
+            
+            // Section Projets
+            const projectsSection = document.querySelector('.py-20.bg-white:nth-of-type(3)');
+            if (projectsSection) {
+                projectsSection.querySelector('h2').textContent = t.projectsTitle;
+                projectsSection.querySelector('h2 + p').textContent = t.projectsSubtitle;
+            }
+            
+            // Section Performance
+            document.querySelector('#performance h2').textContent = t.performanceTitle;
+            document.querySelector('#performance h2 + p').textContent = t.performanceSubtitle;
+            
+            // Section Témoignages
+            const testimonialsSection = document.querySelector('.py-20.bg-white:last-of-type');
+            if (testimonialsSection) {
+                testimonialsSection.querySelector('h2').textContent = t.testimonialsTitle;
+                testimonialsSection.querySelector('h3').textContent = t.partnersTitle;
+            }
+            
+            // Section Contact
+            document.querySelector('#contact h2').textContent = t.contactTitle;
+            document.querySelector('#contact h2 + p').textContent = t.contactSubtitle;
+            
+            // Formulaire
+            const labels = document.querySelectorAll('#contact label');
+            labels[0].textContent = t.formName + ' *';
+            labels[1].textContent = t.formEmail + ' *';
+            labels[2].textContent = t.formPhone + ' *';
+            labels[3].textContent = t.formCompany;
+            labels[4].textContent = t.formSolution;
+            labels[5].textContent = t.formMessage;
+            
+            // Options du select
+            const selectOptions = document.querySelectorAll('#contact select option');
+            selectOptions[0].textContent = t.selectOption;
+            selectOptions[1].textContent = t.optionEssential;
+            selectOptions[2].textContent = t.optionPremium;
+            selectOptions[3].textContent = t.optionExclusive;
+            selectOptions[4].textContent = t.optionCustom;
+            
+            // Bouton submit et texte légal
+            document.querySelector('button[type="submit"]').textContent = t.formSubmit;
+            document.querySelector('#contact p.text-sm').textContent = t.formRequired;
+            
+            // Placeholder du textarea
+            document.querySelector('textarea[name="message"]').placeholder = 
+                lang === 'fr' ? 'Décrivez votre projet d\'investissement...' :
+                lang === 'en' ? 'Describe your investment project...' :
+                'Describa su proyecto de inversión...';
+        }
+
+        // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
+            // Détection et application de la langue
+            const detectedLang = detectLanguage();
+            applyTranslations(detectedLang);
+            
+            // Mise à jour de l'attribut lang du document
+            document.documentElement.lang = detectedLang;
             const iframe = document.getElementById('vimeo-player');
             const fallback = document.getElementById('video-fallback');
 
@@ -872,5 +1205,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978d68f517a2b99a',t:'MTc1NjgyMDMyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978d9ffff6151cba',t:'MTc1NjgyMjU4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
