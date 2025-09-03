@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amaru Resorts - Investissement Hôtelier de Luxe</title>
+    <title>Amaru Resorts - Site en Construction</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,34 +24,8 @@
         .font-playfair { font-family: 'Playfair Display', serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
         
-        .hero-bg {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.6)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f9ff" width="1200" height="800"/><path fill="%23e0f2fe" d="M0 400c200-100 400-50 600 0s400 50 600-50v450H0z"/><circle fill="%23bae6fd" cx="200" cy="200" r="80"/><circle fill="%237dd3fc" cx="800" cy="150" r="60"/><circle fill="%2338bdf8" cx="1000" cy="300" r="40"/></svg>');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .gold-gradient {
-            background: linear-gradient(135deg, #d4af37, #f7e98e);
-        }
-        
-        .chart-bar {
-            background: linear-gradient(to top, #1e3a8a, #3b82f6);
-            animation: growUp 1.5s ease-out;
-        }
-        
-        @keyframes growUp {
-            from { height: 0; }
-            to { height: var(--height); }
+        .construction-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
         }
         
         .floating {
@@ -60,1150 +34,264 @@
         
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .construction-crane {
+            animation: crane-swing 4s ease-in-out infinite;
+        }
+        
+        @keyframes crane-swing {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+        
+        .progress-bar {
+            animation: progress 3s ease-in-out infinite;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 75%; }
+            100% { width: 0%; }
+        }
+        
+        .sparkle {
+            animation: sparkle 2s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
-<body class="font-inter bg-white">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="font-playfair text-2xl font-bold text-deep-brown">
-                    Amaru Resorts
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#investir" class="text-gray-700 hover:text-deep-brown transition-colors">Pourquoi investir</a>
-                    <a href="#solutions" class="text-gray-700 hover:text-deep-brown transition-colors">Solutions</a>
-                    <a href="#performance" class="text-gray-700 hover:text-deep-brown transition-colors">Performance</a>
-                    <a href="#contact" class="bg-deep-brown text-cream px-6 py-2 rounded-lg hover:bg-opacity-80 transition-colors">Contact</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="font-inter construction-bg min-h-screen flex items-center justify-center">
+    <!-- Particules flottantes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="sparkle absolute top-20 left-20 w-2 h-2 bg-warm-gold rounded-full" style="animation-delay: 0s;"></div>
+        <div class="sparkle absolute top-40 right-32 w-3 h-3 bg-white rounded-full" style="animation-delay: 1s;"></div>
+        <div class="sparkle absolute bottom-32 left-1/4 w-2 h-2 bg-warm-gold rounded-full" style="animation-delay: 2s;"></div>
+        <div class="sparkle absolute top-1/3 right-20 w-2 h-2 bg-white rounded-full" style="animation-delay: 0.5s;"></div>
+        <div class="sparkle absolute bottom-20 right-1/3 w-3 h-3 bg-warm-gold rounded-full" style="animation-delay: 1.5s;"></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center text-white relative overflow-hidden">
-        <!-- Vidéo en arrière-plan -->
-        <div class="absolute inset-0 w-full h-full overflow-hidden">
-            <iframe 
-                id="vimeo-player"
-                src="https://player.vimeo.com/video/1115162216?h=a123456789&autoplay=1&loop=1&muted=1&controls=0&background=1&autopause=0&quality=auto#t=27s" 
-                frameborder="0" 
-                allow="autoplay; fullscreen; picture-in-picture" 
-                allowfullscreen
-                style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:56.25vw;min-height:100vh;min-width:177.78vh;" 
-                title="Video landing page">
-            </iframe>
-            <!-- Fallback si la vidéo ne se charge pas -->
-            <div id="video-fallback" class="absolute inset-0 bg-gradient-to-br from-deep-brown via-warm-gold/20 to-deep-brown opacity-100 transition-opacity duration-1000 cursor-pointer">
-                <div class="absolute inset-0 bg-black/30"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="text-center text-white">
-                        <div class="w-20 h-20 mx-auto mb-4 bg-warm-gold/20 rounded-full flex items-center justify-center hover:bg-warm-gold/30 transition-colors">
-                            <svg class="w-10 h-10 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                        </div>
-                        <p class="text-lg">Chargement de la vidéo...</p>
-                        <p class="text-sm text-gray-300 mt-2">Cliquez pour lancer la lecture</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Overlay sombre pour la lisibilité -->
-        <div class="absolute inset-0 bg-gradient-to-r from-deep-brown/70 to-deep-brown/50"></div>
-        
-        <div class="relative z-10 text-center max-w-6xl mx-auto px-4">
-            <div class="floating mb-8">
-                <svg class="w-20 h-20 mx-auto text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
+    <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+        <!-- Logo -->
+        <div class="floating mb-8">
+            <div class="w-24 h-24 mx-auto bg-warm-gold/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-warm-gold/30">
+                <svg class="w-12 h-12 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
                 </svg>
             </div>
-            <h1 class="font-playfair text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-lg">
-                Investissez dans l'avenir du 
-                <span class="text-warm-gold">tourisme de luxe</span> 
-                avec Amaru Resorts
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-                Découvrez des opportunités d'investissement exceptionnelles dans l'hôtellerie de prestige. 
-                Rendements attractifs, expertise reconnue, croissance durable.
-            </p>
-            
-            <button onclick="scrollToContact()" class="bg-warm-gold text-deep-brown px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 drop-shadow-lg hover:bg-opacity-90">
-                Demandez plus d'informations
-            </button>
         </div>
-    </section>
 
-    <!-- Pourquoi Investir -->
-    <section id="investir" class="py-20 bg-cream">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-deep-brown mb-4">
-                    Pourquoi choisir Amaru Resorts ?
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Une opportunité unique d'investir dans le secteur du tourisme de luxe avec des garanties solides
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-16 h-16 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
+        <!-- Image de construction -->
+        <div class="mb-12 relative">
+            <div class="relative max-w-2xl mx-auto">
+                <img 
+                    src="https://i.postimg.cc/bY9GVGQ7/Landing-page.jpg" 
+                    alt="Amaru Resorts - Site en construction" 
+                    class="w-full h-auto rounded-2xl shadow-2xl border-4 border-white/20 floating"
+                    onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                >
+                <!-- Fallback en cas d'erreur de chargement -->
+                <div class="w-full h-64 bg-white/10 rounded-2xl border-4 border-white/20 flex items-center justify-center backdrop-blur-sm" style="display: none;">
+                    <div class="text-center text-white">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
+                        <p class="text-lg font-semibold">Amaru Resorts</p>
+                        <p class="text-sm text-blue-200">En construction</p>
                     </div>
-                    <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-4">Rendement Attractif</h3>
-                    <p class="text-gray-600">ROI moyen de 12-15% par an avec une croissance constante du secteur du luxe</p>
                 </div>
                 
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-16 h-16 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <!-- Overlay décoratif -->
+                <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent rounded-2xl pointer-events-none"></div>
+                
+                <!-- Badge "En construction" -->
+                <div class="absolute top-4 right-4 bg-warm-gold text-deep-brown px-4 py-2 rounded-full font-semibold text-sm shadow-lg">
+                    🚧 En construction
+                </div>
+            </div>
+        </div>
+
+        <!-- Titre principal -->
+        <h1 class="font-playfair text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            Site en 
+            <span class="text-warm-gold">Construction</span>
+        </h1>
+
+        <!-- Sous-titre -->
+        <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Nous préparons quelque chose d'exceptionnel pour vous. 
+            Notre nouveau site sera bientôt disponible avec une expérience encore plus immersive.
+        </p>
+
+        <!-- Barre de progression -->
+        <div class="mb-12">
+            <div class="flex items-center justify-between text-white mb-2">
+                <span class="text-sm font-medium">Progression</span>
+                <span class="text-sm font-medium">75%</span>
+            </div>
+            <div class="w-full bg-white/20 rounded-full h-3 backdrop-blur-sm">
+                <div class="bg-gradient-to-r from-warm-gold to-yellow-400 h-3 rounded-full progress-bar" style="width: 75%;"></div>
+            </div>
+        </div>
+
+        <!-- Informations de contact -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-white/20">
+            <h2 class="font-playfair text-2xl font-bold text-white mb-6">
+                Restons en contact
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-4">Expertise Immobilière</h3>
-                    <p class="text-gray-600">Plus de 15 ans d'expérience dans le développement de projets immobiliers de prestige</p>
+                    <p class="text-white font-semibold">Email</p>
+                    <p class="text-blue-200 text-sm">bonjour@amaru-homes.com</p>
                 </div>
                 
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-16 h-16 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
                     </div>
-                    <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-4">Costa del Sol & Blanca</h3>
-                    <p class="text-gray-600">Expansion stratégique sur les côtes espagnoles les plus prisées avec acquisition de terrains premium</p>
+                    <p class="text-white font-semibold">Téléphone</p>
+                    <p class="text-blue-200 text-sm">+34 627 768 233</p>
                 </div>
                 
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg text-center">
-                    <div class="w-16 h-16 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 1L3 5v6c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V5l-9-4z"/>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-warm-gold/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-warm-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-4">Sécurité Maximale</h3>
-                    <p class="text-gray-600">Investissements garantis par des actifs immobiliers de premier plan</p>
+                    <p class="text-white font-semibold">Adresse</p>
+                    <p class="text-blue-200 text-sm">Orihuela Costa, Espagne</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Solutions d'Investissement -->
-    <section id="solutions" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-deep-brown mb-4">
-                    Solutions d'Investissement
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Choisissez la formule qui correspond à vos objectifs financiers
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Plan Essentiel -->
-                <div class="card-hover bg-cream p-8 rounded-xl border-2 border-warm-gold/30">
-                    <div class="text-center mb-8">
-                        <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-2">Plan Essentiel</h3>
-                        <div class="text-4xl font-bold text-warm-gold mb-4">8-10%</div>
-                        <p class="text-gray-600">Rendement annuel</p>
-                    </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Achat terrain + construction
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Montant minimal : 50 000€
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Garantie rendement maximum
-                        </li>
-                    </ul>
-                    <button class="w-full bg-deep-brown text-cream py-3 rounded-lg hover:bg-opacity-80 transition-colors">
-                        En savoir plus
+            <!-- Formulaire de notification -->
+            <form class="max-w-md mx-auto" onsubmit="handleNotification(event)">
+                <p class="text-white mb-4 font-medium">Soyez notifié du lancement :</p>
+                <div class="flex gap-3">
+                    <input 
+                        type="email" 
+                        placeholder="Votre adresse email" 
+                        required
+                        class="flex-1 px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-warm-gold focus:border-transparent backdrop-blur-sm"
+                    >
+                    <button 
+                        type="submit"
+                        class="px-6 py-3 bg-warm-gold text-deep-brown font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105"
+                    >
+                        Notifier
                     </button>
                 </div>
-                
-                <!-- Plan Premium -->
-                <div class="card-hover bg-deep-brown p-8 rounded-xl border-2 border-warm-gold relative">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-warm-gold text-deep-brown px-4 py-1 rounded-full text-sm font-semibold">Recommandé</span>
-                    </div>
-                    <div class="text-center mb-8">
-                        <h3 class="font-playfair text-2xl font-bold text-cream mb-2">Plan Premium</h3>
-                        <div class="text-4xl font-bold text-warm-gold mb-4">12-15%</div>
-                        <p class="text-gray-300">Rendement annuel</p>
-                    </div>
-                    <ul class="space-y-4 mb-8 text-cream">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-warm-gold mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Terrains Costa del Sol
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-warm-gold mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Montant minimal : 150 000€
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-warm-gold mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Développement complet
-                        </li>
-                    </ul>
-                    <button class="w-full bg-warm-gold text-deep-brown py-3 rounded-lg font-semibold hover:shadow-lg transition-all hover:bg-opacity-90">
-                        En savoir plus
-                    </button>
-                </div>
-                
-                <!-- Plan Exclusif -->
-                <div class="card-hover bg-cream p-8 rounded-xl border-2 border-warm-gold/30">
-                    <div class="text-center mb-8">
-                        <h3 class="font-playfair text-2xl font-bold text-deep-brown mb-2">Plan Exclusif</h3>
-                        <div class="text-4xl font-bold text-warm-gold mb-4">15-20%</div>
-                        <p class="text-gray-600">Rendement annuel</p>
-                    </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Terrains Costa Blanca
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Montant minimal : 500 000€
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            Projets premium exclusifs
-                        </li>
-                    </ul>
-                    <button class="w-full bg-deep-brown text-cream py-3 rounded-lg hover:bg-opacity-80 transition-colors">
-                        En savoir plus
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nos Projets -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-deep-brown mb-4">
-                    Nos Projets en Développement
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Découvrez nos acquisitions de terrains premium sur les côtes espagnoles les plus prisées
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="font-playfair text-3xl font-bold text-deep-blue mb-6">Costa del Sol - Marbella</h3>
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Terrain acquis :</strong> 15 hectares face à la mer</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Projet :</strong> Resort 5 étoiles de 120 suites</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Rendement projeté :</strong> 18-22% après construction</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Début construction :</strong> Q2 2025</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-gradient-to-br from-blue-50 to-gold/10 p-8 rounded-xl">
-                    <svg class="w-full h-48 text-deep-blue/20" fill="currentColor" viewBox="0 0 400 200">
-                        <rect width="400" height="200" fill="url(#coastPattern)"/>
-                        <defs>
-                            <pattern id="coastPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                                <rect width="100" height="60" fill="#e0f2fe"/>
-                                <rect width="100" height="40" y="60" fill="#bae6fd"/>
-                                <circle cx="20" cy="30" r="8" fill="#38bdf8"/>
-                                <circle cx="80" cy="20" r="6" fill="#0ea5e9"/>
-                            </pattern>
-                        </defs>
-                        <text x="200" y="100" text-anchor="middle" class="fill-deep-blue font-bold text-lg">Costa del Sol</text>
-                        <text x="200" y="120" text-anchor="middle" class="fill-gold font-semibold">Marbella Resort</text>
-                    </svg>
-                </div>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-12 items-center mt-16">
-                <div class="bg-gradient-to-br from-gold/10 to-blue-50 p-8 rounded-xl order-2 md:order-1">
-                    <svg class="w-full h-48 text-deep-blue/20" fill="currentColor" viewBox="0 0 400 200">
-                        <rect width="400" height="200" fill="url(#blancaPattern)"/>
-                        <defs>
-                            <pattern id="blancaPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                                <rect width="100" height="50" fill="#f0f9ff"/>
-                                <rect width="100" height="50" y="50" fill="#e0f2fe"/>
-                                <circle cx="30" cy="25" r="5" fill="#3b82f6"/>
-                                <circle cx="70" cy="35" r="7" fill="#1e40af"/>
-                            </pattern>
-                        </defs>
-                        <text x="200" y="100" text-anchor="middle" class="fill-deep-blue font-bold text-lg">Costa Blanca</text>
-                        <text x="200" y="120" text-anchor="middle" class="fill-gold font-semibold">Alicante Premium</text>
-                    </svg>
-                </div>
-                
-                <div class="order-1 md:order-2">
-                    <h3 class="font-playfair text-3xl font-bold text-deep-blue mb-6">Costa Blanca - Alicante</h3>
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Terrain acquis :</strong> 22 hectares en première ligne</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Projet :</strong> Complexe résidentiel de luxe + hôtel</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Rendement projeté :</strong> 20-25% après livraison</p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="w-2 h-2 bg-gold rounded-full mt-2 mr-4 flex-shrink-0"></div>
-                            <p class="text-gray-700"><strong>Début construction :</strong> Q4 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Performance -->
-    <section id="performance" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-deep-blue mb-4">
-                    Performance & Chiffres Clés
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Des résultats qui parlent d'eux-mêmes
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                <div class="text-center">
-                    <div class="text-5xl font-bold text-gold mb-2" id="roi-counter">0%</div>
-                    <p class="text-gray-600 font-semibold">ROI Moyen Historique</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-5xl font-bold text-deep-blue mb-2" id="occupancy-counter">0%</div>
-                    <p class="text-gray-600 font-semibold">Taux de Remplissage</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-5xl font-bold text-gold mb-2" id="investors-counter">0</div>
-                    <p class="text-gray-600 font-semibold">Investisseurs Satisfaits</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-5xl font-bold text-deep-blue mb-2" id="resorts-counter">0</div>
-                    <p class="text-gray-600 font-semibold">Resorts en Exploitation</p>
-                </div>
-            </div>
-            
-            <!-- Graphique ROI -->
-            <div class="bg-white p-8 rounded-xl shadow-lg">
-                <h3 class="font-playfair text-2xl font-bold text-deep-blue mb-8 text-center">Évolution du ROI (2019-2024)</h3>
-                <div class="flex items-end justify-between h-64 px-4">
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 120px; height: 120px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2019</span>
-                        <span class="text-xs text-deep-blue font-semibold">10%</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 140px; height: 140px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2020</span>
-                        <span class="text-xs text-deep-blue font-semibold">11.5%</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 160px; height: 160px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2021</span>
-                        <span class="text-xs text-deep-blue font-semibold">13%</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 180px; height: 180px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2022</span>
-                        <span class="text-xs text-deep-blue font-semibold">14.5%</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 200px; height: 200px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2023</span>
-                        <span class="text-xs text-deep-blue font-semibold">16%</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="chart-bar w-12 rounded-t" style="--height: 220px; height: 220px;"></div>
-                        <span class="mt-2 text-sm text-gray-600">2024</span>
-                        <span class="text-xs text-deep-blue font-semibold">17.2%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Témoignages -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-deep-blue mb-4">
-                    Témoignages d'Investisseurs
-                </h2>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">
-                            JM
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-deep-blue">Jean-Marc Dubois</h4>
-                            <p class="text-sm text-gray-600">Investisseur depuis 2020</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">"Un rendement exceptionnel et une équipe à l'écoute. Mes investissements avec Amaru dépassent toutes mes attentes."</p>
-                    <div class="flex text-gold mt-4">
-                        ★★★★★
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">
-                            SL
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-deep-blue">Sophie Laurent</h4>
-                            <p class="text-sm text-gray-600">Family Office</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">"La transparence et le professionnalisme d'Amaru Resorts nous ont convaincus. Nos clients sont ravis des performances."</p>
-                    <div class="flex text-gold mt-4">
-                        ★★★★★
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-8 rounded-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold">
-                            PR
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-deep-blue">Pierre Rousseau</h4>
-                            <p class="text-sm text-gray-600">Entrepreneur</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700 italic">"Une diversification parfaite pour mon portefeuille. Le secteur du luxe avec Amaru, c'est un choix gagnant."</p>
-                    <div class="flex text-gold mt-4">
-                        ★★★★★
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Partenaires -->
-            <div class="mt-20 text-center">
-                <h3 class="font-playfair text-2xl font-bold text-deep-blue mb-8">Nos Partenaires Financiers</h3>
-                <div class="flex justify-center items-center space-x-12 opacity-60">
-                    <div class="text-2xl font-bold text-gray-400">BNP PARIBAS</div>
-                    <div class="text-2xl font-bold text-gray-400">CRÉDIT AGRICOLE</div>
-                    <div class="text-2xl font-bold text-gray-400">SOCIÉTÉ GÉNÉRALE</div>
-                    <div class="text-2xl font-bold text-gray-400">NATIXIS</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Formulaire de Contact -->
-    <section id="contact" class="py-20 bg-deep-blue">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-white mb-4">
-                    Contactez-nous
-                </h2>
-                <p class="text-xl text-gray-300 mb-8">
-                    Nos experts vous accompagnent dans votre projet d'investissement
-                </p>
-                
-
-                
-                <!-- Équipe Contact -->
-                <div class="grid md:grid-cols-3 gap-6 mt-12 mb-8">
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                        <div class="w-16 h-16 mx-auto mb-4 relative">
-                            <img src="https://allo-les-anges.github.io/Maskarat/assets/images/gallery/gil.jpg" 
-                                 alt="Gillian Diver" 
-                                 class="w-16 h-16 rounded-full object-cover border-2 border-warm-gold"
-                                 onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="w-16 h-16 bg-warm-gold rounded-full flex items-center justify-center text-deep-brown font-bold text-xl border-2 border-warm-gold">GD</div>
-                        </div>
-                        <h3 class="font-playfair text-xl font-bold text-white mb-2">Gillian Diver</h3>
-                        <p class="text-gray-300 mb-4">Directrice Développement</p>
-                        <div class="space-y-2 text-sm text-gray-300">
-                            <p>📞 +34 627 768 233</p>
-                            <p>✉️ gillian@amaru-homes.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                        <div class="w-16 h-16 mx-auto mb-4 relative">
-                            <img src="https://allo-les-anges.github.io/Maskarat/assets/images/gallery/deb.jpg" 
-                                 alt="Déborah Berings" 
-                                 class="w-16 h-16 rounded-full object-cover border-2 border-warm-gold"
-                                 onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="w-16 h-16 bg-warm-gold rounded-full flex items-center justify-center text-deep-brown font-bold text-xl border-2 border-warm-gold">DB</div>
-                        </div>
-                        <h3 class="font-playfair text-xl font-bold text-white mb-2">Déborah Berings</h3>
-                        <p class="text-gray-300 mb-4">Responsable Investisseurs</p>
-                        <div class="space-y-2 text-sm text-gray-300">
-                            <p>📞 +34 627 768 253</p>
-                            <p>✉️ deborah@amaru-homes.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                        <div class="w-16 h-16 mx-auto mb-4 relative">
-                            <img src="https://allo-les-anges.github.io/Maskarat/assets/images/gallery/gaet.jpg" 
-                                 alt="Gaëtan Mukeba-Harchies" 
-                                 class="w-16 h-16 rounded-full object-cover border-2 border-warm-gold"
-                                 onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="w-16 h-16 bg-warm-gold rounded-full flex items-center justify-center text-deep-brown font-bold text-xl border-2 border-warm-gold">GM</div>
-                        </div>
-                        <h3 class="font-playfair text-xl font-bold text-white mb-2">Gaëtan Mukeba-Harchies</h3>
-                        <p class="text-gray-300 mb-4">CTO</p>
-                        <div class="space-y-2 text-sm text-gray-300">
-                            <p>📞 +32 470 241 296</p>
-                            <p>✉️ gaetan@amaru-resorts.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <form action="https://formspree.io/f/myzjgeka" method="POST" class="bg-white p-8 rounded-xl shadow-2xl" onsubmit="handleSubmit(event)">
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Nom complet *</label>
-                        <input type="text" name="nom" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Email *</label>
-                        <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent">
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Téléphone *</label>
-                        <input type="tel" name="telephone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Société</label>
-                        <input type="text" name="societe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent">
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2">Solution d'investissement ciblée</label>
-                    <select name="solution" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent">
-                        <option value="">Sélectionnez une option</option>
-                        <option value="essentiel">Plan Essentiel (50k€ - 8-10%)</option>
-                        <option value="premium">Plan Premium (150k€ - 12-15%)</option>
-                        <option value="exclusif">Plan Exclusif (500k€ - 15-20%)</option>
-                        <option value="sur-mesure">Solution sur-mesure</option>
-                    </select>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2">Message</label>
-                    <textarea rows="4" name="message" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-deep-blue focus:border-transparent" placeholder="Décrivez votre projet d'investissement..."></textarea>
-                </div>
-                
-                <button type="submit" class="w-full gold-gradient text-deep-blue py-4 rounded-lg text-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-                    Envoyer ma demande
-                </button>
-                
-                <p class="text-sm text-gray-500 mt-4 text-center">
-                    * Champs obligatoires. Vos données sont protégées et ne seront jamais partagées.
-                </p>
             </form>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <div class="font-playfair text-2xl font-bold text-gold mb-4">
-                        Amaru Resorts
-                    </div>
-                    <p class="text-gray-400 mb-4">
-                        Investissement hôtelier de luxe depuis 2008. Excellence, performance et confiance.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-gold transition-colors" title="Facebook">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition-colors" title="Instagram">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.897-.875-1.387-2.026-1.387-3.323s.49-2.448 1.297-3.323c.875-.897 2.026-1.387 3.323-1.387s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition-colors" title="YouTube">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition-colors" title="TikTok">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-gold transition-colors" title="LinkedIn">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-lg mb-4">Contact</h4>
-                    <div class="space-y-2 text-gray-400">
-                        <p>📍 Calle Pablo Picasso 1, plante 2, local 1</p>
-                        <p>03189 Orihuela Costa, Espagne</p>
-                        <p>📞 +34 627 768 233 (Gillian)</p>
-                        <p>📞 +34 627 768 253 (Déborah)</p>
-                        <p>📞 +32 470 241 296 (Gaëtan)</p>
-                        <p>✉️ bonjour@amaru-homes.com</p>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-lg mb-4">Investissement</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-gold transition-colors">Plans d'investissement</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Documentation</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">FAQ Investisseurs</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Espace Client</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold text-lg mb-4">Légal</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-gold transition-colors">Mentions légales</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Politique de confidentialité</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">CGV</a></li>
-                        <li><a href="#" class="hover:text-gold transition-colors">Cookies</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Amaru Resorts. Tous droits réservés. | Société d'investissement agréée</p>
-            </div>
+        <!-- Réseaux sociaux -->
+        <div class="flex justify-center space-x-6">
+            <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-warm-gold hover:text-deep-brown transition-all duration-300 backdrop-blur-sm border border-white/20">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+            </a>
+            <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-warm-gold hover:text-deep-brown transition-all duration-300 backdrop-blur-sm border border-white/20">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.897-.875-1.387-2.026-1.387-3.323s.49-2.448 1.297-3.323c.875-.897 2.026-1.387 3.323-1.387s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387z"/>
+                </svg>
+            </a>
+            <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-warm-gold hover:text-deep-brown transition-all duration-300 backdrop-blur-sm border border-white/20">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
         </div>
-    </footer>
+
+        <!-- Message de pied -->
+        <p class="text-blue-200 text-sm mt-8">
+            © 2024 Amaru Resorts. Merci pour votre patience.
+        </p>
+    </div>
 
     <script>
-        // Système de traduction automatique
-        const translations = {
-            fr: {
-                // Navigation
-                navInvest: "Pourquoi investir",
-                navSolutions: "Solutions",
-                navPerformance: "Performance",
-                navContact: "Contact",
-                
-                // Hero
-                heroTitle: "Investissez dans l'avenir du <span class='text-warm-gold'>tourisme de luxe</span> avec Amaru Resorts",
-                heroSubtitle: "Découvrez des opportunités d'investissement exceptionnelles dans l'hôtellerie de prestige. Rendements attractifs, expertise reconnue, croissance durable.",
-                heroButton: "Demandez plus d'informations",
-                
-                // Pourquoi investir
-                whyTitle: "Pourquoi choisir Amaru Resorts ?",
-                whySubtitle: "Une opportunité unique d'investir dans le secteur du tourisme de luxe avec des garanties solides",
-                
-                card1Title: "Rendement Attractif",
-                card1Text: "ROI moyen de 12-15% par an avec une croissance constante du secteur du luxe",
-                card2Title: "Expertise Immobilière",
-                card2Text: "Plus de 15 ans d'expérience dans le développement de projets immobiliers de prestige",
-                card3Title: "Costa del Sol & Blanca",
-                card3Text: "Expansion stratégique sur les côtes espagnoles les plus prisées avec acquisition de terrains premium",
-                card4Title: "Sécurité Maximale",
-                card4Text: "Investissements garantis par des actifs immobiliers de premier plan",
-                
-                // Solutions
-                solutionsTitle: "Solutions d'Investissement",
-                solutionsSubtitle: "Choisissez la formule qui correspond à vos objectifs financiers",
-                
-                planEssential: "Plan Essentiel",
-                planPremium: "Plan Premium",
-                planExclusive: "Plan Exclusif",
-                annualReturn: "Rendement annuel",
-                recommended: "Recommandé",
-                learnMore: "En savoir plus",
-                
-                // Projets
-                projectsTitle: "Nos Projets en Développement",
-                projectsSubtitle: "Découvrez nos acquisitions de terrains premium sur les côtes espagnoles les plus prisées",
-                
-                // Performance
-                performanceTitle: "Performance & Chiffres Clés",
-                performanceSubtitle: "Des résultats qui parlent d'eux-mêmes",
-                
-                // Témoignages
-                testimonialsTitle: "Témoignages d'Investisseurs",
-                partnersTitle: "Nos Partenaires Financiers",
-                
-                // Contact
-                contactTitle: "Contactez-nous",
-                contactSubtitle: "Nos experts vous accompagnent dans votre projet d'investissement",
-                
-                // Formulaire
-                formName: "Nom complet",
-                formEmail: "Email",
-                formPhone: "Téléphone",
-                formCompany: "Société",
-                formSolution: "Solution d'investissement ciblée",
-                formMessage: "Message",
-                formSubmit: "Envoyer ma demande",
-                formRequired: "* Champs obligatoires. Vos données sont protégées et ne seront jamais partagées.",
-                
-                // Options select
-                selectOption: "Sélectionnez une option",
-                optionEssential: "Plan Essentiel (50k€ - 8-10%)",
-                optionPremium: "Plan Premium (150k€ - 12-15%)",
-                optionExclusive: "Plan Exclusif (500k€ - 15-20%)",
-                optionCustom: "Solution sur-mesure"
-            },
-            
-            en: {
-                // Navigation
-                navInvest: "Why invest",
-                navSolutions: "Solutions",
-                navPerformance: "Performance",
-                navContact: "Contact",
-                
-                // Hero
-                heroTitle: "Invest in the future of <span class='text-warm-gold'>luxury tourism</span> with Amaru Resorts",
-                heroSubtitle: "Discover exceptional investment opportunities in luxury hospitality. Attractive returns, recognized expertise, sustainable growth.",
-                heroButton: "Request more information",
-                
-                // Pourquoi investir
-                whyTitle: "Why choose Amaru Resorts?",
-                whySubtitle: "A unique opportunity to invest in the luxury tourism sector with solid guarantees",
-                
-                card1Title: "Attractive Returns",
-                card1Text: "Average ROI of 12-15% per year with consistent growth in the luxury sector",
-                card2Title: "Real Estate Expertise",
-                card2Text: "Over 15 years of experience in developing prestigious real estate projects",
-                card3Title: "Costa del Sol & Blanca",
-                card3Text: "Strategic expansion on Spain's most sought-after coasts with premium land acquisition",
-                card4Title: "Maximum Security",
-                card4Text: "Investments guaranteed by top-tier real estate assets",
-                
-                // Solutions
-                solutionsTitle: "Investment Solutions",
-                solutionsSubtitle: "Choose the plan that matches your financial objectives",
-                
-                planEssential: "Essential Plan",
-                planPremium: "Premium Plan",
-                planExclusive: "Exclusive Plan",
-                annualReturn: "Annual return",
-                recommended: "Recommended",
-                learnMore: "Learn more",
-                
-                // Projets
-                projectsTitle: "Our Development Projects",
-                projectsSubtitle: "Discover our premium land acquisitions on Spain's most coveted coasts",
-                
-                // Performance
-                performanceTitle: "Performance & Key Figures",
-                performanceSubtitle: "Results that speak for themselves",
-                
-                // Témoignages
-                testimonialsTitle: "Investor Testimonials",
-                partnersTitle: "Our Financial Partners",
-                
-                // Contact
-                contactTitle: "Contact us",
-                contactSubtitle: "Our experts guide you through your investment project",
-                
-                // Formulaire
-                formName: "Full name",
-                formEmail: "Email",
-                formPhone: "Phone",
-                formCompany: "Company",
-                formSolution: "Target investment solution",
-                formMessage: "Message",
-                formSubmit: "Send my request",
-                formRequired: "* Required fields. Your data is protected and will never be shared.",
-                
-                // Options select
-                selectOption: "Select an option",
-                optionEssential: "Essential Plan (€50k - 8-10%)",
-                optionPremium: "Premium Plan (€150k - 12-15%)",
-                optionExclusive: "Exclusive Plan (€500k - 15-20%)",
-                optionCustom: "Custom solution"
-            },
-            
-            es: {
-                // Navigation
-                navInvest: "Por qué invertir",
-                navSolutions: "Soluciones",
-                navPerformance: "Rendimiento",
-                navContact: "Contacto",
-                
-                // Hero
-                heroTitle: "Invierta en el futuro del <span class='text-warm-gold'>turismo de lujo</span> con Amaru Resorts",
-                heroSubtitle: "Descubra oportunidades de inversión excepcionales en hostelería de prestigio. Rendimientos atractivos, experiencia reconocida, crecimiento sostenible.",
-                heroButton: "Solicite más información",
-                
-                // Pourquoi investir
-                whyTitle: "¿Por qué elegir Amaru Resorts?",
-                whySubtitle: "Una oportunidad única de invertir en el sector del turismo de lujo con garantías sólidas",
-                
-                card1Title: "Rendimiento Atractivo",
-                card1Text: "ROI promedio del 12-15% anual con crecimiento constante del sector de lujo",
-                card2Title: "Experiencia Inmobiliaria",
-                card2Text: "Más de 15 años de experiencia en el desarrollo de proyectos inmobiliarios de prestigio",
-                card3Title: "Costa del Sol y Blanca",
-                card3Text: "Expansión estratégica en las costas españolas más codiciadas con adquisición de terrenos premium",
-                card4Title: "Máxima Seguridad",
-                card4Text: "Inversiones garantizadas por activos inmobiliarios de primer nivel",
-                
-                // Solutions
-                solutionsTitle: "Soluciones de Inversión",
-                solutionsSubtitle: "Elija el plan que corresponda a sus objetivos financieros",
-                
-                planEssential: "Plan Esencial",
-                planPremium: "Plan Premium",
-                planExclusive: "Plan Exclusivo",
-                annualReturn: "Rendimiento anual",
-                recommended: "Recomendado",
-                learnMore: "Saber más",
-                
-                // Projets
-                projectsTitle: "Nuestros Proyectos en Desarrollo",
-                projectsSubtitle: "Descubra nuestras adquisiciones de terrenos premium en las costas españolas más codiciadas",
-                
-                // Performance
-                performanceTitle: "Rendimiento y Cifras Clave",
-                performanceSubtitle: "Resultados que hablan por sí mismos",
-                
-                // Témoignages
-                testimonialsTitle: "Testimonios de Inversores",
-                partnersTitle: "Nuestros Socios Financieros",
-                
-                // Contact
-                contactTitle: "Contáctenos",
-                contactSubtitle: "Nuestros expertos le acompañan en su proyecto de inversión",
-                
-                // Formulaire
-                formName: "Nombre completo",
-                formEmail: "Email",
-                formPhone: "Teléfono",
-                formCompany: "Empresa",
-                formSolution: "Solución de inversión objetivo",
-                formMessage: "Mensaje",
-                formSubmit: "Enviar mi solicitud",
-                formRequired: "* Campos obligatorios. Sus datos están protegidos y nunca serán compartidos.",
-                
-                // Options select
-                selectOption: "Seleccione una opción",
-                optionEssential: "Plan Esencial (50k€ - 8-10%)",
-                optionPremium: "Plan Premium (150k€ - 12-15%)",
-                optionExclusive: "Plan Exclusivo (500k€ - 15-20%)",
-                optionCustom: "Solución personalizada"
-            }
-        };
-
-        // Détection automatique de la langue
-        function detectLanguage() {
-            const browserLang = navigator.language || navigator.userLanguage;
-            const langCode = browserLang.substring(0, 2).toLowerCase();
-            
-            // Langues supportées
-            const supportedLangs = ['fr', 'en', 'es'];
-            
-            // Retourne la langue détectée si supportée, sinon français par défaut
-            return supportedLangs.includes(langCode) ? langCode : 'fr';
-        }
-
-        // Application des traductions
-        function applyTranslations(lang) {
-            const t = translations[lang];
-            
-            // Navigation
-            document.querySelector('a[href="#investir"]').textContent = t.navInvest;
-            document.querySelector('a[href="#solutions"]').textContent = t.navSolutions;
-            document.querySelector('a[href="#performance"]').textContent = t.navPerformance;
-            document.querySelector('nav a[href="#contact"]').textContent = t.navContact;
-            
-            // Hero section
-            document.querySelector('h1').innerHTML = t.heroTitle;
-            document.querySelector('h1 + p').textContent = t.heroSubtitle;
-            document.querySelector('button[onclick="scrollToContact()"]').textContent = t.heroButton;
-            
-            // Section Pourquoi investir
-            document.querySelector('#investir h2').textContent = t.whyTitle;
-            document.querySelector('#investir h2 + p').textContent = t.whySubtitle;
-            
-            const cards = document.querySelectorAll('#investir .card-hover');
-            cards[0].querySelector('h3').textContent = t.card1Title;
-            cards[0].querySelector('p').textContent = t.card1Text;
-            cards[1].querySelector('h3').textContent = t.card2Title;
-            cards[1].querySelector('p').textContent = t.card2Text;
-            cards[2].querySelector('h3').textContent = t.card3Title;
-            cards[2].querySelector('p').textContent = t.card3Text;
-            cards[3].querySelector('h3').textContent = t.card4Title;
-            cards[3].querySelector('p').textContent = t.card4Text;
-            
-            // Section Solutions
-            document.querySelector('#solutions h2').textContent = t.solutionsTitle;
-            document.querySelector('#solutions h2 + p').textContent = t.solutionsSubtitle;
-            
-            const plans = document.querySelectorAll('#solutions .card-hover');
-            plans[0].querySelector('h3').textContent = t.planEssential;
-            plans[0].querySelector('p').textContent = t.annualReturn;
-            plans[1].querySelector('h3').textContent = t.planPremium;
-            plans[1].querySelector('p').textContent = t.annualReturn;
-            plans[2].querySelector('h3').textContent = t.planExclusive;
-            plans[2].querySelector('p').textContent = t.annualReturn;
-            
-            // Badge recommandé
-            document.querySelector('.bg-warm-gold').textContent = t.recommended;
-            
-            // Boutons "En savoir plus"
-            document.querySelectorAll('#solutions button').forEach(btn => {
-                if (btn.textContent.includes('savoir') || btn.textContent.includes('more') || btn.textContent.includes('más')) {
-                    btn.textContent = t.learnMore;
-                }
-            });
-            
-            // Section Projets
-            const projectsSection = document.querySelector('.py-20.bg-white:nth-of-type(3)');
-            if (projectsSection) {
-                projectsSection.querySelector('h2').textContent = t.projectsTitle;
-                projectsSection.querySelector('h2 + p').textContent = t.projectsSubtitle;
-            }
-            
-            // Section Performance
-            document.querySelector('#performance h2').textContent = t.performanceTitle;
-            document.querySelector('#performance h2 + p').textContent = t.performanceSubtitle;
-            
-            // Section Témoignages
-            const testimonialsSection = document.querySelector('.py-20.bg-white:last-of-type');
-            if (testimonialsSection) {
-                testimonialsSection.querySelector('h2').textContent = t.testimonialsTitle;
-                testimonialsSection.querySelector('h3').textContent = t.partnersTitle;
-            }
-            
-            // Section Contact
-            document.querySelector('#contact h2').textContent = t.contactTitle;
-            document.querySelector('#contact h2 + p').textContent = t.contactSubtitle;
-            
-            // Formulaire
-            const labels = document.querySelectorAll('#contact label');
-            labels[0].textContent = t.formName + ' *';
-            labels[1].textContent = t.formEmail + ' *';
-            labels[2].textContent = t.formPhone + ' *';
-            labels[3].textContent = t.formCompany;
-            labels[4].textContent = t.formSolution;
-            labels[5].textContent = t.formMessage;
-            
-            // Options du select
-            const selectOptions = document.querySelectorAll('#contact select option');
-            selectOptions[0].textContent = t.selectOption;
-            selectOptions[1].textContent = t.optionEssential;
-            selectOptions[2].textContent = t.optionPremium;
-            selectOptions[3].textContent = t.optionExclusive;
-            selectOptions[4].textContent = t.optionCustom;
-            
-            // Bouton submit et texte légal
-            document.querySelector('button[type="submit"]').textContent = t.formSubmit;
-            document.querySelector('#contact p.text-sm').textContent = t.formRequired;
-            
-            // Placeholder du textarea
-            document.querySelector('textarea[name="message"]').placeholder = 
-                lang === 'fr' ? 'Décrivez votre projet d\'investissement...' :
-                lang === 'en' ? 'Describe your investment project...' :
-                'Describa su proyecto de inversión...';
-        }
-
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Détection et application de la langue
-            const detectedLang = detectLanguage();
-            applyTranslations(detectedLang);
-            
-            // Mise à jour de l'attribut lang du document
-            document.documentElement.lang = detectedLang;
-            const iframe = document.getElementById('vimeo-player');
-            const fallback = document.getElementById('video-fallback');
-
-            // Use a Promise to handle the Vimeo API loading
-            const loadVimeoPlayer = new Promise((resolve, reject) => {
-                if (typeof Vimeo !== 'undefined') {
-                    resolve(new Vimeo.Player(iframe));
-                } else {
-                    // Fallback for when the Vimeo API script is not yet loaded
-                    const script = document.createElement('script');
-                    script.src = 'https://player.vimeo.com/api/player.js';
-                    script.onload = () => resolve(new Vimeo.Player(iframe));
-                    script.onerror = () => reject('Vimeo API not available');
-                    document.head.appendChild(script);
-                }
-            });
-
-            loadVimeoPlayer.then(player => {
-                player.ready().then(() => {
-                    // Hide the fallback with a fade-out effect
-                    fallback.style.transition = 'opacity 1s ease-out';
-                    fallback.style.opacity = '0';
-                    setTimeout(() => {
-                        fallback.style.display = 'none';
-                    }, 1000);
-
-                    // Attempt to play the video. Browsers will allow this since it's muted.
-                    player.play().catch(error => {
-                        console.warn('Autoplay was prevented:', error.name);
-                    });
-                }).catch(error => {
-                    console.error('Vimeo player failed to load:', error);
-                    // In case of error, just hide the fallback
-                    fallback.style.display = 'none';
-                });
-            }).catch(error => {
-                console.error(error);
-                // If Vimeo API fails to load, hide the fallback anyway
-                fallback.style.display = 'none';
-            });
-
-            // Optional: Add a button to the fallback to allow user-initiated playback
-            // This handles cases where autoplay is strictly blocked.
-            fallback.addEventListener('click', () => {
-                loadVimeoPlayer.then(player => {
-                    player.play();
-                });
-            });
-        });
-        
-        // Animation des compteurs
-        function animateCounter(elementId, targetValue, suffix = '') {
-            const element = document.getElementById(elementId);
-            const duration = 2000;
-            const increment = targetValue / (duration / 16);
-            let current = 0;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= targetValue) {
-                    current = targetValue;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current) + suffix;
-            }, 16);
-        }
-        
-        // Observer pour déclencher les animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounter('roi-counter', 14.2, '%');
-                    animateCounter('occupancy-counter', 87, '%');
-                    animateCounter('investors-counter', 1250, '+');
-                    animateCounter('resorts-counter', 23);
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-        
-        observer.observe(document.getElementById('performance'));
-        
-        // Scroll vers le formulaire de contact
-        function scrollToContact() {
-            document.getElementById('contact').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-        
-        // Gestion du formulaire
-        function handleSubmit(event) {
+        // Gestion du formulaire de notification
+        function handleNotification(event) {
             event.preventDefault();
             
-            // Animation de succès
-            const button = event.target.querySelector('button[type="submit"]');
+            const button = event.target.querySelector('button');
+            const input = event.target.querySelector('input');
             const originalText = button.textContent;
             
-            button.textContent = 'Envoi en cours...';
+            // Animation de soumission
+            button.textContent = 'Envoi...';
             button.disabled = true;
             
             setTimeout(() => {
-                button.textContent = '✓ Message envoyé !';
-                button.classList.remove('gold-gradient');
+                button.textContent = '✓ Inscrit !';
+                button.classList.remove('bg-warm-gold');
                 button.classList.add('bg-green-500');
                 
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.disabled = false;
-                    button.classList.add('gold-gradient');
+                    button.classList.add('bg-warm-gold');
                     button.classList.remove('bg-green-500');
-                    event.target.reset();
+                    input.value = '';
                 }, 2000);
-            }, 1500);
+            }, 1000);
         }
-        
-        // Navigation fluide
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+
+        // Animation de la barre de progression
+        function animateProgress() {
+            const progressBar = document.querySelector('.progress-bar');
+            let width = 0;
+            const targetWidth = 75;
+            const increment = 1;
+            
+            const interval = setInterval(() => {
+                if (width >= targetWidth) {
+                    clearInterval(interval);
+                } else {
+                    width += increment;
+                    progressBar.style.width = width + '%';
                 }
+            }, 30);
+        }
+
+        // Démarrer l'animation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(animateProgress, 500);
+        });
+
+        // Effet de parallaxe léger sur les particules
+        document.addEventListener('mousemove', (e) => {
+            const sparkles = document.querySelectorAll('.sparkle');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            sparkles.forEach((sparkle, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                
+                sparkle.style.transform = `translate(${x}px, ${y}px) scale(${sparkle.style.transform.includes('scale') ? sparkle.style.transform.split('scale(')[1].split(')')[0] : 1})`;
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978d9ffff6151cba',t:'MTc1NjgyMjU4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978f6486f711b9bf',t:'MTc1Njg0MTEyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
