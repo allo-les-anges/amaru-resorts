@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Amaru Resorts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div id="app">
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="min-h-screen flex items-center justify-center p-4">
+            <div class="w-full max-w-md">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-r from-red-600 to-red-800 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Admin Portal</h1>
+                    <p class="text-gray-600">Amaru Resorts - Property Management</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div id="auth-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4"></div>
+                    
+                    <form id="login-form">
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Admin Email</label>
+                            <input type="email" id="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                   placeholder="admin@amaruresorts.com">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                            <input type="password" id="password" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                   placeholder="••••••••">
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 rounded-lg transition duration-200">
+                            <i class="fas fa-lock mr-2"></i>Admin Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b">
+                <div class="container mx-auto px-4 py-4">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-800">Property Management</h1>
+                            <p class="text-gray-600">Manage properties displayed on the public website</p>
+                        </div>
+                        
+                        <div class="mt-4 md:mt-0 flex items-center space-x-4">
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">Admin</p>
+                                <p id="admin-email" class="font-medium"></p>
+                            </div>
+                            <button id="logout-btn" 
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="container mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Property Form -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-xl shadow-lg p-6 sticky top-8">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4" id="form-title">
+                                <i class="fas fa-plus-circle text-red-600 mr-2"></i>Add New Property
+                            </h2>
+                            
+                            <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4"></div>
+                            <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4"></div>
+                            
+                            <form id="property-form">
+                                <input type="hidden" id="property-id">
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Title *</label>
+                                    <input type="text" id="property-title" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           placeholder="Villa Serenity">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Description *</label>
+                                    <textarea id="property-description" required rows="4"
+                                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                              placeholder="Beautiful villa with sea view..."></textarea>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Price per Night (€) *</label>
+                                    <input type="number" id="property-price" required min="0" step="10"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           placeholder="450">
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2">Image URL *</label>
+                                    <input type="url" id="property-image" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           placeholder="https://example.com/image.jpg">
+                                    <p class="text-xs text-gray-500 mt-2">Use high-quality images (min. 1200x800px)</p>
+                                </div>
+                                
+                                <div class="flex space-x-3">
+                                    <button type="submit" id="submit-btn"
+                                            class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 rounded-lg transition duration-200">
+                                        <i class="fas fa-save mr-2"></i>Save Property
+                                    </button>
+                                    
+                                    <button type="button" id="cancel-edit-btn" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-4 rounded-lg transition">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Properties List -->
+                    <div class="lg:col-span-2">
+                        <!-- Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <div class="bg-white rounded-xl shadow p-6">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-home text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Total Properties</p>
+                                        <p id="total-properties" class="text-2xl font-bold text-gray-800">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl shadow p-6">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-euro-sign text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Avg. Price</p>
+                                        <p id="avg-price" class="text-2xl font-bold text-gray-800">€0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl shadow p-6">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-sync-alt text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Last Updated</p>
+                                        <p id="last-updated" class="text-2xl font-bold text-gray-800">Now</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Properties Table -->
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h2 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-list text-red-600 mr-2"></i>Properties List
+                                </h2>
+                                <p class="text-gray-600 text-sm">Real-time updates from Firestore</p>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="properties-table-body" class="divide-y divide-gray-200">
+                                        <tr id="no-properties-row">
+                                            <td colspan="4" class="py-12 text-center text-gray-500">
+                                                <i class="fas fa-home text-3xl mb-4"></i>
+                                                <p>No properties found</p>
+                                                <p class="text-sm mt-2">Add your first property using the form</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signOut,
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            doc,
+            onSnapshot,
+            query,
+            orderBy,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyChNdjTQq47Z7YLm_ClqA0gOEXTRZj9a6c",
+            authDomain: "amaruresorts-admin.firebaseapp.com",
+            projectId: "amaruresorts-admin",
+            storageBucket: "amaruresorts-admin.appspot.com",
+            messagingSenderId: "555555555555",
+            appId: "1:555555555555:web:abcdef1234567890abcde"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const authScreen = document.getElementById('auth-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const loginForm = document.getElementById('login-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        const propertyForm = document.getElementById('property-form');
+        const formTitle = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const adminEmail = document.getElementById('admin-email');
+        const authError = document.getElementById('auth-error');
+        const formSuccess = document.getElementById('form-success');
+        const formError = document.getElementById('form-error');
+        const propertiesTableBody = document.getElementById('properties-table-body');
+        const noPropertiesRow = document.getElementById('no-properties-row');
+        const totalProperties = document.getElementById('total-properties');
+        const avgPrice = document.getElementById('avg-price');
+        const lastUpdated = document.getElementById('last-updated');
+
+        // Form fields
+        const propertyId = document.getElementById('property-id');
+        const propertyTitle = document.getElementById('property-title');
+        const propertyDescription = document.getElementById('property-description');
+        const propertyPrice = document.getElementById('property-price');
+        const propertyImage = document.getElementById('property-image');
+
+        let unsubscribeProperties = null;
+        let currentUser = null;
+        let isEditing = false;
+
+        // Authentication State Observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                showDashboard(user);
+            } else {
+                currentUser = null;
+                showAuthScreen();
+                
+                if (unsubscribeProperties) {
+                    unsubscribeProperties();
+                    unsubscribeProperties = null;
+                }
+            }
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                authError.classList.add('hidden');
+            } catch (error) {
+                authError.textContent = getAuthErrorMessage(error.code);
+                authError.classList.remove('hidden');
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Property Form Submission
+        propertyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = propertyTitle.value.trim();
+            const description = propertyDescription.value.trim();
+            const price = parseInt(propertyPrice.value);
+            const imageUrl = propertyImage.value.trim();
+            
+            // Validation
+            if (!title || !description || !price || !imageUrl) {
+                showFormError('All fields are required');
+                return;
+            }
+            
+            if (price <= 0) {
+                showFormError('Price must be greater than 0');
+                return;
+            }
+            
+            try {
+                const propertyData = {
+                    title: title,
+                    description: description,
+                    pricePerNight: price,
+                    imageUrl: imageUrl,
+                    updatedAt: serverTimestamp(),
+                    updatedBy: currentUser.email
+                };
+                
+                if (isEditing && propertyId.value) {
+                    // Update existing property
+                    const propertyRef = doc(db, 'public/data/properties', propertyId.value);
+                    await updateDoc(propertyRef, propertyData);
+                    showFormSuccess('Property updated successfully!');
+                } else {
+                    // Add new property
+                    propertyData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, 'public/data/properties'), propertyData);
+                    showFormSuccess('Property added successfully!');
+                }
+                
+                // Reset form
+                resetForm();
+                
+            } catch (error) {
+                console.error('Error saving property:', error);
+                showFormError('Error saving property. Please try again.');
+            }
+        });
+
+        // Cancel Edit
+        cancelEditBtn.addEventListener('submit', (e) => {
+            e.preventDefault();
+            resetForm();
+        });
+
+        // Load Properties
+        function loadProperties() {
+            const q = query(
+                collection(db, 'public/data/properties'), 
+                orderBy('updatedAt', 'desc')
+            );
+            
+            unsubscribeProperties = onSnapshot(q, (snapshot) => {
+                const properties = [];
+                let totalPrice = 0;
+                
+                propertiesTableBody.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    propertiesTableBody.appendChild(noPropertiesRow.cloneNode(true));
+                } else {
+                    snapshot.forEach((docSnap) => {
+                        const property = { id: docSnap.id, ...docSnap.data() };
+                        properties.push(property);
+                        totalPrice += property.pricePerNight || 0;
+                        
+                        // Add to table
+                        const row = createPropertyRow(property);
+                        propertiesTableBody.appendChild(row);
+                    });
+                }
+                
+                // Update stats
+                totalProperties.textContent = properties.length;
+                const average = properties.length > 0 ? Math.round(totalPrice / properties.length) : 0;
+                avgPrice.textContent = `€${average}`;
+                
+                // Update timestamp
+                const now = new Date();
+                lastUpdated.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+            }, (error) => {
+                console.error('Error loading properties:', error);
+            });
+        }
+
+        // Edit Property
+        function editProperty(property) {
+            isEditing = true;
+            
+            // Populate form
+            propertyId.value = property.id;
+            propertyTitle.value = property.title || '';
+            propertyDescription.value = property.description || '';
+            propertyPrice.value = property.pricePerNight || '';
+            propertyImage.value = property.imageUrl || '';
+            
+            // Update UI
+            formTitle.innerHTML = '<i class="fas fa-edit text-red-600 mr-2"></i>Edit Property';
+            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Update Property';
+            cancelEditBtn.classList.remove('hidden');
+        }
+
+        // Delete Property
+        async function deleteProperty(propertyId) {
+            if (!confirm('Are you sure you want to delete this property?')) return;
+            
+            try {
+                await deleteDoc(doc(db, 'public/data/properties', propertyId));
+                showFormSuccess('Property deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting property:', error);
+                showFormError('Error deleting property. Please try again.');
+            }
+        }
+
+        // Helper Functions
+        function showAuthScreen() {
+            authScreen.classList.remove('hidden');
+            dashboardScreen.classList.add('hidden');
+        }
+
+        function showDashboard(user) {
+            authScreen.classList.add('hidden');
+            dashboardScreen.classList.remove('hidden');
+            
+            // Display user info
+            adminEmail.textContent = user.email;
+            
+            // Load properties
+            loadProperties();
+        }
+
+        function showFormError(message) {
+            formError.textContent = message;
+            formError.classList.remove('hidden');
+            formSuccess.classList.add('hidden');
+        }
+
+        function showFormSuccess(message) {
+            formSuccess.textContent = message;
+            formSuccess.classList.remove('hidden');
+            formError.classList.add('hidden');
+            
+            setTimeout(() => {
+                formSuccess.classList.add('hidden');
+            }, 3000);
+        }
+
+        function resetForm() {
+            isEditing = false;
+            propertyForm.reset();
+            propertyId.value = '';
+            
+            // Reset UI
+            formTitle.innerHTML = '<i class="fas fa-plus-circle text-red-600 mr-2"></i>Add New Property';
+            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Property';
+            cancelEditBtn.classList.add('hidden');
+        }
+
+        function createPropertyRow(property) {
+            const row = document.createElement('tr');
+            row.className = 'hover:bg-gray-50';
+            
+            row.innerHTML = `
+                <td class="py-4 px-6">
+                    <div class="w-16 h-16 bg-gray-200 rounded-lg bg-cover bg-center" 
+                         style="background-image: url('${property.imageUrl || ''}')">
+                    </div>
+                </td>
+                <td class="py-4 px-6">
+                    <div class="font-medium text-gray-900">${property.title || 'Untitled'}</div>
+                    <div class="text-sm text-gray-500 truncate max-w-xs">${property.description || ''}</div>
+                </td>
+                <td class="py-4 px-6 whitespace-nowrap">
+                    <span class="font-bold text-red-600">€${property.pricePerNight || '0'}</span>
+                    <span class="text-sm text-gray-500">/night</span>
+                </td>
+                <td class="py-4 px-6 whitespace-nowrap">
+                    <div class="flex space-x-2">
+                        <button onclick="window.editProperty(${JSON.stringify(property).replace(/"/g, '&quot;')})"
+                                class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="window.deleteProperty('${property.id}')"
+                                class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            
+            return row;
+        }
+
+        function getAuthErrorMessage(errorCode) {
+            const messages = {
+                'auth/invalid-email': 'Invalid email address',
+                'auth/user-disabled': 'Account disabled',
+                'auth/user-not-found': 'No admin account found',
+                'auth/wrong-password': 'Incorrect password'
+            };
+            
+            return messages[errorCode] || 'Authentication failed';
+        }
+
+        // Expose functions to global scope for inline onclick handlers
+        window.editProperty = editProperty;
+        window.deleteProperty = deleteProperty;
+    </script>
+</body>
+</html>
