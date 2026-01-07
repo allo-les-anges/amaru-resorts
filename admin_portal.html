@@ -59,13 +59,19 @@
                         </div>
                         
                         <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                            <div class="text-right">
-                                <p class="text-sm text-gray-600">Admin</p>
-                                <p id="admin-email" class="font-medium"></p>
-                            </div>
-                            <button id="logout-btn" 
-                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
-                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        <div class="text-right">
+                        <p class="text-sm text-gray-600">Admin</p>
+                        <p id="admin-email" class="font-medium"></p>
+                        </div>
+                    <!-- AJOUTEZ CE BOUTON -->
+                    <button onclick="window.location.href='index.html'" 
+                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
+                    <i class="fas fa-home mr-2"></i>Back to Home
+                    </button>
+                    <!-- BOUTON LOGOUT EXISTANT -->
+                    <button id="logout-btn" 
+                            class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
                             </button>
                         </div>
                     </div>
@@ -234,7 +240,9 @@
         } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         // Firebase Configuration - Utilise les clés du fichier partagé
-        const app = initializeApp(window.firebaseConfig); // ✅ Ligne modifiée
+        const app = initializeApp(window.firebaseConfig);
+        const auth = getAuth(app);       
+        const db = getFirestore(app);    
 
         // DOM Elements
         const authScreen = document.getElementById('auth-screen');
@@ -439,8 +447,12 @@
 
         // Helper Functions
         function showAuthScreen() {
-            authScreen.classList.remove('hidden');
-            dashboardScreen.classList.add('hidden');
+                authScreen.classList.remove('hidden');
+                dashboardScreen.classList.add('hidden');
+    
+        // Nettoyer le formulaire
+                loginForm.reset();
+                authError.classList.add('hidden');
         }
 
         function showDashboard(user) {
