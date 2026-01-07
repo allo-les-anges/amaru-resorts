@@ -299,14 +299,16 @@
         });
 
         // Logout
-        logoutBtn.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
+                logoutBtn.addEventListener('click', async (e) => { // ✅ CHANGER À 'click'
+                e.preventDefault();
+                try {
                 await signOut(auth);
-            } catch (error) {
+        // Rediriger vers index.html
+                window.location.href = 'index.html';
+                } catch (error) {
                 console.error('Logout error:', error);
-            }
-        });
+                }
+                });
 
         // Property Form Submission
         propertyForm.addEventListener('submit', async (e) => {
@@ -360,11 +362,10 @@
         });
 
         // Cancel Edit
-        cancelEditBtn.addEventListener('submit', (e) => {
-            e.preventDefault();
-            resetForm();
-        });
-
+                cancelEditBtn.addEventListener('click', (e) => { // ✅ CHANGER À 'click'
+                e.preventDefault();
+                resetForm();
+            });
         // Load Properties
         function loadProperties() {
             const q = query(
