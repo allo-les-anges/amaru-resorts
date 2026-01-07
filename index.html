@@ -18,6 +18,12 @@
             background-size: cover;
             background-position: center;
         }
+        /* Animation pour le formulaire */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -61,24 +67,286 @@
     </header>
 
     <main>
-        <!-- Hero Section with Booking Widget -->
-        <section class="hero-bg py-16 md:py-24">
+        <!-- Hero Section with AvaiBook Integration -->
+        <section class="hero-bg py-12 md:py-16">
             <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto text-center text-white mb-12">
-                    <h1 class="brand-font text-4xl md:text-5xl font-bold mb-4" data-lang-key="hero_title">
+                <div class="max-w-6xl mx-auto text-center text-white mb-8">
+                    <h1 class="brand-font text-3xl md:text-5xl font-bold mb-4" data-lang-key="hero_title">
                         Book Direct: 0% Commission & Best Price Guarantee
                     </h1>
-                    <p class="text-xl mb-8" data-lang-key="hero_subtitle">
+                    <p class="text-lg md:text-xl mb-8" data-lang-key="hero_subtitle">
                         Discover luxury villas in Spain's most beautiful destinations
                     </p>
                 </div>
                 
-                <!-- Booking Widget Area -->
-                <div class="bg-white rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
-                    <div id="avaiBook-widget" class="bg-gray-100 rounded-lg p-8 text-center">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4" data-lang-key="booking_title">Direct Booking Engine</h3>
-                        <div class="h-12 bg-amber-100 rounded-lg flex items-center justify-center">
-                            <span class="text-amber-800 font-medium" data-lang-key="booking_cta">Search Availability & Book</span>
+                <!-- AvaiBook Booking Engine Section -->
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white rounded-xl shadow-2xl overflow-hidden fade-in">
+                        <!-- Header with tabs -->
+                        <div class="border-b border-gray-200">
+                            <div class="flex">
+                                <button id="tab-booking" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50 active bg-amber-600 text-white" data-tab="booking">
+                                    <i class="fas fa-calendar-check mr-2"></i>
+                                    <span data-lang-key="tab_booking">Book Now</span>
+                                </button>
+                                <button id="tab-availability" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="availability">
+                                    <i class="fas fa-search mr-2"></i>
+                                    <span data-lang-key="tab_availability">Check Availability</span>
+                                </button>
+                                <button id="tab-widget" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="widget">
+                                    <i class="fas fa-code mr-2"></i>
+                                    <span data-lang-key="tab_widget">Integration</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Main Content Area -->
+                        <div class="p-6">
+                            <!-- Tab 1: Booking Form (Demo) -->
+                            <div id="tab-booking-content" class="tab-content active">
+                                <div class="mb-6">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2" data-lang-key="booking_title">
+                                        Direct Booking Engine - AvaiBook Integration Ready
+                                    </h3>
+                                    <p class="text-gray-600" data-lang-key="booking_subtitle">
+                                        Search availability and book directly with 0% commission
+                                    </p>
+                                </div>
+                                
+                                <!-- Demo Booking Form -->
+                                <div class="bg-gradient-to-r from-amber-50 to-white border border-amber-200 rounded-xl p-6 mb-6">
+                                    <form id="demo-booking-form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_destination">
+                                                Destination / Villa
+                                            </label>
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="destination">
+                                                <option value="">Select a villa...</option>
+                                                <!-- Options will be loaded from Firebase -->
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_checkin">
+                                                Check-in
+                                            </label>
+                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="checkin">
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_checkout">
+                                                Check-out
+                                            </label>
+                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="checkout">
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_guests">
+                                                Guests
+                                            </label>
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="guests">
+                                                <option value="1">1 Guest</option>
+                                                <option value="2" selected>2 Guests</option>
+                                                <option value="3">3 Guests</option>
+                                                <option value="4">4 Guests</option>
+                                                <option value="5">5 Guests</option>
+                                                <option value="6">6+ Guests</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="md:col-span-3">
+                                            <div class="text-sm text-gray-600 mt-2">
+                                                <i class="fas fa-info-circle text-amber-600 mr-1"></i>
+                                                <span data-lang-key="form_note">Real-time prices and availability from AvaiBook</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <button type="submit" class="w-full h-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg">
+                                                <i class="fas fa-search mr-2"></i>
+                                                <span data-lang-key="form_search">Search</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- AvaiBook Integration Info -->
+                                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                                    <div class="flex flex-col md:flex-row items-start md:items-center">
+                                        <div class="flex items-center mb-4 md:mb-0 md:mr-6">
+                                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-bolt text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <h4 class="font-semibold text-gray-800">AvaiBook Integration Ready</h4>
+                                                <p class="text-sm text-gray-600">Your booking engine is pre-configured</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-700 mb-3">
+                                                This demo shows how AvaiBook will integrate with your website. When you get your AvaiBook account, simply:
+                                            </p>
+                                            <ol class="text-sm text-gray-600 list-decimal pl-5 space-y-1">
+                                                <li>Create your AvaiBook account</li>
+                                                <li>Get your integration code (iframe or JavaScript)</li>
+                                                <li>Replace the demo form with the real AvaiBook widget</li>
+                                            </ol>
+                                        </div>
+                                        
+                                        <div class="mt-4 md:mt-0 md:ml-6">
+                                            <a href="https://www.avaibook.com" target="_blank" class="inline-flex items-center bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg transition">
+                                                <i class="fas fa-external-link-alt mr-2"></i>
+                                                Get AvaiBook
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab 2: Availability Calendar -->
+                            <div id="tab-availability-content" class="tab-content hidden">
+                                <div class="text-center py-8">
+                                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-calendar-alt text-amber-600 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Real-time Availability Calendar</h3>
+                                    <p class="text-gray-600 mb-6">Coming soon with AvaiBook integration</p>
+                                    
+                                    <!-- Demo Calendar -->
+                                    <div class="max-w-md mx-auto bg-white border border-gray-200 rounded-xl p-6">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <button class="text-gray-600 hover:text-amber-700">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <h4 class="font-semibold">March 2024</h4>
+                                            <button class="text-gray-600 hover:text-amber-700">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-7 gap-2">
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Mon</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Tue</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Wed</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Thu</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Fri</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sat</div>
+                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sun</div>
+                                            
+                                            <!-- Calendar days -->
+                                            <div class="text-center py-2 text-gray-400">26</div>
+                                            <div class="text-center py-2 text-gray-400">27</div>
+                                            <div class="text-center py-2 text-gray-400">28</div>
+                                            <div class="text-center py-2 text-gray-400">29</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">1</div>
+                                            <div class="text-center py-2 bg-green-100 text-green-800 font-medium rounded">2</div>
+                                            <div class="text-center py-2 bg-green-100 text-green-800 font-medium rounded">3</div>
+                                            <div class="text-center py-2 bg-red-100 text-red-800 font-medium rounded">4</div>
+                                            <div class="text-center py-2 bg-red-100 text-red-800 font-medium rounded">5</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">6</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">7</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">8</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">9</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">10</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">11</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">12</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">13</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">14</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">15</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">16</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">17</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">18</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">19</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">20</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">21</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">22</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">23</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">24</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">25</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">26</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">27</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">28</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">29</div>
+                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">30</div>
+                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">31</div>
+                                            <div class="text-center py-2 text-gray-400">1</div>
+                                            <div class="text-center py-2 text-gray-400">2</div>
+                                        </div>
+                                        
+                                        <div class="mt-6 flex justify-center space-x-6 text-sm">
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 bg-green-100 rounded mr-2"></div>
+                                                <span class="text-gray-600">Available</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 bg-red-100 rounded mr-2"></div>
+                                                <span class="text-gray-600">Booked</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab 3: Integration Code -->
+                            <div id="tab-widget-content" class="tab-content hidden">
+                                <div class="bg-gray-900 rounded-xl p-6 text-white">
+                                    <h3 class="text-lg font-semibold mb-3">AvaiBook Integration Code</h3>
+                                    <p class="text-gray-300 mb-4 text-sm">When you get your AvaiBook account, replace this demo with the actual integration code.</p>
+                                    
+                                    <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                                        <pre class="text-green-400"><span class="text-gray-400">&lt;!-- AvaiBook Integration Code --&gt;</span>
+&lt;div id="avaiBook-widget"&gt;&lt;/div&gt;
+&lt;script&gt;
+  <span class="text-blue-400">// Your AvaiBook JavaScript code will go here</span>
+  <span class="text-blue-400">// Example structure:</span>
+  (<span class="text-yellow-400">function</span>(w, d, s, o, f, js, fjs) {
+    w[o] = w[o] || <span class="text-yellow-400">function</span>() { (w[o].q = w[o].q || []).push(<span class="text-yellow-400">arguments</span>) };
+    js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+    js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
+  })(window, document, <span class="text-green-300">'script'</span>, <span class="text-green-300">'avaiBook'</span>, <span class="text-green-300">'https://YOUR_SUBDOMAIN.avaibook.com/widget.js'</span>);
+  
+  avaiBook(<span class="text-green-300">'init'</span>, {
+    container: <span class="text-green-300">'#avaiBook-widget'</span>,
+    language: <span class="text-green-300">'en'</span>,
+    primaryColor: <span class="text-green-300">'#d97706'</span>,
+    borderRadius: <span class="text-green-300">'12px'</span>
+  });
+&lt;/script&gt;</pre>
+                                    </div>
+                                    
+                                    <div class="mt-4 text-xs text-gray-400">
+                                        <p><i class="fas fa-info-circle mr-1"></i> This is a placeholder. Replace with your actual AvaiBook code.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Benefits Section -->
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-percentage text-amber-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">0% Commission</h4>
+                            <p class="text-gray-600 text-sm">Book directly and save on booking platform fees</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Dynamic Pricing</h4>
+                            <p class="text-gray-600 text-sm">Real-time prices powered by PriceLabs integration</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-shield-alt text-blue-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Secure Booking</h4>
+                            <p class="text-gray-600 text-sm">SSL encrypted payments and secure reservations</p>
                         </div>
                     </div>
                 </div>
@@ -107,7 +375,7 @@
                 </div>
                 
                 <div class="text-center mt-12">
-                    <button class="bg-white border-2 border-amber-600 text-amber-600 hover:bg-amber-50 px-6 py-3 rounded-lg font-medium transition" data-lang-key="view_all">
+                    <button id="view-all-btn" class="bg-white border-2 border-amber-600 text-amber-600 hover:bg-amber-50 px-6 py-3 rounded-lg font-medium transition" data-lang-key="view_all">
                         View All Properties
                     </button>
                 </div>
@@ -176,9 +444,9 @@
         } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         // Initialize Firebase avec la configuration du fichier externe
-            const app = initializeApp(window.firebaseConfig); // ✅ Utilise vos VRAIES clés
-            const auth = getAuth(app);
-            const db = getFirestore(app);
+        const app = initializeApp(window.firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         // Language System
         const translations = {
@@ -187,7 +455,13 @@
                 'nav_experiences': 'Experiences', 'nav_about': 'About', 'nav_contact': 'Contact',
                 'hero_title': 'Book Direct: 0% Commission & Best Price Guarantee',
                 'hero_subtitle': 'Discover luxury villas in Spain\'s most beautiful destinations',
-                'booking_title': 'Direct Booking Engine', 'booking_cta': 'Search Availability & Book',
+                'tab_booking': 'Book Now', 'tab_availability': 'Check Availability', 'tab_widget': 'Integration',
+                'booking_title': 'Direct Booking Engine - AvaiBook Integration Ready',
+                'booking_subtitle': 'Search availability and book directly with 0% commission',
+                'form_destination': 'Destination / Villa', 'form_checkin': 'Check-in',
+                'form_checkout': 'Check-out', 'form_guests': 'Guests',
+                'form_note': 'Real-time prices and availability from AvaiBook',
+                'form_search': 'Search',
                 'properties_title': 'Featured Luxury Villas',
                 'properties_subtitle': 'Experience unparalleled comfort in our handpicked selection of premium properties',
                 'view_details': 'View Details', 'view_all': 'View All Properties',
@@ -201,10 +475,16 @@
                 'nav_experiences': 'Expériences', 'nav_about': 'À propos', 'nav_contact': 'Contact',
                 'hero_title': 'Réservez Direct : 0% Commission & Meilleur Prix Garanti',
                 'hero_subtitle': 'Découvrez des villas de luxe dans les plus belles destinations d\'Espagne',
-                'booking_title': 'Moteur de Réservation Directe', 'booking_cta': 'Rechercher Disponibilité & Réserver',
+                'tab_booking': 'Réserver', 'tab_availability': 'Vérifier Disponibilité', 'tab_widget': 'Intégration',
+                'booking_title': 'Moteur de Réservation Directe - Prêt pour AvaiBook',
+                'booking_subtitle': 'Vérifiez les disponibilités et réservez directement avec 0% commission',
+                'form_destination': 'Destination / Villa', 'form_checkin': 'Arrivée',
+                'form_checkout': 'Départ', 'form_guests': 'Voyageurs',
+                'form_note': 'Prix et disponibilités en temps réel depuis AvaiBook',
+                'form_search': 'Rechercher',
                 'properties_title': 'Villas de Luxe en Vedette',
                 'properties_subtitle': 'Vivez un confort incomparable dans notre sélection de propriétés premium',
-                'view_details': 'Voir les Détails', 'view_all': 'Voir Toutes les Propriétés',
+                'view_details': 'Voir Détails', 'view_all': 'Voir Toutes les Propriétés',
                 'loading': 'Chargement des propriétés...',
                 'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
                 'footer_explore': 'Explorer', 'footer_support': 'Support',
@@ -215,7 +495,13 @@
                 'nav_experiences': 'Experiencias', 'nav_about': 'Acerca de', 'nav_contact': 'Contacto',
                 'hero_title': 'Reserva Directa: 0% Comisión & Garantía del Mejor Precio',
                 'hero_subtitle': 'Descubre villas de lujo en los destinos más bellos de España',
-                'booking_title': 'Motor de Reserva Directa', 'booking_cta': 'Buscar Disponibilidad & Reservar',
+                'tab_booking': 'Reservar', 'tab_availability': 'Ver Disponibilidad', 'tab_widget': 'Integración',
+                'booking_title': 'Motor de Reserva Directa - Listo para AvaiBook',
+                'booking_subtitle': 'Consulta disponibilidad y reserva directamente con 0% comisión',
+                'form_destination': 'Destino / Villa', 'form_checkin': 'Entrada',
+                'form_checkout': 'Salida', 'form_guests': 'Huéspedes',
+                'form_note': 'Precios y disponibilidad en tiempo real desde AvaiBook',
+                'form_search': 'Buscar',
                 'properties_title': 'Villas de Lujo Destacadas',
                 'properties_subtitle': 'Experimenta un confort inigualable en nuestra selección de propiedades premium',
                 'view_details': 'Ver Detalles', 'view_all': 'Ver Todas las Propiedades',
@@ -229,7 +515,13 @@
                 'nav_experiences': 'Ervaringen', 'nav_about': 'Over', 'nav_contact': 'Contact',
                 'hero_title': 'Boek Direct: 0% Commissie & Beste Prijs Garantie',
                 'hero_subtitle': 'Ontdek luxe villa\'s in de mooiste bestemmingen van Spanje',
-                'booking_title': 'Direct Boekingssysteem', 'booking_cta': 'Zoek Beschikbaarheid & Boek',
+                'tab_booking': 'Boek Nu', 'tab_availability': 'Beschikbaarheid', 'tab_widget': 'Integratie',
+                'booking_title': 'Direct Boekingssysteem - Klaar voor AvaiBook',
+                'booking_subtitle': 'Zoek beschikbaarheid en boek direct met 0% commissie',
+                'form_destination': 'Bestemming / Villa', 'form_checkin': 'Check-in',
+                'form_checkout': 'Check-out', 'form_guests': 'Gasten',
+                'form_note': 'Realtime prijzen en beschikbaarheid van AvaiBook',
+                'form_search': 'Zoeken',
                 'properties_title': 'Uitgelichte Luxe Villa\'s',
                 'properties_subtitle': 'Ervaar ongeëvenaard comfort in onze zorgvuldig geselecteerde premium eigendommen',
                 'view_details': 'Bekijk Details', 'view_all': 'Bekijk Alle Eigendommen',
@@ -242,24 +534,80 @@
 
         let currentLang = 'en';
 
-        function changeLanguage(lang) {
-            currentLang = lang;
-            document.querySelector('#current-lang').textContent = lang.toUpperCase();
+        // Tabs functionality
+        function setupTabs() {
+            const tabs = document.querySelectorAll('[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
             
-            document.querySelectorAll('[data-lang-key]').forEach(element => {
-                const key = element.getAttribute('data-lang-key');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Remove active classes
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-amber-600', 'text-white');
+                        t.classList.add('text-gray-700', 'hover:bg-amber-50');
+                    });
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Add active classes
+                    tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
+                    tab.classList.add('active', 'bg-amber-600', 'text-white');
+                    
+                    const activeContent = document.getElementById(`tab-${tabId}-content`);
+                    if (activeContent) {
+                        activeContent.classList.remove('hidden');
+                        activeContent.classList.add('active');
+                    }
+                });
             });
-            
-            localStorage.setItem('amaru_language', lang);
         }
 
-        // Properties Loading
+        // Demo booking form
+        function setupBookingForm() {
+            const form = document.getElementById('demo-booking-form');
+            const destinationSelect = document.getElementById('destination');
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const destination = destinationSelect.value;
+                const checkin = document.getElementById('checkin').value;
+                const checkout = document.getElementById('checkout').value;
+                const guests = document.getElementById('guests').value;
+                
+                if (!destination || !checkin || !checkout) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Show success message
+                alert(`Demo booking search:\n\nDestination: ${destination}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\n\nNote: This is a demo. With AvaiBook, you would see real availability and prices.`);
+                
+                // In a real scenario, this would redirect to AvaiBook
+                // window.location.href = `https://your-avaibook-url.com/search?destination=${destination}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`;
+            });
+            
+            // Set default dates (tomorrow and 3 days later)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 4);
+            
+            document.getElementById('checkin').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('checkout').value = nextWeek.toISOString().split('T')[0];
+        }
+
+        // Load properties from Firebase
         function loadProperties() {
             const propertiesContainer = document.getElementById('properties-container');
             const loadingSpinner = document.getElementById('loading-spinner');
+            const destinationSelect = document.getElementById('destination');
+            const viewAllBtn = document.getElementById('view-all-btn');
             
             const q = query(collection(db, 'public/data/properties'), orderBy('createdAt', 'desc'));
             
@@ -267,12 +615,14 @@
                 if (loadingSpinner) loadingSpinner.remove();
                 
                 propertiesContainer.innerHTML = '';
+                destinationSelect.innerHTML = '<option value="">Select a villa...</option>';
                 
                 if (snapshot.empty) {
                     propertiesContainer.innerHTML = `
                         <div class="col-span-3 text-center py-12">
                             <i class="fas fa-home text-3xl text-gray-300 mb-4"></i>
                             <p class="text-gray-600">No properties available at the moment.</p>
+                            <p class="text-gray-500 text-sm mt-2">Add properties in the Admin Portal</p>
                         </div>
                     `;
                     return;
@@ -282,14 +632,45 @@
                     const property = doc.data();
                     const propertyCard = createPropertyCard(property);
                     propertiesContainer.appendChild(propertyCard);
+                    
+                    // Add to destination dropdown
+                    const option = document.createElement('option');
+                    option.value = property.title;
+                    option.textContent = `${property.title} - €${property.pricePerNight || '0'}/night`;
+                    destinationSelect.appendChild(option);
                 });
+                
+                // Add demo options if no properties
+                if (snapshot.size === 0) {
+                    const demoProperties = [
+                        'Villa Serenity - Costa del Sol',
+                        'Casa del Mar - Ibiza',
+                        'Finca Andalucía - Marbella'
+                    ];
+                    
+                    demoProperties.forEach(prop => {
+                        const option = document.createElement('option');
+                        option.value = prop;
+                        option.textContent = prop;
+                        destinationSelect.appendChild(option);
+                    });
+                }
             }, (error) => {
                 console.error('Error loading properties:', error);
-                loadingSpinner.innerHTML = `
-                    <i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-4"></i>
-                    <p class="text-gray-600">Error loading properties. Please try again later.</p>
-                `;
+                if (loadingSpinner) {
+                    loadingSpinner.innerHTML = `
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-4"></i>
+                        <p class="text-gray-600">Error loading properties. Please try again later.</p>
+                    `;
+                }
             });
+            
+            // View all button functionality
+            if (viewAllBtn) {
+                viewAllBtn.addEventListener('click', () => {
+                    alert('In a real scenario, this would show all properties or filter the booking form.');
+                });
+            }
         }
 
         function createPropertyCard(property) {
@@ -304,37 +685,59 @@
                     <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
                     <div class="flex justify-between items-center">
                         <span class="text-amber-700 font-bold">From €${property.pricePerNight || '0'}/night</span>
-                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition view-details-btn">
-                            ${translations[currentLang]?.view_details || 'View Details'}
+                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition book-now-btn" data-property="${property.title || ''}">
+                            ${translations[currentLang]?.view_details || 'Book Now'}
                         </button>
                     </div>
                 </div>
             `;
             
+            // Add click event to book now button
+            const bookBtn = card.querySelector('.book-now-btn');
+            bookBtn.addEventListener('click', () => {
+                const propertyName = bookBtn.getAttribute('data-property');
+                document.getElementById('destination').value = propertyName;
+                document.getElementById('tab-booking').click();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
             return card;
         }
 
-        // Authentication
+        // Language functions
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelector('#current-lang').textContent = lang.toUpperCase();
+            
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            localStorage.setItem('amaru_language', lang);
+        }
+
+        // Authentication (public access)
         async function authenticate() {
             try {
-                // Try to get custom token from global variable or localStorage
-                const token = window.__initial_auth_token || localStorage.getItem('amaru_auth_token');
-                
-                if (token) {
-                    await signInWithCustomToken(auth, token);
-                    return true;
-                } else {
-                    // Fallback to anonymous auth for public access
-                    return true;
-                }
+                // Public access - no authentication required for viewing
+                return true;
             } catch (error) {
                 console.error('Authentication error:', error);
-                return true; // Still load properties even if auth fails
+                return true; // Continue anyway for public access
             }
         }
 
-        // Initialize
+        // Initialize everything
         document.addEventListener('DOMContentLoaded', async () => {
+            // Setup tabs
+            setupTabs();
+            
+            // Setup booking form
+            setupBookingForm();
+            
             // Initialize language
             const savedLang = localStorage.getItem('amaru_language') || 'en';
             changeLanguage(savedLang);
