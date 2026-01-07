@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .brand-font { font-family: 'Playfair Display', serif; }
         .hero-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), 
                               url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
         }
+        
         /* Animation pour le formulaire */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -25,49 +27,91 @@
         }
         .fade-in { animation: fadeIn 0.5s ease-out; }
         
-        /* 🔽 Effet "Glassmorphism" moderne pour les vignettes 🔽 */
+        /* MODERN GLASS EFFECT - Plus transparent et moderne */
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.08),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-            opacity: 0.98;
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                0 5px 15px rgba(0, 0, 0, 0.07),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.6);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            opacity: 0.95;
         }
 
         .glass-card:hover {
-            opacity: 1;
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: 
-                0 20px 60px rgba(217, 119, 6, 0.15),
-                inset 0 0 0 1px rgba(217, 119, 6, 0.2);
-            background: rgba(255, 255, 255, 0.95);
+                0 25px 50px rgba(217, 119, 6, 0.15),
+                0 10px 30px rgba(217, 119, 6, 0.1),
+                inset 0 0 0 1px rgba(217, 119, 6, 0.3);
+            background: rgba(255, 255, 255, 0.85);
         }
 
-        /* Effet de brillance sur la bordure */
-        .glass-card::after {
+        /* Header moderne avec fond transparent */
+        .header-glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Effet de gradient moderne */
+        .modern-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+        }
+
+        /* Effet de surbrillance moderne */
+        .highlight-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-effect::after {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                rgba(217, 119, 6, 0) 0%,
-                rgba(217, 119, 6, 0.1) 50%,
-                rgba(217, 119, 6, 0) 100%);
-            border-radius: 14px;
-            z-index: -1;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
             opacity: 0;
-            transition: opacity 0.4s ease;
         }
 
-        .glass-card:hover::after {
+        .highlight-effect:hover::after {
             opacity: 1;
+            transform: rotate(30deg) translate(10%, 10%);
+        }
+
+        /* Style moderne pour les boutons */
+        .modern-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .modern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Animations modernes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
         }
     </style>
 </head>
@@ -75,19 +119,19 @@
     <!-- Firebase SDK -->
     <script type="module" src="/__/firebase/init.js?useEmulator=true"></script>
     
-    <header class="sticky top-0 z-50 bg-white shadow-sm">
+    <header class="sticky top-0 z-50 header-glass shadow-sm">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
                 <h1 class="brand-font text-2xl font-bold text-amber-700">Amaru Resorts</h1>
             </div>
             
-            <nav class="hidden md:flex space-x-8">
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_home">Home</a>
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_villas">Villas</a>
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_destinations">Destinations</a>
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_experiences">Experiences</a>
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_about">About</a>
-                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_contact">Contact</a>
+            <nav id="main-nav" class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link" data-lang-key="nav_home">Home</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link under-construction" data-page="villas" data-lang-key="nav_villas">Villas</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link under-construction" data-page="destinations" data-lang-key="nav_destinations">Destinations</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link under-construction" data-page="experiences" data-lang-key="nav_experiences">Experiences</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link under-construction" data-page="about" data-lang-key="nav_about">About</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition nav-link under-construction" data-page="contact" data-lang-key="nav_contact">Contact</a>
             </nav>
             
             <div class="flex items-center space-x-4">
@@ -104,41 +148,71 @@
                     </div>
                 </div>
                 
-                <button class="md:hidden text-gray-700">
+                <button class="md:hidden text-gray-700" id="mobile-menu-btn">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
+        
+        <!-- Menu mobile -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link" data-lang-key="nav_home">Home</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link under-construction" data-page="villas" data-lang-key="nav_villas">Villas</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link under-construction" data-page="destinations" data-lang-key="nav_destinations">Destinations</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link under-construction" data-page="experiences" data-lang-key="nav_experiences">Experiences</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link under-construction" data-page="about" data-lang-key="nav_about">About</a>
+                <a href="#" class="block py-2 text-gray-700 hover:text-amber-700 transition nav-link under-construction" data-page="contact" data-lang-key="nav_contact">Contact</a>
+            </div>
+        </div>
     </header>
+
+    <!-- Page de construction (cachée par défaut) -->
+    <div id="construction-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="glass-card max-w-md w-full p-8 rounded-2xl">
+            <div class="text-center">
+                <div class="w-20 h-20 modern-gradient rounded-full flex items-center justify-center mx-auto mb-6 float-animation">
+                    <i class="fas fa-tools text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2" id="construction-title">Page en construction</h3>
+                <p class="text-gray-600 mb-6" id="construction-message">
+                    Cette section est actuellement en développement. Elle sera disponible très bientôt.
+                </p>
+                <button id="close-construction" class="modern-btn text-white px-6 py-3 rounded-lg font-medium w-full">
+                    Retour à l'accueil
+                </button>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- Hero Section with AvaiBook Integration -->
-        <section class="hero-bg py-12 md:py-16">
+        <section class="hero-bg py-16 md:py-24">
             <div class="container mx-auto px-4">
-                <div class="max-w-6xl mx-auto text-center text-white mb-8">
-                    <h1 class="brand-font text-3xl md:text-5xl font-bold mb-4" data-lang-key="hero_title">
+                <div class="max-w-6xl mx-auto text-center text-white mb-12">
+                    <h1 class="brand-font text-4xl md:text-6xl font-bold mb-6" data-lang-key="hero_title">
                         Book Direct: 0% Commission & Best Price Guarantee
                     </h1>
-                    <p class="text-lg md:text-xl mb-8" data-lang-key="hero_subtitle">
+                    <p class="text-xl md:text-2xl mb-8 opacity-90" data-lang-key="hero_subtitle">
                         Discover luxury villas in Spain's most beautiful destinations
                     </p>
                 </div>
                 
                 <!-- AvaiBook Booking Engine Section -->
                 <div class="max-w-6xl mx-auto">
-                    <div class="bg-white rounded-xl shadow-2xl overflow-hidden fade-in">
+                    <div class="glass-card rounded-2xl shadow-2xl overflow-hidden fade-in highlight-effect">
                         <!-- Header with tabs -->
                         <div class="border-b border-gray-200">
                             <div class="flex">
-                                <button id="tab-booking" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50 active bg-amber-600 text-white" data-tab="booking">
+                                <button id="tab-booking" class="flex-1 py-5 px-6 text-center font-medium text-gray-700 hover:bg-amber-50 active modern-gradient text-white" data-tab="booking">
                                     <i class="fas fa-calendar-check mr-2"></i>
                                     <span data-lang-key="tab_booking">Book Now</span>
                                 </button>
-                                <button id="tab-availability" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="availability">
+                                <button id="tab-availability" class="flex-1 py-5 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="availability">
                                     <i class="fas fa-search mr-2"></i>
                                     <span data-lang-key="tab_availability">Check Availability</span>
                                 </button>
-                                <button id="tab-widget" class="flex-1 py-4 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="widget">
+                                <button id="tab-widget" class="flex-1 py-5 px-6 text-center font-medium text-gray-700 hover:bg-amber-50" data-tab="widget">
                                     <i class="fas fa-code mr-2"></i>
                                     <span data-lang-key="tab_widget">Integration</span>
                                 </button>
@@ -146,50 +220,50 @@
                         </div>
                         
                         <!-- Main Content Area -->
-                        <div class="p-6">
+                        <div class="p-8">
                             <!-- Tab 1: Booking Form (Demo) -->
                             <div id="tab-booking-content" class="tab-content active">
-                                <div class="mb-6">
-                                    <h3 class="text-xl font-semibold text-gray-800 mb-2" data-lang-key="booking_title">
+                                <div class="mb-8">
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-3" data-lang-key="booking_title">
                                         Direct Booking Engine - AvaiBook Integration Ready
                                     </h3>
-                                    <p class="text-gray-600" data-lang-key="booking_subtitle">
+                                    <p class="text-gray-600 text-lg" data-lang-key="booking_subtitle">
                                         Search availability and book directly with 0% commission
                                     </p>
                                 </div>
                                 
                                 <!-- Demo Booking Form -->
-                                <div class="bg-gradient-to-r from-amber-50 to-white border border-amber-200 rounded-xl p-6 mb-6">
-                                    <form id="demo-booking-form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div class="bg-gradient-to-r from-amber-50/50 to-white/50 border border-amber-200/50 rounded-xl p-8 mb-8 glass-card">
+                                    <form id="demo-booking-form" class="grid grid-cols-1 md:grid-cols-4 gap-6">
                                         <div class="md:col-span-2">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_destination">
+                                            <label class="block text-sm font-medium text-gray-700 mb-3" data-lang-key="form_destination">
                                                 Destination / Villa
                                             </label>
-                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="destination">
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white/80" id="destination">
                                                 <option value="">Select a villa...</option>
                                                 <!-- Options will be loaded from Firebase -->
                                             </select>
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_checkin">
+                                            <label class="block text-sm font-medium text-gray-700 mb-3" data-lang-key="form_checkin">
                                                 Check-in
                                             </label>
-                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="checkin">
+                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white/80" id="checkin">
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_checkout">
+                                            <label class="block text-sm font-medium text-gray-700 mb-3" data-lang-key="form_checkout">
                                                 Check-out
                                             </label>
-                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="checkout">
+                                            <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white/80" id="checkout">
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-2" data-lang-key="form_guests">
+                                            <label class="block text-sm font-medium text-gray-700 mb-3" data-lang-key="form_guests">
                                                 Guests
                                             </label>
-                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" id="guests">
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white/80" id="guests">
                                                 <option value="1">1 Guest</option>
                                                 <option value="2" selected>2 Guests</option>
                                                 <option value="3">3 Guests</option>
@@ -207,7 +281,7 @@
                                         </div>
                                         
                                         <div>
-                                            <button type="submit" class="w-full h-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg">
+                                            <button type="submit" class="modern-btn w-full h-full text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
                                                 <i class="fas fa-search mr-2"></i>
                                                 <span data-lang-key="form_search">Search</span>
                                             </button>
@@ -216,31 +290,31 @@
                                 </div>
                                 
                                 <!-- AvaiBook Integration Info -->
-                                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                                <div class="glass-card border border-blue-200/50 rounded-xl p-8">
                                     <div class="flex flex-col md:flex-row items-start md:items-center">
-                                        <div class="flex items-center mb-4 md:mb-0 md:mr-6">
-                                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                                <i class="fas fa-bolt text-blue-600 text-xl"></i>
+                                        <div class="flex items-center mb-6 md:mb-0 md:mr-8">
+                                            <div class="w-16 h-16 bg-blue-100/50 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-bolt text-blue-600 text-2xl"></i>
                                             </div>
                                             <div class="ml-4">
-                                                <h4 class="font-semibold text-gray-800">AvaiBook Integration Ready</h4>
-                                                <p class="text-sm text-gray-600">Your booking engine is pre-configured</p>
+                                                <h4 class="font-bold text-gray-800 text-lg">AvaiBook Integration Ready</h4>
+                                                <p class="text-gray-600">Your booking engine is pre-configured</p>
                                             </div>
                                         </div>
                                         
                                         <div class="flex-1">
-                                            <p class="text-sm text-gray-700 mb-3">
+                                            <p class="text-gray-700 mb-4">
                                                 This demo shows how AvaiBook will integrate with your website. When you get your AvaiBook account, simply:
                                             </p>
-                                            <ol class="text-sm text-gray-600 list-decimal pl-5 space-y-1">
+                                            <ol class="text-gray-600 list-decimal pl-5 space-y-2">
                                                 <li>Create your AvaiBook account</li>
                                                 <li>Get your integration code (iframe or JavaScript)</li>
                                                 <li>Replace the demo form with the real AvaiBook widget</li>
                                             </ol>
                                         </div>
                                         
-                                        <div class="mt-4 md:mt-0 md:ml-6">
-                                            <a href="https://www.avaibook.com" target="_blank" class="inline-flex items-center bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg transition">
+                                        <div class="mt-6 md:mt-0 md:ml-8">
+                                            <a href="https://www.avaibook.com" target="_blank" class="modern-btn inline-flex items-center text-white px-6 py-3 rounded-lg transition">
                                                 <i class="fas fa-external-link-alt mr-2"></i>
                                                 Get AvaiBook
                                             </a>
@@ -252,80 +326,80 @@
                             <!-- Tab 2: Availability Calendar -->
                             <div id="tab-availability-content" class="tab-content hidden">
                                 <div class="text-center py-8">
-                                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <i class="fas fa-calendar-alt text-amber-600 text-2xl"></i>
+                                    <div class="w-24 h-24 bg-amber-100/50 rounded-full flex items-center justify-center mx-auto mb-6 float-animation">
+                                        <i class="fas fa-calendar-alt text-amber-600 text-3xl"></i>
                                     </div>
-                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Real-time Availability Calendar</h3>
-                                    <p class="text-gray-600 mb-6">Coming soon with AvaiBook integration</p>
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Real-time Availability Calendar</h3>
+                                    <p class="text-gray-600 text-lg mb-8">Coming soon with AvaiBook integration</p>
                                     
                                     <!-- Demo Calendar -->
-                                    <div class="max-w-md mx-auto bg-white border border-gray-200 rounded-xl p-6">
-                                        <div class="flex justify-between items-center mb-4">
+                                    <div class="max-w-md mx-auto glass-card border border-gray-200/50 rounded-2xl p-8">
+                                        <div class="flex justify-between items-center mb-6">
                                             <button class="text-gray-600 hover:text-amber-700">
-                                                <i class="fas fa-chevron-left"></i>
+                                                <i class="fas fa-chevron-left text-lg"></i>
                                             </button>
-                                            <h4 class="font-semibold">March 2024</h4>
+                                            <h4 class="font-bold text-lg">March 2024</h4>
                                             <button class="text-gray-600 hover:text-amber-700">
-                                                <i class="fas fa-chevron-right"></i>
+                                                <i class="fas fa-chevron-right text-lg"></i>
                                             </button>
                                         </div>
                                         
                                         <div class="grid grid-cols-7 gap-2">
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Mon</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Tue</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Wed</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Thu</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Fri</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sat</div>
-                                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sun</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Mon</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Tue</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Wed</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Thu</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Fri</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Sat</div>
+                                            <div class="text-center text-sm font-medium text-gray-500 py-3">Sun</div>
                                             
                                             <!-- Calendar days -->
-                                            <div class="text-center py-2 text-gray-400">26</div>
-                                            <div class="text-center py-2 text-gray-400">27</div>
-                                            <div class="text-center py-2 text-gray-400">28</div>
-                                            <div class="text-center py-2 text-gray-400">29</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">1</div>
-                                            <div class="text-center py-2 bg-green-100 text-green-800 font-medium rounded">2</div>
-                                            <div class="text-center py-2 bg-green-100 text-green-800 font-medium rounded">3</div>
-                                            <div class="text-center py-2 bg-red-100 text-red-800 font-medium rounded">4</div>
-                                            <div class="text-center py-2 bg-red-100 text-red-800 font-medium rounded">5</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">6</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">7</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">8</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">9</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">10</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">11</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">12</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">13</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">14</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">15</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">16</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">17</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">18</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">19</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">20</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">21</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">22</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">23</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">24</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">25</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">26</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">27</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">28</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">29</div>
-                                            <div class="text-center py-2 bg-gray-100 text-gray-700 rounded">30</div>
-                                            <div class="text-center py-2 bg-green-50 text-green-700 rounded">31</div>
-                                            <div class="text-center py-2 text-gray-400">1</div>
-                                            <div class="text-center py-2 text-gray-400">2</div>
+                                            <div class="text-center py-3 text-gray-400">26</div>
+                                            <div class="text-center py-3 text-gray-400">27</div>
+                                            <div class="text-center py-3 text-gray-400">28</div>
+                                            <div class="text-center py-3 text-gray-400">29</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">1</div>
+                                            <div class="text-center py-3 bg-green-100/50 text-green-800 font-medium rounded-lg">2</div>
+                                            <div class="text-center py-3 bg-green-100/50 text-green-800 font-medium rounded-lg">3</div>
+                                            <div class="text-center py-3 bg-red-100/50 text-red-800 font-medium rounded-lg">4</div>
+                                            <div class="text-center py-3 bg-red-100/50 text-red-800 font-medium rounded-lg">5</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">6</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">7</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">8</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">9</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">10</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">11</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">12</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">13</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">14</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">15</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">16</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">17</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">18</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">19</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">20</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">21</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">22</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">23</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">24</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">25</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">26</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">27</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">28</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">29</div>
+                                            <div class="text-center py-3 bg-gray-100/50 text-gray-700 rounded-lg">30</div>
+                                            <div class="text-center py-3 bg-green-50/50 text-green-700 rounded-lg">31</div>
+                                            <div class="text-center py-3 text-gray-400">1</div>
+                                            <div class="text-center py-3 text-gray-400">2</div>
                                         </div>
                                         
-                                        <div class="mt-6 flex justify-center space-x-6 text-sm">
+                                        <div class="mt-8 flex justify-center space-x-8 text-sm">
                                             <div class="flex items-center">
-                                                <div class="w-4 h-4 bg-green-100 rounded mr-2"></div>
+                                                <div class="w-4 h-4 bg-green-100/50 rounded mr-2"></div>
                                                 <span class="text-gray-600">Available</span>
                                             </div>
                                             <div class="flex items-center">
-                                                <div class="w-4 h-4 bg-red-100 rounded mr-2"></div>
+                                                <div class="w-4 h-4 bg-red-100/50 rounded mr-2"></div>
                                                 <span class="text-gray-600">Booked</span>
                                             </div>
                                         </div>
@@ -335,11 +409,11 @@
                             
                             <!-- Tab 3: Integration Code -->
                             <div id="tab-widget-content" class="tab-content hidden">
-                                <div class="bg-gray-900 rounded-xl p-6 text-white">
-                                    <h3 class="text-lg font-semibold mb-3">AvaiBook Integration Code</h3>
-                                    <p class="text-gray-300 mb-4 text-sm">When you get your AvaiBook account, replace this demo with the actual integration code.</p>
+                                <div class="glass-card border border-gray-800 rounded-2xl p-8 text-gray-800">
+                                    <h3 class="text-xl font-bold mb-4">AvaiBook Integration Code</h3>
+                                    <p class="text-gray-600 mb-6">When you get your AvaiBook account, replace this demo with the actual integration code.</p>
                                     
-                                    <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                                    <div class="bg-gray-900/80 rounded-xl p-6 font-mono text-sm overflow-x-auto">
                                         <pre class="text-green-400"><span class="text-gray-400">&lt;!-- AvaiBook Integration Code --&gt;</span>
 &lt;div id="avaiBook-widget"&gt;&lt;/div&gt;
 &lt;script&gt;
@@ -360,8 +434,8 @@
 &lt;/script&gt;</pre>
                                     </div>
                                     
-                                    <div class="mt-4 text-xs text-gray-400">
-                                        <p><i class="fas fa-info-circle mr-1"></i> This is a placeholder. Replace with your actual AvaiBook code.</p>
+                                    <div class="mt-6 text-sm text-gray-600">
+                                        <p><i class="fas fa-info-circle mr-2"></i> This is a placeholder. Replace with your actual AvaiBook code.</p>
                                     </div>
                                 </div>
                             </div>
@@ -369,29 +443,29 @@
                     </div>
                     
                     <!-- Benefits Section -->
-                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl p-6 shadow-md">
-                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-                                <i class="fas fa-percentage text-amber-600 text-xl"></i>
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="glass-card rounded-2xl p-8">
+                            <div class="w-16 h-16 bg-amber-100/50 rounded-xl flex items-center justify-center mb-6">
+                                <i class="fas fa-percentage text-amber-600 text-2xl"></i>
                             </div>
-                            <h4 class="font-semibold text-gray-800 mb-2">0% Commission</h4>
-                            <p class="text-gray-600 text-sm">Book directly and save on booking platform fees</p>
+                            <h4 class="font-bold text-gray-800 text-lg mb-3">0% Commission</h4>
+                            <p class="text-gray-600">Book directly and save on booking platform fees</p>
                         </div>
                         
-                        <div class="bg-white rounded-xl p-6 shadow-md">
-                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                        <div class="glass-card rounded-2xl p-8">
+                            <div class="w-16 h-16 bg-green-100/50 rounded-xl flex items-center justify-center mb-6">
+                                <i class="fas fa-chart-line text-green-600 text-2xl"></i>
                             </div>
-                            <h4 class="font-semibold text-gray-800 mb-2">Dynamic Pricing</h4>
-                            <p class="text-gray-600 text-sm">Real-time prices powered by PriceLabs integration</p>
+                            <h4 class="font-bold text-gray-800 text-lg mb-3">Dynamic Pricing</h4>
+                            <p class="text-gray-600">Real-time prices powered by PriceLabs integration</p>
                         </div>
                         
-                        <div class="bg-white rounded-xl p-6 shadow-md">
-                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                                <i class="fas fa-shield-alt text-blue-600 text-xl"></i>
+                        <div class="glass-card rounded-2xl p-8">
+                            <div class="w-16 h-16 bg-blue-100/50 rounded-xl flex items-center justify-center mb-6">
+                                <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
                             </div>
-                            <h4 class="font-semibold text-gray-800 mb-2">Secure Booking</h4>
-                            <p class="text-gray-600 text-sm">SSL encrypted payments and secure reservations</p>
+                            <h4 class="font-bold text-gray-800 text-lg mb-3">Secure Booking</h4>
+                            <p class="text-gray-600">SSL encrypted payments and secure reservations</p>
                         </div>
                     </div>
                 </div>
@@ -399,73 +473,73 @@
         </section>
 
         <!-- Featured Properties Section -->
-        <section class="py-16 bg-white">
+        <section class="py-20 bg-gradient-to-b from-white to-gray-50/50">
             <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="brand-font text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-lang-key="properties_title">
+                <div class="text-center mb-16">
+                    <h2 class="brand-font text-4xl md:text-5xl font-bold text-gray-800 mb-6" data-lang-key="properties_title">
                         Featured Luxury Villas
                     </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto" data-lang-key="properties_subtitle">
+                    <p class="text-gray-600 text-lg max-w-3xl mx-auto" data-lang-key="properties_subtitle">
                         Experience unparalleled comfort in our handpicked selection of premium properties
                     </p>
                 </div>
                 
                 <!-- Properties Grid (Loaded dynamically) -->
-                <div id="properties-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="properties-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <!-- Properties will be loaded here -->
-                    <div id="loading-spinner" class="col-span-3 text-center py-12">
-                        <i class="fas fa-spinner fa-spin text-3xl text-amber-600 mb-4"></i>
-                        <p class="text-gray-600" data-lang-key="loading">Loading properties...</p>
+                    <div id="loading-spinner" class="col-span-3 text-center py-16">
+                        <i class="fas fa-spinner fa-spin text-4xl text-amber-600 mb-6"></i>
+                        <p class="text-gray-600 text-lg" data-lang-key="loading">Loading properties...</p>
                     </div>
                 </div>
                 
-                <div class="text-center mt-12">
-                    <button id="view-all-btn" class="bg-white border-2 border-amber-600 text-amber-600 hover:bg-amber-50 px-6 py-3 rounded-lg font-medium transition" data-lang-key="view_all">
-                        View All Properties
+                <div class="text-center mt-16">
+                    <button id="view-all-btn" class="modern-btn text-white px-8 py-4 rounded-lg font-medium text-lg">
+                        <span data-lang-key="view_all">View All Properties</span>
                     </button>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
                 <div>
-                    <h3 class="brand-font text-xl font-bold mb-4">Amaru Resorts</h3>
-                    <p class="text-gray-300 mb-4" data-lang-key="footer_description">
+                    <h3 class="brand-font text-2xl font-bold mb-6">Amaru Resorts</h3>
+                    <p class="text-gray-300 mb-6" data-lang-key="footer_description">
                         Luxury villa rentals in Spain's most beautiful destinations
                     </p>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4" data-lang-key="footer_explore">Explore</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition" data-lang-key="nav_villas">All Villas</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Costa del Sol</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Ibiza</a></li>
+                    <h4 class="font-semibold text-lg mb-6" data-lang-key="footer_explore">Explore</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition nav-link under-construction" data-page="villas" data-lang-key="nav_villas">All Villas</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition nav-link under-construction" data-page="costa-del-sol">Costa del Sol</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition nav-link under-construction" data-page="ibiza">Ibiza</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4" data-lang-key="footer_support">Support</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition" data-lang-key="nav_contact">Contact Us</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">FAQ</a></li>
+                    <h4 class="font-semibold text-lg mb-6" data-lang-key="footer_support">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition nav-link under-construction" data-page="contact" data-lang-key="nav_contact">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition nav-link under-construction" data-page="faq">FAQ</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4" data-lang-key="footer_portals">Partner Portals</h4>
-                    <ul class="space-y-2">
+                    <h4 class="font-semibold text-lg mb-6" data-lang-key="footer_portals">Partner Portals</h4>
+                    <ul class="space-y-3">
                         <li><a href="agent_portal.html" class="text-amber-300 hover:text-amber-100 transition">Agent Portal</a></li>
                         <li><a href="admin_portal.html" class="text-amber-300 hover:text-amber-100 transition">Administration Login</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="pt-8 border-t border-gray-700 text-center">
-                <p class="text-gray-400 text-sm">
+            <div class="pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">
                     &copy; 2025 Amaru Resorts. <span data-lang-key="rights_reserved">All rights reserved.</span>
                 </p>
             </div>
@@ -493,7 +567,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Language System
+        // Language System avec ajout de messages de construction
         const translations = {
             'en': {
                 'nav_home': 'Home', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
@@ -513,7 +587,9 @@
                 'loading': 'Loading properties...',
                 'footer_description': 'Luxury villa rentals in Spain\'s most beautiful destinations',
                 'footer_explore': 'Explore', 'footer_support': 'Support',
-                'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.'
+                'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.',
+                'construction_title': 'Page under construction',
+                'construction_message': 'This section is currently under development. It will be available soon.'
             },
             'fr': {
                 'nav_home': 'Accueil', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
@@ -533,7 +609,9 @@
                 'loading': 'Chargement des propriétés...',
                 'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
                 'footer_explore': 'Explorer', 'footer_support': 'Support',
-                'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.'
+                'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.',
+                'construction_title': 'Page en construction',
+                'construction_message': 'Cette section est actuellement en développement. Elle sera disponible très bientôt.'
             },
             'es': {
                 'nav_home': 'Inicio', 'nav_villas': 'Villas', 'nav_destinations': 'Destinos',
@@ -553,7 +631,9 @@
                 'loading': 'Cargando propiedades...',
                 'footer_description': 'Alquiler de villas de lujo en los destinos más bellos de España',
                 'footer_explore': 'Explorar', 'footer_support': 'Soporte',
-                'footer_portals': 'Portales para Socios', 'rights_reserved': 'Todos los derechos reservados.'
+                'footer_portals': 'Portales para Socios', 'rights_reserved': 'Todos los derechos reservados.',
+                'construction_title': 'Página en construcción',
+                'construction_message': 'Esta sección está actualmente en desarrollo. Estará disponible pronto.'
             },
             'nl': {
                 'nav_home': 'Home', 'nav_villas': 'Villa\'s', 'nav_destinations': 'Bestemmingen',
@@ -573,7 +653,9 @@
                 'loading': 'Eigendommen laden...',
                 'footer_description': 'Luxe villaverhuur in de mooiste bestemmingen van Spanje',
                 'footer_explore': 'Ontdekken', 'footer_support': 'Ondersteuning',
-                'footer_portals': 'Partner Portalen', 'rights_reserved': 'Alle rechten voorbehouden.'
+                'footer_portals': 'Partner Portalen', 'rights_reserved': 'Alle rechten voorbehouden.',
+                'construction_title': 'Pagina in aanbouw',
+                'construction_message': 'Deze sectie is momenteel in ontwikkeling. Ze zal binnenkort beschikbaar zijn.'
             }
         };
 
@@ -590,7 +672,7 @@
                     
                     // Remove active classes
                     tabs.forEach(t => {
-                        t.classList.remove('active', 'bg-amber-600', 'text-white');
+                        t.classList.remove('active', 'modern-gradient', 'text-white');
                         t.classList.add('text-gray-700', 'hover:bg-amber-50');
                     });
                     
@@ -601,13 +683,76 @@
                     
                     // Add active classes
                     tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
-                    tab.classList.add('active', 'bg-amber-600', 'text-white');
+                    tab.classList.add('active', 'modern-gradient', 'text-white');
                     
                     const activeContent = document.getElementById(`tab-${tabId}-content`);
                     if (activeContent) {
                         activeContent.classList.remove('hidden');
                         activeContent.classList.add('active');
                     }
+                });
+            });
+        }
+
+        // Système de pages de construction
+        function setupConstructionPages() {
+            const modal = document.getElementById('construction-modal');
+            const closeBtn = document.getElementById('close-construction');
+            const title = document.getElementById('construction-title');
+            const message = document.getElementById('construction-message');
+            
+            // Gérer les liens "en construction"
+            document.querySelectorAll('.under-construction').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Mettre à jour les textes selon la langue
+                    title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
+                    message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
+                    
+                    // Afficher la modal
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                });
+            });
+            
+            // Fermer la modal
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+            
+            // Fermer en cliquant en dehors
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+            
+            // Fermer avec la touche Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        }
+
+        // Menu mobile
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Fermer le menu en cliquant sur un lien
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
                 });
             });
         }
@@ -632,9 +777,6 @@
                 
                 // Show success message
                 alert(`Demo booking search:\n\nDestination: ${destination}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\n\nNote: This is a demo. With AvaiBook, you would see real availability and prices.`);
-                
-                // In a real scenario, this would redirect to AvaiBook
-                // window.location.href = `https://your-avaibook-url.com/search?destination=${destination}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`;
             });
             
             // Set default dates (tomorrow and 3 days later)
@@ -713,46 +855,61 @@
             // View all button functionality
             if (viewAllBtn) {
                 viewAllBtn.addEventListener('click', () => {
-                    alert('In a real scenario, this would show all properties or filter the booking form.');
+                    // Dans un scénario réel, cela montrerait toutes les propriétés ou filtrerait le formulaire de réservation
+                    const modal = document.getElementById('construction-modal');
+                    const title = document.getElementById('construction-title');
+                    const message = document.getElementById('construction-message');
+                    
+                    title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
+                    message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
+                    
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
                 });
             }
         }
 
         function createPropertyCard(property) {
-    const card = document.createElement('div');
-    // AJOUTEZ "glass-card" à la classe
-    card.className = 'glass-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative';
-    
-    card.innerHTML = `
-        <div class="h-56 bg-gray-300 bg-cover bg-center relative overflow-hidden" 
-             style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
-            <!-- Overlay gradient -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
-        </div>
-        <div class="p-6 relative z-10">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">${property.title || 'Luxury Villa'}</h3>
-            <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
-            <div class="flex justify-between items-center">
-                <span class="text-amber-700 font-bold">From €${property.pricePerNight || '0'}/night</span>
-                <button class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white px-4 py-2 rounded-lg transition book-now-btn shadow-md hover:shadow-lg" 
-                        data-property="${property.title || ''}">
-                    ${translations[currentLang]?.view_details || 'Book Now'}
-                </button>
-            </div>
-        </div>
-    `;
-    
-    // Add click event to book now button
-    const bookBtn = card.querySelector('.book-now-btn');
-    bookBtn.addEventListener('click', () => {
-        const propertyName = bookBtn.getAttribute('data-property');
-        document.getElementById('destination').value = propertyName;
-        document.getElementById('tab-booking').click();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    return card;
-}
+            const card = document.createElement('div');
+            card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 highlight-effect';
+            
+            card.innerHTML = `
+                <div class="h-64 bg-gray-300 bg-cover bg-center relative overflow-hidden" 
+                     style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
+                    <!-- Overlay gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-amber-700">
+                        €${property.pricePerNight || '0'}/night
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">${property.title || 'Luxury Villa'}</h3>
+                    <p class="text-gray-600 mb-6 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>Up to ${property.guests || '6'} guests</span>
+                        </div>
+                        <button class="modern-btn text-white px-6 py-3 rounded-lg transition book-now-btn shadow-md hover:shadow-lg" 
+                                data-property="${property.title || ''}">
+                            ${translations[currentLang]?.view_details || 'Book Now'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to book now button
+            const bookBtn = card.querySelector('.book-now-btn');
+            bookBtn.addEventListener('click', () => {
+                const propertyName = bookBtn.getAttribute('data-property');
+                document.getElementById('destination').value = propertyName;
+                document.getElementById('tab-booking').click();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            return card;
+        }
+
         // Language functions
         function changeLanguage(lang) {
             currentLang = lang;
@@ -783,6 +940,12 @@
         document.addEventListener('DOMContentLoaded', async () => {
             // Setup tabs
             setupTabs();
+            
+            // Setup construction pages
+            setupConstructionPages();
+            
+            // Setup mobile menu
+            setupMobileMenu();
             
             // Setup booking form
             setupBookingForm();
