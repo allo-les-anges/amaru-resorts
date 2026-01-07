@@ -273,13 +273,13 @@
         });
 
         // Logout
-        logoutBtn.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
+        logoutBtn.addEventListener('click', async (e) => { // ✅ Changé à 'click'
+        e.preventDefault();
+         try {
+        await signOut(auth);
+        } catch (error) {
+        console.error('Logout error:', error);
+          }
         });
 
         // Lead Form Submission
