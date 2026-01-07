@@ -58,38 +58,47 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* Effet de gradient moderne */
-        .modern-gradient {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
-        }
-
-        /* Effet de surbrillance moderne */
-        .highlight-effect {
+        /* Style pour le sélecteur de langue corrigé */
+        #language-selector {
             position: relative;
-            overflow: hidden;
+            z-index: 1000;
         }
-
-        .highlight-effect::after {
-            content: '';
+        
+        #language-menu {
+            display: none;
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: rotate(30deg);
-            transition: all 0.6s ease;
-            opacity: 0;
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
+            width: 120px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1001;
         }
-
-        .highlight-effect:hover::after {
-            opacity: 1;
-            transform: rotate(30deg) translate(10%, 10%);
+        
+        #language-menu.show {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        .language-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .language-option:last-child {
+            border-bottom: none;
+        }
+        
+        .language-option:hover {
+            background-color: #fffbeb;
+            color: #b45309;
         }
 
         /* Style moderne pour les boutons */
@@ -135,16 +144,33 @@
             </nav>
             
             <div class="flex items-center space-x-4">
-                <div class="relative group" id="language-selector">
-                    <button class="flex items-center text-gray-700 hover:text-amber-700 transition">
-                        <span class="mr-1" id="current-lang">EN</span>
-                        <i class="fas fa-chevron-down text-xs"></i>
+                <!-- Sélecteur de langue corrigé -->
+                <div class="relative" id="language-selector">
+                    <button id="language-toggle" class="flex items-center text-gray-700 hover:text-amber-700 transition px-3 py-2 rounded-lg hover:bg-amber-50">
+                        <span class="mr-2" id="current-lang">EN</span>
+                        <i class="fas fa-chevron-down text-xs transition-transform duration-200" id="language-icon"></i>
                     </button>
-                    <div class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="en">EN</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="fr">FR</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="es">ES</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="nl">NL</a>
+                    <div id="language-menu" class="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-xl border border-gray-100 py-1">
+                        <a href="#" class="language-option" data-lang="en">
+                            <span class="flex items-center">
+                                <span class="mr-2">🇬🇧</span> English
+                            </span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="fr">
+                            <span class="flex items-center">
+                                <span class="mr-2">🇫🇷</span> Français
+                            </span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="es">
+                            <span class="flex items-center">
+                                <span class="mr-2">🇪🇸</span> Español
+                            </span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="nl">
+                            <span class="flex items-center">
+                                <span class="mr-2">🇳🇱</span> Nederlands
+                            </span>
+                        </a>
                     </div>
                 </div>
                 
@@ -171,7 +197,7 @@
     <div id="construction-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black bg-opacity-50">
         <div class="glass-card max-w-md w-full p-8 rounded-2xl">
             <div class="text-center">
-                <div class="w-20 h-20 modern-gradient rounded-full flex items-center justify-center mx-auto mb-6 float-animation">
+                <div class="w-20 h-20 bg-gradient-to-r from-amber-600 to-amber-700 rounded-full flex items-center justify-center mx-auto mb-6 float-animation">
                     <i class="fas fa-tools text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2" id="construction-title">Page en construction</h3>
@@ -186,7 +212,7 @@
     </div>
 
     <main>
-        <!-- Hero Section with AvaiBook Integration -->
+        <!-- Hero Section avec AvaiBook Integration -->
         <section class="hero-bg py-16 md:py-24">
             <div class="container mx-auto px-4">
                 <div class="max-w-6xl mx-auto text-center text-white mb-12">
@@ -200,11 +226,11 @@
                 
                 <!-- AvaiBook Booking Engine Section -->
                 <div class="max-w-6xl mx-auto">
-                    <div class="glass-card rounded-2xl shadow-2xl overflow-hidden fade-in highlight-effect">
+                    <div class="glass-card rounded-2xl shadow-2xl overflow-hidden fade-in">
                         <!-- Header with tabs -->
                         <div class="border-b border-gray-200">
                             <div class="flex">
-                                <button id="tab-booking" class="flex-1 py-5 px-6 text-center font-medium text-gray-700 hover:bg-amber-50 active modern-gradient text-white" data-tab="booking">
+                                <button id="tab-booking" class="flex-1 py-5 px-6 text-center font-medium text-gray-700 hover:bg-amber-50 active bg-gradient-to-r from-amber-600 to-amber-700 text-white" data-tab="booking">
                                     <i class="fas fa-calendar-check mr-2"></i>
                                     <span data-lang-key="tab_booking">Book Now</span>
                                 </button>
@@ -672,7 +698,7 @@
                     
                     // Remove active classes
                     tabs.forEach(t => {
-                        t.classList.remove('active', 'modern-gradient', 'text-white');
+                        t.classList.remove('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
                         t.classList.add('text-gray-700', 'hover:bg-amber-50');
                     });
                     
@@ -683,7 +709,7 @@
                     
                     // Add active classes
                     tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
-                    tab.classList.add('active', 'modern-gradient', 'text-white');
+                    tab.classList.add('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
                     
                     const activeContent = document.getElementById(`tab-${tabId}-content`);
                     if (activeContent) {
@@ -691,6 +717,50 @@
                         activeContent.classList.add('active');
                     }
                 });
+            });
+        }
+
+        // Gestion du sélecteur de langue corrigé
+        function setupLanguageSelector() {
+            const languageToggle = document.getElementById('language-toggle');
+            const languageMenu = document.getElementById('language-menu');
+            const languageIcon = document.getElementById('language-icon');
+            
+            if (!languageToggle || !languageMenu) return;
+            
+            // Ouvrir/fermer le menu
+            languageToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                languageMenu.classList.toggle('show');
+                languageIcon.classList.toggle('rotate-180');
+            });
+            
+            // Choisir une langue
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const lang = option.getAttribute('data-lang');
+                    if (lang) {
+                        changeLanguage(lang);
+                        languageMenu.classList.remove('show');
+                        languageIcon.classList.remove('rotate-180');
+                    }
+                });
+            });
+            
+            // Fermer le menu en cliquant ailleurs
+            document.addEventListener('click', (e) => {
+                if (!languageToggle.contains(e.target) && !languageMenu.contains(e.target)) {
+                    languageMenu.classList.remove('show');
+                    languageIcon.classList.remove('rotate-180');
+                }
+            });
+            
+            // Empêcher la fermeture lors du clic dans le menu
+            languageMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         }
 
@@ -745,6 +815,8 @@
             const menuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             
+            if (!menuBtn || !mobileMenu) return;
+            
             menuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
@@ -761,6 +833,8 @@
         function setupBookingForm() {
             const form = document.getElementById('demo-booking-form');
             const destinationSelect = document.getElementById('destination');
+            
+            if (!form) return;
             
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -785,8 +859,15 @@
             const nextWeek = new Date();
             nextWeek.setDate(nextWeek.getDate() + 4);
             
-            document.getElementById('checkin').value = tomorrow.toISOString().split('T')[0];
-            document.getElementById('checkout').value = nextWeek.toISOString().split('T')[0];
+            const checkinInput = document.getElementById('checkin');
+            const checkoutInput = document.getElementById('checkout');
+            
+            if (checkinInput) {
+                checkinInput.value = tomorrow.toISOString().split('T')[0];
+            }
+            if (checkoutInput) {
+                checkoutInput.value = nextWeek.toISOString().split('T')[0];
+            }
         }
 
         // Load properties from Firebase
@@ -799,36 +880,49 @@
             const q = query(collection(db, 'public/data/properties'), orderBy('createdAt', 'desc'));
             
             onSnapshot(q, (snapshot) => {
-                if (loadingSpinner) loadingSpinner.remove();
+                if (loadingSpinner && loadingSpinner.parentNode) {
+                    loadingSpinner.remove();
+                }
                 
-                propertiesContainer.innerHTML = '';
-                destinationSelect.innerHTML = '<option value="">Select a villa...</option>';
+                if (propertiesContainer) {
+                    propertiesContainer.innerHTML = '';
+                }
+                
+                if (destinationSelect) {
+                    destinationSelect.innerHTML = '<option value="">Select a villa...</option>';
+                }
                 
                 if (snapshot.empty) {
-                    propertiesContainer.innerHTML = `
-                        <div class="col-span-3 text-center py-12">
-                            <i class="fas fa-home text-3xl text-gray-300 mb-4"></i>
-                            <p class="text-gray-600">No properties available at the moment.</p>
-                            <p class="text-gray-500 text-sm mt-2">Add properties in the Admin Portal</p>
-                        </div>
-                    `;
+                    if (propertiesContainer) {
+                        propertiesContainer.innerHTML = `
+                            <div class="col-span-3 text-center py-12">
+                                <i class="fas fa-home text-3xl text-gray-300 mb-4"></i>
+                                <p class="text-gray-600">No properties available at the moment.</p>
+                                <p class="text-gray-500 text-sm mt-2">Add properties in the Admin Portal</p>
+                            </div>
+                        `;
+                    }
                     return;
                 }
                 
                 snapshot.forEach((doc) => {
                     const property = doc.data();
-                    const propertyCard = createPropertyCard(property);
-                    propertiesContainer.appendChild(propertyCard);
+                    if (propertiesContainer) {
+                        const propertyCard = createPropertyCard(property);
+                        propertiesContainer.appendChild(propertyCard);
+                    }
                     
                     // Add to destination dropdown
-                    const option = document.createElement('option');
-                    option.value = property.title;
-                    option.textContent = `${property.title} - €${property.pricePerNight || '0'}/night`;
-                    destinationSelect.appendChild(option);
+                    if (destinationSelect) {
+                        const option = document.createElement('option');
+                        option.value = property.title;
+                        option.textContent = `${property.title} - €${property.pricePerNight || '0'}/night`;
+                        destinationSelect.appendChild(option);
+                    }
                 });
                 
                 // Add demo options if no properties
-                if (snapshot.size === 0) {
+                if (snapshot.size === 0 && destinationSelect) {
                     const demoProperties = [
                         'Villa Serenity - Costa del Sol',
                         'Casa del Mar - Ibiza',
@@ -844,7 +938,7 @@
                 }
             }, (error) => {
                 console.error('Error loading properties:', error);
-                if (loadingSpinner) {
+                if (loadingSpinner && propertiesContainer) {
                     loadingSpinner.innerHTML = `
                         <i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-4"></i>
                         <p class="text-gray-600">Error loading properties. Please try again later.</p>
@@ -855,28 +949,30 @@
             // View all button functionality
             if (viewAllBtn) {
                 viewAllBtn.addEventListener('click', () => {
-                    // Dans un scénario réel, cela montrerait toutes les propriétés ou filtrerait le formulaire de réservation
                     const modal = document.getElementById('construction-modal');
                     const title = document.getElementById('construction-title');
                     const message = document.getElementById('construction-message');
                     
-                    title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
-                    message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
+                    if (title && message) {
+                        title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
+                        message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
+                    }
                     
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                    }
                 });
             }
         }
 
         function createPropertyCard(property) {
             const card = document.createElement('div');
-            card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 highlight-effect';
+            card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl';
             
             card.innerHTML = `
                 <div class="h-64 bg-gray-300 bg-cover bg-center relative overflow-hidden" 
                      style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
-                    <!-- Overlay gradient -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-amber-700">
                         €${property.pricePerNight || '0'}/night
@@ -890,7 +986,7 @@
                             <i class="fas fa-users mr-2"></i>
                             <span>Up to ${property.guests || '6'} guests</span>
                         </div>
-                        <button class="modern-btn text-white px-6 py-3 rounded-lg transition book-now-btn shadow-md hover:shadow-lg" 
+                        <button class="modern-btn text-white px-6 py-3 rounded-lg transition book-now-btn" 
                                 data-property="${property.title || ''}">
                             ${translations[currentLang]?.view_details || 'Book Now'}
                         </button>
@@ -900,20 +996,36 @@
             
             // Add click event to book now button
             const bookBtn = card.querySelector('.book-now-btn');
-            bookBtn.addEventListener('click', () => {
-                const propertyName = bookBtn.getAttribute('data-property');
-                document.getElementById('destination').value = propertyName;
-                document.getElementById('tab-booking').click();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            if (bookBtn) {
+                bookBtn.addEventListener('click', () => {
+                    const propertyName = bookBtn.getAttribute('data-property');
+                    const destinationSelect = document.getElementById('destination');
+                    const tabBooking = document.getElementById('tab-booking');
+                    
+                    if (destinationSelect) {
+                        destinationSelect.value = propertyName;
+                    }
+                    
+                    if (tabBooking) {
+                        tabBooking.click();
+                    }
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
             
             return card;
         }
 
         // Language functions
         function changeLanguage(lang) {
+            if (!translations[lang]) return;
+            
             currentLang = lang;
-            document.querySelector('#current-lang').textContent = lang.toUpperCase();
+            const currentLangElement = document.querySelector('#current-lang');
+            if (currentLangElement) {
+                currentLangElement.textContent = lang.toUpperCase();
+            }
             
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
@@ -923,23 +1035,20 @@
             });
             
             localStorage.setItem('amaru_language', lang);
-        }
-
-        // Authentication (public access)
-        async function authenticate() {
-            try {
-                // Public access - no authentication required for viewing
-                return true;
-            } catch (error) {
-                console.error('Authentication error:', error);
-                return true; // Continue anyway for public access
-            }
+            
+            // Mettre à jour les boutons "Book Now" dans les cartes de propriétés
+            document.querySelectorAll('.book-now-btn').forEach(btn => {
+                btn.textContent = translations[lang]?.view_details || 'Book Now';
+            });
         }
 
         // Initialize everything
         document.addEventListener('DOMContentLoaded', async () => {
             // Setup tabs
             setupTabs();
+            
+            // Setup language selector
+            setupLanguageSelector();
             
             // Setup construction pages
             setupConstructionPages();
@@ -954,18 +1063,12 @@
             const savedLang = localStorage.getItem('amaru_language') || 'en';
             changeLanguage(savedLang);
             
-            // Set up language selector
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const lang = option.getAttribute('data-lang');
-                    changeLanguage(lang);
-                });
-            });
-            
-            // Authenticate and load properties
-            await authenticate();
-            loadProperties();
+            // Load properties
+            try {
+                await loadProperties();
+            } catch (error) {
+                console.error('Error loading properties:', error);
+            }
         });
     </script>
 </body>
