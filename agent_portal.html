@@ -216,7 +216,9 @@
         } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         // Firebase Configuration - Utilise les clés du fichier partagé
-        const app = initializeApp(window.firebaseConfig); // ✅ Ligne modifiée
+        const app = initializeApp(window.firebaseConfig); // ✅ Initialise l'app
+        const auth = getAuth(app);  
+        const db = getFirestore(app);  
 
         // DOM Elements
         const authScreen = document.getElementById('auth-screen');
