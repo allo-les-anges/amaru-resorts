@@ -24,7 +24,67 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in { animation: fadeIn 0.5s ease-out; }
-    </style>
+        <style>
+    body { font-family: 'Montserrat', sans-serif; }
+    .brand-font { font-family: 'Playfair Display', serif; }
+    .hero-bg {
+        background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                          url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        background-size: cover;
+        background-position: center;
+    }
+    /* Animation pour le formulaire */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.5s ease-out; }
+    
+    /* 🔽 AJOUTEZ ICI - Effet "Glassmorphism" moderne pour les vignettes 🔽 */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.08),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        opacity: 0.98;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+        opacity: 1;
+        transform: translateY(-8px);
+        box-shadow: 
+            0 20px 60px rgba(217, 119, 6, 0.15),
+            inset 0 0 0 1px rgba(217, 119, 6, 0.2);
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Effet de brillance sur la bordure */
+    .glass-card::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, 
+            rgba(217, 119, 6, 0) 0%,
+            rgba(217, 119, 6, 0.1) 50%,
+            rgba(217, 119, 6, 0) 100%);
+        border-radius: 14px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .glass-card:hover::after {
+        opacity: 1;
+    }
+</style>
+    
 </head>
 <body class="bg-gray-50">
     <!-- Firebase SDK -->
@@ -674,36 +734,40 @@
         }
 
         function createPropertyCard(property) {
-            const card = document.createElement('div');
-            card.className = 'bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1';
-            
-            card.innerHTML = `
-                <div class="h-56 bg-gray-300 bg-cover bg-center" style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">${property.title || 'Luxury Villa'}</h3>
-                    <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-amber-700 font-bold">From €${property.pricePerNight || '0'}/night</span>
-                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition book-now-btn" data-property="${property.title || ''}">
-                            ${translations[currentLang]?.view_details || 'Book Now'}
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            // Add click event to book now button
-            const bookBtn = card.querySelector('.book-now-btn');
-            bookBtn.addEventListener('click', () => {
-                const propertyName = bookBtn.getAttribute('data-property');
-                document.getElementById('destination').value = propertyName;
-                document.getElementById('tab-booking').click();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            
-            return card;
-        }
-
+    const card = document.createElement('div');
+    // AJOUTEZ "glass-card" à la classe
+    card.className = 'glass-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative';
+    
+    card.innerHTML = `
+        <div class="h-56 bg-gray-300 bg-cover bg-center relative overflow-hidden" 
+             style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
+            <!-- Overlay gradient -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+        </div>
+        <div class="p-6 relative z-10">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">${property.title || 'Luxury Villa'}</h3>
+            <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
+            <div class="flex justify-between items-center">
+                <span class="text-amber-700 font-bold">From €${property.pricePerNight || '0'}/night</span>
+                <button class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white px-4 py-2 rounded-lg transition book-now-btn shadow-md hover:shadow-lg" 
+                        data-property="${property.title || ''}">
+                    ${translations[currentLang]?.view_details || 'Book Now'}
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Add click event to book now button
+    const bookBtn = card.querySelector('.book-now-btn');
+    bookBtn.addEventListener('click', () => {
+        const propertyName = bookBtn.getAttribute('data-property');
+        document.getElementById('destination').value = propertyName;
+        document.getElementById('tab-booking').click();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    return card;
+}
         // Language functions
         function changeLanguage(lang) {
             currentLang = lang;
