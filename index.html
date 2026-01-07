@@ -3,441 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amaru Resorts - Luxury Accommodations</title>
-    <!-- Tailwind CSS -->
+    <title>Amaru Resorts - Luxury Villa Rentals in Spain</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .property-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .property-card:hover {
-            transform: translateY(-5px);
-        }
-        .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        body { font-family: 'Montserrat', sans-serif; }
+        .brand-font { font-family: 'Playfair Display', serif; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                              url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Firebase SDK -->
+    <script type="module" src="/__/firebase/init.js?useEmulator=true"></script>
+    
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <!-- Logo -->
             <div class="flex items-center">
-                <h1 class="text-2xl font-bold text-amber-600">Amaru Resorts</h1>
+                <h1 class="brand-font text-2xl font-bold text-amber-700">Amaru Resorts</h1>
             </div>
             
-            <!-- Navigation & Language Selector -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_home">Home</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_villas">Villas</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_destinations">Destinations</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_experiences">Experiences</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_about">About</a>
+                <a href="#" class="text-gray-700 hover:text-amber-700 font-medium transition" data-lang-key="nav_contact">Contact</a>
+            </nav>
+            
             <div class="flex items-center space-x-4">
-                <!-- Navigation (mobile hidden) -->
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Accueil</a>
-                    <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Destinations</a>
-                    <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Offres</a>
-                    <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Contact</a>
-                </nav>
-                
-                <!-- Language Selector -->
-                <div class="relative">
-                    <select id="languageSelector" class="bg-white border border-gray-300 rounded-md py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-                        <option value="en">EN</option>
-                        <option value="fr" selected>FR</option>
-                        <option value="es">ES</option>
-                        <option value="nl">NL</option>
-                    </select>
+                <div class="relative group" id="language-selector">
+                    <button class="flex items-center text-gray-700 hover:text-amber-700 transition">
+                        <span class="mr-1" id="current-lang">EN</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="en">EN</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="fr">FR</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="es">ES</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 language-option" data-lang="nl">NL</a>
+                    </div>
                 </div>
                 
-                <!-- Mobile Menu Button -->
-                <button id="mobileMenuButton" class="md:hidden text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
-        
-        <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white py-2 px-4 border-t">
-            <nav class="flex flex-col space-y-3">
-                <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Accueil</a>
-                <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Destinations</a>
-                <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Offres</a>
-                <a href="#" class="text-gray-700 hover:text-amber-600 transition-colors">Contact</a>
-            </nav>
-        </div>
     </header>
 
-    <!-- Hero Section with Booking Widget -->
-    <section class="hero-section py-16 md:py-24 text-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4" data-i18n="hero-title">Luxury Resorts in Paradise</h1>
-                <p class="text-xl md:text-2xl mb-6" data-i18n="hero-subtitle">Book Direct: 0% Commission & Best Price Guarantee.</p>
-                <p class="text-lg mb-8" data-i18n="hero-description">Experience unparalleled luxury in our handpicked collection of exclusive resorts around the world.</p>
-            </div>
-            
-            <!-- AvaiBook Widget Placeholder -->
-            <div class="bg-white rounded-lg shadow-xl p-6 max-w-4xl mx-auto">
-                <div id="avaiBookWidget" class="text-center py-12 bg-gray-100 rounded">
-                    <p class="text-gray-700" data-i18n="widget-placeholder">AvaiBook Booking Widget will be integrated here</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Properties Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="properties-title">Our Exclusive Properties</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="properties-subtitle">Discover our handpicked selection of luxury resorts in the world's most beautiful destinations.</p>
-            </div>
-            
-            <!-- Properties Grid -->
-            <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Properties will be loaded here dynamically -->
-                <div class="text-center py-8">
-                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
-                    <p class="mt-4 text-gray-600" data-i18n="loading">Loading properties...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="bg-amber-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-i18n="feature1-title">Best Price Guarantee</h3>
-                    <p class="text-gray-600" data-i18n="feature1-desc">Book directly with us and enjoy the best rates with no hidden fees.</p>
+    <main>
+        <!-- Hero Section with Booking Widget -->
+        <section class="hero-bg py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center text-white mb-12">
+                    <h1 class="brand-font text-4xl md:text-5xl font-bold mb-4" data-lang-key="hero_title">
+                        Book Direct: 0% Commission & Best Price Guarantee
+                    </h1>
+                    <p class="text-xl mb-8" data-lang-key="hero_subtitle">
+                        Discover luxury villas in Spain's most beautiful destinations
+                    </p>
                 </div>
                 
-                <div class="text-center">
-                    <div class="bg-amber-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
+                <!-- Booking Widget Area -->
+                <div class="bg-white rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+                    <div id="avaiBook-widget" class="bg-gray-100 rounded-lg p-8 text-center">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4" data-lang-key="booking_title">Direct Booking Engine</h3>
+                        <div class="h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                            <span class="text-amber-800 font-medium" data-lang-key="booking_cta">Search Availability & Book</span>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2" data-i18n="feature2-title">24/7 Support</h3>
-                    <p class="text-gray-600" data-i18n="feature2-desc">Our dedicated team is available around the clock to assist you.</p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="bg-amber-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2" data-i18n="feature3-title">Secure Booking</h3>
-                    <p class="text-gray-600" data-i18n="feature3-desc">Your personal and payment information is protected with advanced security.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
-                    <h3 class="text-2xl font-bold text-amber-400 mb-4">Amaru Resorts</h3>
-                    <p class="text-gray-300 mb-4" data-i18n="footer-description">Luxury resorts in the world's most beautiful destinations. Experience paradise with Amaru Resorts.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.129 22 16.99 22 12z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm0 1.5c4.694 0 8.5 3.806 8.5 8.5 0 4.694-3.806 8.5-8.5 8.5-4.694 0-8.5-3.806-8.5-8.5 0-4.694 3.806-8.5 8.5-8.5zm-1.25 3.5v5.5h-1.5V7h1.5zm2.5 0v5.5h-1.5V7h1.5z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                            </svg>
-                        </a>
+        <!-- Featured Properties Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="brand-font text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-lang-key="properties_title">
+                        Featured Luxury Villas
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-lang-key="properties_subtitle">
+                        Experience unparalleled comfort in our handpicked selection of premium properties
+                    </p>
+                </div>
+                
+                <!-- Properties Grid (Loaded dynamically) -->
+                <div id="properties-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Properties will be loaded here -->
+                    <div id="loading-spinner" class="col-span-3 text-center py-12">
+                        <i class="fas fa-spinner fa-spin text-3xl text-amber-600 mb-4"></i>
+                        <p class="text-gray-600" data-lang-key="loading">Loading properties...</p>
                     </div>
                 </div>
+                
+                <div class="text-center mt-12">
+                    <button class="bg-white border-2 border-amber-600 text-amber-600 hover:bg-amber-50 px-6 py-3 rounded-lg font-medium transition" data-lang-key="view_all">
+                        View All Properties
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
 
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="brand-font text-xl font-bold mb-4">Amaru Resorts</h3>
+                    <p class="text-gray-300 mb-4" data-lang-key="footer_description">
+                        Luxury villa rentals in Spain's most beautiful destinations
+                    </p>
+                </div>
                 
                 <div>
-                    <h4 class="text-lg font-semibold mb-4" data-i18n="footer-links">Quick Links</h4>
+                    <h4 class="font-semibold mb-4" data-lang-key="footer_explore">Explore</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer-home">Home</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer-destinations">Destinations</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer-offers">Special Offers</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-i18n="footer-contact">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition" data-lang-key="nav_villas">All Villas</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Costa del Sol</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">Ibiza</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="text-lg font-semibold mb-4" data-i18n="footer-portals">Portals</h4>
+                    <h4 class="font-semibold mb-4" data-lang-key="footer_support">Support</h4>
                     <ul class="space-y-2">
-                        <li><a href="agent_portal.html" class="text-gray-300 hover:text-white transition-colors">Agent Portal</a></li>
-                        <li><a href="admin_portal.html" class="text-gray-300 hover:text-white transition-colors">Administration Login</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition" data-lang-key="nav_contact">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4" data-lang-key="footer_portals">Partner Portals</h4>
+                    <ul class="space-y-2">
+                        <li><a href="agent_portal.html" class="text-amber-300 hover:text-amber-100 transition">Agent Portal</a></li>
+                        <li><a href="admin_portal.html" class="text-amber-300 hover:text-amber-100 transition">Administration Login</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p data-i18n="footer-copyright">&copy; 2023 Amaru Resorts. All rights reserved.</p>
+            <div class="pt-8 border-t border-gray-700 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Amaru Resorts. <span data-lang-key="rights_reserved">All rights reserved.</span>
+                </p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            // These would typically be environment variables
-            apiKey: "your-api-key",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "your-app-id"
-        };
+    <!-- Firebase and Language Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithCustomToken,
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            onSnapshot,
+            query,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
+        const firebaseConfig = {
+            apiKey: "AIzaSyChNdjTQq47Z7YLm_ClqA0gOEXTRZj9a6c",
+            authDomain: "amaruresorts-public.firebaseapp.com",
+            projectId: "amaruresorts-public",
+            storageBucket: "amaruresorts-public.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef1234567890abcdef"
+        };
 
-        // Authentication and Data Loading
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize language
-            initLanguage();
-            
-            // Initialize mobile menu
-            initMobileMenu();
-            
-            // Authenticate and load properties
-            authenticateAndLoadData();
-        });
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Language Management
+        // Language System
         const translations = {
-            en: {
-                "hero-title": "Luxury Resorts in Paradise",
-                "hero-subtitle": "Book Direct: 0% Commission & Best Price Guarantee.",
-                "hero-description": "Experience unparalleled luxury in our handpicked collection of exclusive resorts around the world.",
-                "widget-placeholder": "AvaiBook Booking Widget will be integrated here",
-                "properties-title": "Our Exclusive Properties",
-                "properties-subtitle": "Discover our handpicked selection of luxury resorts in the world's most beautiful destinations.",
-                "loading": "Loading properties...",
-                "feature1-title": "Best Price Guarantee",
-                "feature1-desc": "Book directly with us and enjoy the best rates with no hidden fees.",
-                "feature2-title": "24/7 Support",
-                "feature2-desc": "Our dedicated team is available around the clock to assist you.",
-                "feature3-title": "Secure Booking",
-                "feature3-desc": "Your personal and payment information is protected with advanced security.",
-                "footer-description": "Luxury resorts in the world's most beautiful destinations. Experience paradise with Amaru Resorts.",
-                "footer-links": "Quick Links",
-                "footer-home": "Home",
-                "footer-destinations": "Destinations",
-                "footer-offers": "Special Offers",
-                "footer-contact": "Contact Us",
-                "footer-portals": "Portals",
-                "footer-copyright": "© 2023 Amaru Resorts. All rights reserved."
+            'en': {
+                'nav_home': 'Home', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
+                'nav_experiences': 'Experiences', 'nav_about': 'About', 'nav_contact': 'Contact',
+                'hero_title': 'Book Direct: 0% Commission & Best Price Guarantee',
+                'hero_subtitle': 'Discover luxury villas in Spain\'s most beautiful destinations',
+                'booking_title': 'Direct Booking Engine', 'booking_cta': 'Search Availability & Book',
+                'properties_title': 'Featured Luxury Villas',
+                'properties_subtitle': 'Experience unparalleled comfort in our handpicked selection of premium properties',
+                'view_details': 'View Details', 'view_all': 'View All Properties',
+                'loading': 'Loading properties...',
+                'footer_description': 'Luxury villa rentals in Spain\'s most beautiful destinations',
+                'footer_explore': 'Explore', 'footer_support': 'Support',
+                'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.'
             },
-            fr: {
-                "hero-title": "Résorts de Luxe au Paradis",
-                "hero-subtitle": "Réservez Directement : 0% de Commission & Meilleur Prix Garanti.",
-                "hero-description": "Vivez un luxe incomparable dans notre collection soigneusement sélectionnée de resorts exclusifs à travers le monde.",
-                "widget-placeholder": "Le widget de réservation AvaiBook sera intégré ici",
-                "properties-title": "Nos Propriétés Exclusives",
-                "properties-subtitle": "Découvrez notre sélection soigneusement choisie de resorts de luxe dans les plus belles destinations du monde.",
-                "loading": "Chargement des propriétés...",
-                "feature1-title": "Meilleur Prix Garanti",
-                "feature1-desc": "Réservez directement avec nous et profitez des meilleurs tarifs sans frais cachés.",
-                "feature2-title": "Assistance 24h/24",
-                "feature2-desc": "Notre équipe dédiée est disponible 24h/24 pour vous assister.",
-                "feature3-title": "Réservation Sécurisée",
-                "feature3-desc": "Vos informations personnelles et de paiement sont protégées par une sécurité avancée.",
-                "footer-description": "Résorts de luxe dans les plus belles destinations du monde. Vivez le paradis avec Amaru Resorts.",
-                "footer-links": "Liens Rapides",
-                "footer-home": "Accueil",
-                "footer-destinations": "Destinations",
-                "footer-offers": "Offres Spéciales",
-                "footer-contact": "Contactez-nous",
-                "footer-portals": "Portails",
-                "footer-copyright": "© 2023 Amaru Resorts. Tous droits réservés."
+            'fr': {
+                'nav_home': 'Accueil', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
+                'nav_experiences': 'Expériences', 'nav_about': 'À propos', 'nav_contact': 'Contact',
+                'hero_title': 'Réservez Direct : 0% Commission & Meilleur Prix Garanti',
+                'hero_subtitle': 'Découvrez des villas de luxe dans les plus belles destinations d\'Espagne',
+                'booking_title': 'Moteur de Réservation Directe', 'booking_cta': 'Rechercher Disponibilité & Réserver',
+                'properties_title': 'Villas de Luxe en Vedette',
+                'properties_subtitle': 'Vivez un confort incomparable dans notre sélection de propriétés premium',
+                'view_details': 'Voir les Détails', 'view_all': 'Voir Toutes les Propriétés',
+                'loading': 'Chargement des propriétés...',
+                'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
+                'footer_explore': 'Explorer', 'footer_support': 'Support',
+                'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.'
             },
-            es: {
-                "hero-title": "Resorts de Lujo en el Paraíso",
-                "hero-subtitle": "Reserva Directa: 0% de Comisión y Garantía del Mejor Precio.",
-                "hero-description": "Experimenta un lujo inigualable en nuestra colección cuidadosamente seleccionada de resorts exclusivos en todo el mundo.",
-                "widget-placeholder": "El widget de reservas AvaiBook se integrará aquí",
-                "properties-title": "Nuestras Propiedades Exclusivas",
-                "properties-subtitle": "Descubre nuestra selección cuidadosamente elegida de resorts de lujo en los destinos más bellos del mundo.",
-                "loading": "Cargando propiedades...",
-                "feature1-title": "Garantía del Mejor Precio",
-                "feature1-desc": "Reserva directamente con nosotros y disfruta de las mejores tarifas sin cargos ocultos.",
-                "feature2-title": "Soporte 24/7",
-                "feature2-desc": "Nuestro equipo dedicado está disponible las 24 horas para asistirle.",
-                "feature3-title": "Reserva Segura",
-                "feature3-desc": "Su información personal y de pago está protegida con seguridad avanzada.",
-                "footer-description": "Resorts de lujo en los destinos más bellos del mundo. Experimenta el paraíso con Amaru Resorts.",
-                "footer-links": "Enlaces Rápidos",
-                "footer-home": "Inicio",
-                "footer-destinations": "Destinos",
-                "footer-offers": "Ofertas Especiales",
-                "footer-contact": "Contáctenos",
-                "footer-portals": "Portales",
-                "footer-copyright": "© 2023 Amaru Resorts. Todos los derechos reservados."
+            'es': {
+                'nav_home': 'Inicio', 'nav_villas': 'Villas', 'nav_destinations': 'Destinos',
+                'nav_experiences': 'Experiencias', 'nav_about': 'Acerca de', 'nav_contact': 'Contacto',
+                'hero_title': 'Reserva Directa: 0% Comisión & Garantía del Mejor Precio',
+                'hero_subtitle': 'Descubre villas de lujo en los destinos más bellos de España',
+                'booking_title': 'Motor de Reserva Directa', 'booking_cta': 'Buscar Disponibilidad & Reservar',
+                'properties_title': 'Villas de Lujo Destacadas',
+                'properties_subtitle': 'Experimenta un confort inigualable en nuestra selección de propiedades premium',
+                'view_details': 'Ver Detalles', 'view_all': 'Ver Todas las Propiedades',
+                'loading': 'Cargando propiedades...',
+                'footer_description': 'Alquiler de villas de lujo en los destinos más bellos de España',
+                'footer_explore': 'Explorar', 'footer_support': 'Soporte',
+                'footer_portals': 'Portales para Socios', 'rights_reserved': 'Todos los derechos reservados.'
             },
-            nl: {
-                "hero-title": "Luxe Resorts in Paradijs",
-                "hero-subtitle": "Direct Boeken: 0% Commissie & Beste Prijs Garantie.",
-                "hero-description": "Ervaar ongeëvenaarde luxe in onze zorgvuldig geselecteerde collectie van exclusieve resorts over de hele wereld.",
-                "widget-placeholder": "AvaiBook Boeking Widget wordt hier geïntegreerd",
-                "properties-title": "Onze Exclusieve Eigendommen",
-                "properties-subtitle": "Ontdek onze zorgvuldig gekozen selectie van luxe resorts in 's werelds mooiste bestemmingen.",
-                "loading": "Eigendommen laden...",
-                "feature1-title": "Beste Prijs Garantie",
-                "feature1-desc": "Boek rechtstreeks bij ons en geniet van de beste tarieven zonder verborgen kosten.",
-                "feature2-title": "24/7 Ondersteuning",
-                "feature2-desc": "Ons toegewijde team is 24 uur per dag beschikbaar om u te helpen.",
-                "feature3-title": "Veilig Boeken",
-                "feature3-desc": "Uw persoonlijke en betalingsgegevens zijn beschermd met geavanceerde beveiliging.",
-                "footer-description": "Luxe resorts in 's werelds mooiste bestemmingen. Ervaar het paradijs met Amaru Resorts.",
-                "footer-links": "Snelle Links",
-                "footer-home": "Home",
-                "footer-destinations": "Bestemmingen",
-                "footer-offers": "Speciale Aanbiedingen",
-                "footer-contact": "Neem Contact Op",
-                "footer-portals": "Portalen",
-                "footer-copyright": "© 2023 Amaru Resorts. Alle rechten voorbehouden."
+            'nl': {
+                'nav_home': 'Home', 'nav_villas': 'Villa\'s', 'nav_destinations': 'Bestemmingen',
+                'nav_experiences': 'Ervaringen', 'nav_about': 'Over', 'nav_contact': 'Contact',
+                'hero_title': 'Boek Direct: 0% Commissie & Beste Prijs Garantie',
+                'hero_subtitle': 'Ontdek luxe villa\'s in de mooiste bestemmingen van Spanje',
+                'booking_title': 'Direct Boekingssysteem', 'booking_cta': 'Zoek Beschikbaarheid & Boek',
+                'properties_title': 'Uitgelichte Luxe Villa\'s',
+                'properties_subtitle': 'Ervaar ongeëvenaard comfort in onze zorgvuldig geselecteerde premium eigendommen',
+                'view_details': 'Bekijk Details', 'view_all': 'Bekijk Alle Eigendommen',
+                'loading': 'Eigendommen laden...',
+                'footer_description': 'Luxe villaverhuur in de mooiste bestemmingen van Spanje',
+                'footer_explore': 'Ontdekken', 'footer_support': 'Ondersteuning',
+                'footer_portals': 'Partner Portalen', 'rights_reserved': 'Alle rechten voorbehouden.'
             }
         };
 
-        function initLanguage() {
-            const languageSelector = document.getElementById('languageSelector');
-            const savedLanguage = localStorage.getItem('amaru-language') || 'fr';
-            
-            // Set the selector to saved language
-            languageSelector.value = savedLanguage;
-            updateTexts(savedLanguage);
-            
-            // Add event listener for language change
-            languageSelector.addEventListener('change', function() {
-                const selectedLanguage = this.value;
-                localStorage.setItem('amaru-language', selectedLanguage);
-                updateTexts(selectedLanguage);
-            });
-        }
+        let currentLang = 'en';
 
-        function updateTexts(language) {
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[language] && translations[language][key]) {
-                    element.textContent = translations[language][key];
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelector('#current-lang').textContent = lang.toUpperCase();
+            
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
                 }
             });
-        }
-
-        function initMobileMenu() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
             
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
+            localStorage.setItem('amaru_language', lang);
         }
 
-        async function authenticateAndLoadData() {
-            try {
-                // Try to authenticate with the initial auth token if available
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await auth.signInWithCustomToken(__initial_auth_token);
-                } else {
-                    // Fall back to anonymous authentication
-                    await auth.signInAnonymously();
+        // Properties Loading
+        function loadProperties() {
+            const propertiesContainer = document.getElementById('properties-container');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            
+            const q = query(collection(db, 'public/data/properties'), orderBy('createdAt', 'desc'));
+            
+            onSnapshot(q, (snapshot) => {
+                if (loadingSpinner) loadingSpinner.remove();
+                
+                propertiesContainer.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    propertiesContainer.innerHTML = `
+                        <div class="col-span-3 text-center py-12">
+                            <i class="fas fa-home text-3xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-600">No properties available at the moment.</p>
+                        </div>
+                    `;
+                    return;
                 }
                 
-                // Load properties once authenticated
-                loadProperties();
-            } catch (error) {
-                console.error('Authentication error:', error);
-                // Try anonymous authentication as fallback
-                try {
-                    await auth.signInAnonymously();
-                    loadProperties();
-                } catch (anonError) {
-                    console.error('Anonymous authentication also failed:', anonError);
-                    document.getElementById('propertiesGrid').innerHTML = 
-                        '<p class="text-center text-red-500 col-span-full">Error loading properties. Please refresh the page.</p>';
-                }
-            }
-        }
-
-        function loadProperties() {
-            const propertiesGrid = document.getElementById('propertiesGrid');
-            
-            // Listen for real-time updates from Firestore
-            const unsubscribe = db.collection('public/data/properties')
-                .onSnapshot(
-                    function(snapshot) {
-                        propertiesGrid.innerHTML = '';
-                        
-                        if (snapshot.empty) {
-                            propertiesGrid.innerHTML = 
-                                '<p class="text-center text-gray-500 col-span-full">No properties available at the moment.</p>';
-                            return;
-                        }
-                        
-                        snapshot.forEach(doc => {
-                            const property = doc.data();
-                            const propertyCard = createPropertyCard(property);
-                            propertiesGrid.appendChild(propertyCard);
-                        });
-                    },
-                    function(error) {
-                        console.error('Error loading properties:', error);
-                        propertiesGrid.innerHTML = 
-                            '<p class="text-center text-red-500 col-span-full">Error loading properties. Please try again later.</p>';
-                    }
-                );
+                snapshot.forEach((doc) => {
+                    const property = doc.data();
+                    const propertyCard = createPropertyCard(property);
+                    propertiesContainer.appendChild(propertyCard);
+                });
+            }, (error) => {
+                console.error('Error loading properties:', error);
+                loadingSpinner.innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-4"></i>
+                    <p class="text-gray-600">Error loading properties. Please try again later.</p>
+                `;
+            });
         }
 
         function createPropertyCard(property) {
             const card = document.createElement('div');
-            card.className = 'property-card bg-white rounded-lg shadow-md overflow-hidden';
-            
-            // Format price if available
-            const priceFormatted = property.price ? 
-                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(property.price) : 
-                'Price on request';
+            card.className = 'bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1';
             
             card.innerHTML = `
-                <div class="h-48 bg-gray-200 overflow-hidden">
-                    <img src="${property.image || 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'}" 
-                         alt="${property.name}" 
-                         class="w-full h-full object-cover">
+                <div class="h-56 bg-gray-300 bg-cover bg-center" style="background-image: url('${property.imageUrl || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'}')">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">${property.name}</h3>
-                    <p class="text-gray-600 mb-4">${property.description || 'Luxury resort with premium amenities'}</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">${property.title || 'Luxury Villa'}</h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-amber-600 font-bold">${priceFormatted}</span>
-                        <button class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition-colors">
-                            View Details
+                        <span class="text-amber-700 font-bold">From €${property.pricePerNight || '0'}/night</span>
+                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg transition view-details-btn">
+                            ${translations[currentLang]?.view_details || 'View Details'}
                         </button>
                     </div>
                 </div>
@@ -445,6 +322,45 @@
             
             return card;
         }
+
+        // Authentication
+        async function authenticate() {
+            try {
+                // Try to get custom token from global variable or localStorage
+                const token = window.__initial_auth_token || localStorage.getItem('amaru_auth_token');
+                
+                if (token) {
+                    await signInWithCustomToken(auth, token);
+                    return true;
+                } else {
+                    // Fallback to anonymous auth for public access
+                    return true;
+                }
+            } catch (error) {
+                console.error('Authentication error:', error);
+                return true; // Still load properties even if auth fails
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize language
+            const savedLang = localStorage.getItem('amaru_language') || 'en';
+            changeLanguage(savedLang);
+            
+            // Set up language selector
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = option.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            
+            // Authenticate and load properties
+            await authenticate();
+            loadProperties();
+        });
     </script>
 </body>
 </html>
