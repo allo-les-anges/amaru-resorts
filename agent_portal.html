@@ -80,44 +80,76 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <!-- Lead Submission Form -->
                     <div class="lg:col-span-1">
-                        <div class="bg-white rounded-xl shadow-lg p-6 sticky top-8">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4">
-                                <i class="fas fa-plus-circle text-amber-600 mr-2"></i>Submit New Lead
-                            </h2>
-                            
-                            <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
-                                <i class="fas fa-check-circle mr-2"></i>Lead submitted successfully!
-                            </div>
-                            
-                            <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4"></div>
-                            
-                            <form id="lead-form">
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
-                                    <input type="text" id="lead-name" required 
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Email *</label>
-                                    <input type="email" id="lead-email" required 
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Phone (Optional)</label>
-                                    <input type="tel" id="lead-phone" 
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                                </div>
-                                
-                                <button type="submit" 
-                                        class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-medium py-3 rounded-lg transition duration-200">
-                                    <i class="fas fa-paper-plane mr-2"></i>Submit Lead
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
+    <div class="bg-white rounded-xl shadow-lg p-6 sticky top-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+            <i class="fas fa-plus-circle text-amber-600 mr-2"></i>Submit New Lead
+        </h2>
+        
+        <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
+            <i class="fas fa-check-circle mr-2"></i>Lead submitted successfully!
+        </div>
+        
+        <div id="form-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4"></div>
+        
+        <form id="lead-form">
+            <!-- Villa Selection -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Select Property *</label>
+                <select id="lead-property" required 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white">
+                    <option value="" disabled selected>Choose a villa...</option>
+                    <!-- Options will be loaded dynamically -->
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Properties are loaded from Firestore</p>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Full Name *</label>
+                <input type="text" id="lead-name" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                       placeholder="John Doe">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Email *</label>
+                <input type="email" id="lead-email" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                       placeholder="john@example.com">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Phone (Optional)</label>
+                <input type="tel" id="lead-phone" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                       placeholder="+32 123 45 67 89">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Check-in Date *</label>
+                <input type="date" id="lead-checkin" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Check-out Date *</label>
+                <input type="date" id="lead-checkout" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2">Notes (Optional)</label>
+                <textarea id="lead-notes" rows="3"
+                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                          placeholder="Additional information about the lead..."></textarea>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-medium py-3 rounded-lg transition duration-200">
+                <i class="fas fa-paper-plane mr-2"></i>Submit Lead
+            </button>
+        </form>
+    </div>
+</div>
                     <!-- Leads Dashboard -->
                     <div class="lg:col-span-2">
                         <!-- Stats Overview -->
@@ -169,23 +201,25 @@
                             
                             <div class="overflow-x-auto">
                                 <table class="w-full">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="leads-table-body" class="divide-y divide-gray-200">
-                                        <tr id="no-leads-row">
-                                            <td colspan="4" class="py-12 text-center text-gray-500">
-                                                <i class="fas fa-inbox text-3xl mb-4"></i>
-                                                <p>No leads submitted yet</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+    <thead class="bg-gray-50">
+        <tr>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dates</th>
+            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+        </tr>
+    </thead>
+    <tbody id="leads-table-body" class="divide-y divide-gray-200">
+        <tr id="no-leads-row">
+            <td colspan="6" class="py-12 text-center text-gray-500">
+                <i class="fas fa-inbox text-3xl mb-4"></i>
+                <p>No leads submitted yet</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
                             </div>
                         </div>
                     </div>
@@ -194,260 +228,394 @@
         </div>
     </div>
 
-    <script src="firebase-config.js"></script>
-    
-    <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
-            signOut,
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        import { 
-            getFirestore, 
-            collection, 
-            addDoc, 
-            query, 
-            where, 
-            onSnapshot,
-            serverTimestamp 
-        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { 
+        getAuth, 
+        signInWithEmailAndPassword, 
+        signOut,
+        onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        query, 
+        where, 
+        onSnapshot,
+        serverTimestamp,
+        orderBy  // AJOUTER CET IMPORT
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-        // Firebase Configuration - Utilise les clés du fichier partagé
-        const app = initializeApp(window.firebaseConfig); // ✅ Initialise l'app
-        const auth = getAuth(app);  
-        const db = getFirestore(app);  
+    // Firebase Configuration
+    const app = initializeApp(window.firebaseConfig);
+    const auth = getAuth(app);  
+    const db = getFirestore(app);  
 
-        // DOM Elements
-        const authScreen = document.getElementById('auth-screen');
-        const dashboardScreen = document.getElementById('dashboard-screen');
-        const loginForm = document.getElementById('login-form');
-        const logoutBtn = document.getElementById('logout-btn');
-        const leadForm = document.getElementById('lead-form');
-        const agentIdDisplay = document.getElementById('agent-id-display');
-        const agentEmail = document.getElementById('agent-email');
-        const authError = document.getElementById('auth-error');
-        const formSuccess = document.getElementById('form-success');
-        const formError = document.getElementById('form-error');
-        const leadsTableBody = document.getElementById('leads-table-body');
-        const noLeadsRow = document.getElementById('no-leads-row');
-        const statsSubmitted = document.getElementById('stats-submitted');
-        const statsBooked = document.getElementById('stats-booked');
-        const statsPaid = document.getElementById('stats-paid');
+    // DOM Elements
+    const authScreen = document.getElementById('auth-screen');
+    const dashboardScreen = document.getElementById('dashboard-screen');
+    const loginForm = document.getElementById('login-form');
+    const logoutBtn = document.getElementById('logout-btn');
+    const leadForm = document.getElementById('lead-form');
+    const agentIdDisplay = document.getElementById('agent-id-display');
+    const agentEmail = document.getElementById('agent-email');
+    const authError = document.getElementById('auth-error');
+    const formSuccess = document.getElementById('form-success');
+    const formError = document.getElementById('form-error');
+    const leadsTableBody = document.getElementById('leads-table-body');
+    const noLeadsRow = document.getElementById('no-leads-row');
+    const statsSubmitted = document.getElementById('stats-submitted');
+    const statsBooked = document.getElementById('stats-booked');
+    const statsPaid = document.getElementById('stats-paid');
 
-        let unsubscribeLeads = null;
-        let currentUser = null;
+    let unsubscribeLeads = null;
+    let currentUser = null;
 
-        // Authentication State Observer
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                showDashboard(user);
-            } else {
-                currentUser = null;
-                showAuthScreen();
-                
-                if (unsubscribeLeads) {
-                    unsubscribeLeads();
-                    unsubscribeLeads = null;
-                }
-            }
-        });
-
-        // Login Form Submission
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    // 1. AUTHENTICATION STATE OBSERVER
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            showDashboard(user);
+        } else {
+            currentUser = null;
+            showAuthScreen();
             
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                authError.classList.add('hidden');
-            } catch (error) {
-                authError.textContent = getAuthErrorMessage(error.code);
-                authError.classList.remove('hidden');
+            if (unsubscribeLeads) {
+                unsubscribeLeads();
+                unsubscribeLeads = null;
             }
-        });
-
-        logoutBtn.addEventListener('click', async (e) => {
-         e.preventDefault();
-        try {
-        await signOut(auth);
-        // Rediriger vers la page d'accueil après déconnexion
-        window.location.href = 'index.html';
-        } catch (error) {
-        console.error('Logout error:', error);
         }
-        });
+    });
 
-        // Lead Form Submission
-        leadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('lead-name').value.trim();
-            const email = document.getElementById('lead-email').value.trim();
-            const phone = document.getElementById('lead-phone').value.trim();
-            
-            if (!name || !email) {
-                showFormError('Name and email are required');
-                return;
-            }
-            
-            try {
-                // Store lead in private user collection
-                const leadData = {
-                    name: name,
-                    email: email,
-                    phone: phone || 'Not provided',
-                    status: 'Submitted',
-                    createdAt: serverTimestamp(),
-                    agentId: currentUser.uid,
-                    agentEmail: currentUser.email
-                };
-                
-                await addDoc(
-                    collection(db, 'users', currentUser.uid, 'agent_leads'), 
-                    leadData
-                );
-                
-                leadForm.reset();
-                showFormSuccess();
-                
-            } catch (error) {
-                console.error('Error adding lead:', error);
-                showFormError('Error submitting lead. Please try again.');
-            }
-        });
+    // 2. LOGIN FORM SUBMISSION
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            authError.classList.add('hidden');
+        } catch (error) {
+            authError.textContent = getAuthErrorMessage(error.code);
+            authError.classList.remove('hidden');
+        }
+    });
 
-        // Load Agent's Leads
-        function loadAgentLeads(userId) {
-            const q = query(
-                collection(db, 'users', userId, 'agent_leads'),
-                where('agentId', '==', userId)
-            );
+    // 3. LOGOUT FUNCTION
+    logoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    });
+
+    // 4. LOAD PROPERTIES FOR DROPDOWN (NOUVEAU CODE)
+    async function loadPropertiesForDropdown() {
+        const propertySelect = document.getElementById('lead-property');
+        
+        try {
+            const q = query(collection(db, 'public/data/properties'), orderBy('title'));
             
-            unsubscribeLeads = onSnapshot(q, (snapshot) => {
-                const leads = [];
-                let submitted = 0, booked = 0, paid = 0;
-                
-                leadsTableBody.innerHTML = '';
+            onSnapshot(q, (snapshot) => {
+                propertySelect.innerHTML = '<option value="" disabled selected>Choose a villa...</option>';
                 
                 if (snapshot.empty) {
-                    leadsTableBody.appendChild(noLeadsRow.cloneNode(true));
-                } else {
-                    snapshot.forEach((doc) => {
-                        const lead = { id: doc.id, ...doc.data() };
-                        leads.push(lead);
-                        
-                        // Count by status
-                        if (lead.status === 'Submitted') submitted++;
-                        if (lead.status === 'Booked') booked++;
-                        if (lead.status === 'Paid') paid++;
-                        
-                        // Add to table
-                        const row = createLeadRow(lead);
-                        leadsTableBody.appendChild(row);
-                    });
-                    
-                    // Sort by date (newest first)
-                    leads.sort((a, b) => {
-                        const dateA = a.createdAt?.toDate() || new Date(0);
-                        const dateB = b.createdAt?.toDate() || new Date(0);
-                        return dateB - dateA;
-                    });
+                    propertySelect.innerHTML += '<option value="" disabled>No properties available</option>';
+                    return;
                 }
                 
-                // Update stats
-                statsSubmitted.textContent = submitted;
-                statsBooked.textContent = booked;
-                statsPaid.textContent = paid;
+                snapshot.forEach((doc) => {
+                    const property = doc.data();
+                    const option = document.createElement('option');
+                    option.value = doc.id;
+                    option.textContent = `${property.title} - €${property.pricePerNight || '0'}/night`;
+                    option.setAttribute('data-property-title', property.title);
+                    option.setAttribute('data-property-price', property.pricePerNight || '0');
+                    propertySelect.appendChild(option);
+                });
             }, (error) => {
-                console.error('Error loading leads:', error);
+                console.error('Error loading properties:', error);
+                propertySelect.innerHTML = '<option value="" disabled>Error loading properties</option>';
             });
-        }
-
-        // Helper Functions
-        function showAuthScreen() {
-            authScreen.classList.remove('hidden');
-            dashboardScreen.classList.add('hidden');
-        }
-
-        function showDashboard(user) {
-            authScreen.classList.add('hidden');
-            dashboardScreen.classList.remove('hidden');
             
-            // Display user info
-            agentIdDisplay.textContent = user.uid.substring(0, 8) + '...';
-            agentEmail.textContent = user.email;
-            
-            // Load user's leads
-            loadAgentLeads(user.uid);
+        } catch (error) {
+            console.error('Error loading properties:', error);
         }
+    }
 
-        function showFormError(message) {
-            formError.textContent = message;
-            formError.classList.remove('hidden');
-            formSuccess.classList.add('hidden');
+    // 5. MODIFIED LEAD FORM SUBMISSION (NOUVEAU CODE)
+    leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const propertyId = document.getElementById('lead-property').value;
+        const propertyTitle = document.getElementById('lead-property').selectedOptions[0]?.getAttribute('data-property-title') || 'Unknown Property';
+        const propertyPrice = document.getElementById('lead-property').selectedOptions[0]?.getAttribute('data-property-price') || '0';
+        const name = document.getElementById('lead-name').value.trim();
+        const email = document.getElementById('lead-email').value.trim();
+        const phone = document.getElementById('lead-phone').value.trim();
+        const checkin = document.getElementById('lead-checkin').value;
+        const checkout = document.getElementById('lead-checkout').value;
+        const notes = document.getElementById('lead-notes').value.trim();
+        
+        // Validation
+        if (!propertyId || !name || !email || !checkin || !checkout) {
+            showFormError('Please fill all required fields (Property, Name, Email, Check-in, Check-out)');
+            return;
         }
-
-        function showFormSuccess() {
-            formSuccess.classList.remove('hidden');
-            formError.classList.add('hidden');
-            
-            setTimeout(() => {
-                formSuccess.classList.add('hidden');
-            }, 3000);
+        
+        // Date validation
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (checkinDate < today) {
+            showFormError('Check-in date cannot be in the past');
+            return;
         }
-
-        function createLeadRow(lead) {
-            const row = document.createElement('tr');
-            row.className = 'hover:bg-gray-50';
+        
+        if (checkoutDate <= checkinDate) {
+            showFormError('Check-out date must be after check-in date');
+            return;
+        }
+        
+        try {
+            // Store lead with property association
+            const leadData = {
+                // Property information
+                propertyId: propertyId,
+                propertyTitle: propertyTitle,
+                propertyPrice: propertyPrice,
+                
+                // Client information
+                name: name,
+                email: email,
+                phone: phone || 'Not provided',
+                
+                // Dates
+                checkinDate: checkin,
+                checkoutDate: checkout,
+                stayDuration: Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24)),
+                
+                // Additional info
+                notes: notes || 'No notes',
+                status: 'Submitted',
+                createdAt: serverTimestamp(),
+                
+                // Agent information
+                agentId: currentUser.uid,
+                agentEmail: currentUser.email,
+                agentName: currentUser.displayName || currentUser.email.split('@')[0]
+            };
             
-            // Format date
-            let dateStr = 'N/A';
-            if (lead.createdAt) {
-                const date = lead.createdAt.toDate();
-                dateStr = date.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric'
+            await addDoc(
+                collection(db, 'users', currentUser.uid, 'agent_leads'), 
+                leadData
+            );
+            
+            // Also store in a global leads collection for admin viewing
+            await addDoc(collection(db, 'all_leads'), {
+                ...leadData,
+                leadType: 'agent_lead',
+                timestamp: serverTimestamp()
+            });
+            
+            leadForm.reset();
+            setDefaultDates(); // Reset to default dates
+            showFormSuccess();
+            
+        } catch (error) {
+            console.error('Error adding lead:', error);
+            showFormError('Error submitting lead. Please try again.');
+        }
+    });
+
+    // 6. SET DEFAULT DATES FUNCTION (NOUVEAU CODE)
+    function setDefaultDates() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const threeDaysLater = new Date();
+        threeDaysLater.setDate(threeDaysLater.getDate() + 4);
+        
+        document.getElementById('lead-checkin').valueAsDate = tomorrow;
+        document.getElementById('lead-checkout').valueAsDate = threeDaysLater;
+    }
+
+    // 7. LOAD AGENT'S LEADS (MODIFIÉ)
+    function loadAgentLeads(userId) {
+        const q = query(
+            collection(db, 'users', userId, 'agent_leads'),
+            where('agentId', '==', userId)
+        );
+        
+        unsubscribeLeads = onSnapshot(q, (snapshot) => {
+            const leads = [];
+            let submitted = 0, booked = 0, paid = 0;
+            
+            leadsTableBody.innerHTML = '';
+            
+            if (snapshot.empty) {
+                leadsTableBody.appendChild(noLeadsRow.cloneNode(true));
+            } else {
+                snapshot.forEach((doc) => {
+                    const lead = { id: doc.id, ...doc.data() };
+                    leads.push(lead);
+                    
+                    // Count by status
+                    if (lead.status === 'Submitted') submitted++;
+                    if (lead.status === 'Booked') booked++;
+                    if (lead.status === 'Paid') paid++;
+                    
+                    // Add to table
+                    const row = createLeadRow(lead);
+                    leadsTableBody.appendChild(row);
+                });
+                
+                // Sort by date (newest first)
+                leads.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate() || new Date(0);
+                    const dateB = b.createdAt?.toDate() || new Date(0);
+                    return dateB - dateA;
                 });
             }
             
-            // Status styling
-            let statusClass = 'bg-gray-100 text-gray-800';
-            if (lead.status === 'Contacted') statusClass = 'bg-blue-100 text-blue-800';
-            if (lead.status === 'Booked') statusClass = 'bg-green-100 text-green-800';
-            if (lead.status === 'Paid') statusClass = 'bg-purple-100 text-purple-800';
-            
-            row.innerHTML = `
-                <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">${dateStr}</td>
-                <td class="py-4 px-6 whitespace-nowrap text-sm font-medium text-gray-900">${lead.name}</td>
-                <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">${lead.email}</td>
-                <td class="py-4 px-6 whitespace-nowrap">
-                    <span class="px-3 py-1 text-xs font-medium rounded-full ${statusClass}">
-                        ${lead.status}
-                    </span>
-                </td>
-            `;
-            
-            return row;
-        }
+            // Update stats
+            statsSubmitted.textContent = submitted;
+            statsBooked.textContent = booked;
+            statsPaid.textContent = paid;
+        }, (error) => {
+            console.error('Error loading leads:', error);
+        });
+    }
 
-        function getAuthErrorMessage(errorCode) {
-            const messages = {
-                'auth/invalid-email': 'Invalid email address',
-                'auth/user-disabled': 'Account disabled',
-                'auth/user-not-found': 'No account found',
-                'auth/wrong-password': 'Incorrect password',
-                'auth/too-many-requests': 'Too many attempts. Try again later'
-            };
-            
-            return messages[errorCode] || 'Authentication failed';
+    // 8. HELPER FUNCTIONS
+    function showAuthScreen() {
+        authScreen.classList.remove('hidden');
+        dashboardScreen.classList.add('hidden');
+        loginForm.reset();
+        authError.classList.add('hidden');
+    }
+
+    function showDashboard(user) {
+        authScreen.classList.add('hidden');
+        dashboardScreen.classList.remove('hidden');
+        
+        // Display user info
+        agentIdDisplay.textContent = user.uid.substring(0, 8) + '...';
+        agentEmail.textContent = user.email;
+        
+        // Load user's leads
+        loadAgentLeads(user.uid);
+        
+        // Load properties for dropdown
+        loadPropertiesForDropdown();
+        
+        // Set default dates
+        setDefaultDates();
+    }
+
+    function showFormError(message) {
+        formError.textContent = message;
+        formError.classList.remove('hidden');
+        formSuccess.classList.add('hidden');
+    }
+
+    function showFormSuccess() {
+        formSuccess.classList.remove('hidden');
+        formError.classList.add('hidden');
+        
+        setTimeout(() => {
+            formSuccess.classList.add('hidden');
+        }, 3000);
+    }
+
+    // 9. MODIFIED CREATE LEAD ROW FUNCTION (NOUVEAU CODE)
+    function createLeadRow(lead) {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50';
+        
+        // Format date
+        let dateStr = 'N/A';
+        if (lead.createdAt) {
+            const date = lead.createdAt.toDate();
+            dateStr = date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
         }
-    </script>
+        
+        // Format dates range
+        let datesStr = 'N/A';
+        if (lead.checkinDate && lead.checkoutDate) {
+            const checkin = new Date(lead.checkinDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const checkout = new Date(lead.checkoutDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            datesStr = `${checkin} - ${checkout}`;
+        }
+        
+        // Status styling
+        let statusClass = 'bg-gray-100 text-gray-800';
+        let statusIcon = 'fas fa-clock';
+        
+        if (lead.status === 'Contacted') {
+            statusClass = 'bg-blue-100 text-blue-800';
+            statusIcon = 'fas fa-comments';
+        } else if (lead.status === 'Booked') {
+            statusClass = 'bg-green-100 text-green-800';
+            statusIcon = 'fas fa-calendar-check';
+        } else if (lead.status === 'Paid') {
+            statusClass = 'bg-purple-100 text-purple-800';
+            statusIcon = 'fas fa-euro-sign';
+        } else if (lead.status === 'Cancelled') {
+            statusClass = 'bg-red-100 text-red-800';
+            statusIcon = 'fas fa-times-circle';
+        }
+        
+        row.innerHTML = `
+            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">${dateStr}</td>
+            <td class="py-4 px-6 whitespace-nowrap">
+                <div class="font-medium text-gray-900">${lead.propertyTitle || 'No property'}</div>
+                <div class="text-xs text-gray-500">€${lead.propertyPrice || '0'}/night</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900">${lead.name}</div>
+                <div class="text-xs text-gray-500">${lead.phone || 'No phone'}</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">${lead.email}</td>
+            <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">
+                <div>${datesStr}</div>
+                <div class="text-xs text-gray-500">${lead.stayDuration || '?'} nights</div>
+            </td>
+            <td class="py-4 px-6 whitespace-nowrap">
+                <div class="flex items-center">
+                    <span class="px-3 py-1 text-xs font-medium rounded-full ${statusClass} flex items-center">
+                        <i class="${statusIcon} mr-1"></i> ${lead.status}
+                    </span>
+                </div>
+            </td>
+        `;
+        
+        return row;
+    }
+
+    // 10. AUTH ERROR MESSAGES
+    function getAuthErrorMessage(errorCode) {
+        const messages = {
+            'auth/invalid-email': 'Invalid email address',
+            'auth/user-disabled': 'Account disabled',
+            'auth/user-not-found': 'No account found',
+            'auth/wrong-password': 'Incorrect password',
+            'auth/too-many-requests': 'Too many attempts. Try again later'
+        };
+        
+        return messages[errorCode] || 'Authentication failed';
+    }
+</script>
 </body>
 </html>
