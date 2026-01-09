@@ -132,6 +132,53 @@
         .rotate-180 {
             transform: rotate(180deg);
         }
+
+        /* Styles supplémentaires pour le menu dropdown */
+#auth-language-menu, #dashboard-language-menu {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+#auth-language-menu.show, #dashboard-language-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Empêcher le texte de se sélectionner lors du clic sur le menu */
+#language-selector * {
+    user-select: none;
+}
+
+/* Assurer que le menu reste au-dessus du contenu */
+#dashboard-language-selector, #auth-language-selector {
+    z-index: 1000;
+}
+
+/* Styles pour les boutons de langue */
+.language-option {
+    position: relative;
+}
+
+.language-option:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #b45309;
+}
+
+/* Empêcher le double clic de sélectionner le texte */
+.language-option span {
+    pointer-events: none;
+}
+        
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -948,70 +995,127 @@
         }
 
         function setupLanguageSelectors() {
-            // Setup auth language selector
-            const authLanguageToggle = document.getElementById('auth-language-toggle');
-            const authLanguageMenu = document.getElementById('auth-language-menu');
-            const authLanguageIcon = document.getElementById('auth-language-icon');
-            
-            if (authLanguageToggle) {
-                authLanguageToggle.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    authLanguageMenu.classList.toggle('show');
-                    authLanguageIcon.classList.toggle('rotate-180');
-                });
-                
-                document.querySelectorAll('#auth-language-menu .language-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const lang = option.getAttribute('data-lang');
-                        changeLanguage(lang);
-                        authLanguageMenu.classList.remove('show');
-                        authLanguageIcon.classList.remove('rotate-180');
-                    });
-                });
-                
-                document.addEventListener('click', (e) => {
-                    if (!authLanguageToggle.contains(e.target) && !authLanguageMenu.contains(e.target)) {
-                        authLanguageMenu.classList.remove('show');
-                        authLanguageIcon.classList.remove('rotate-180');
-                    }
-                });
-            }
-            
-            // Setup dashboard language selector
-            const dashboardLanguageToggle = document.getElementById('dashboard-language-toggle');
-            const dashboardLanguageMenu = document.getElementById('dashboard-language-menu');
-            const dashboardLanguageIcon = document.getElementById('dashboard-language-icon');
-            
-            if (dashboardLanguageToggle) {
-                dashboardLanguageToggle.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dashboardLanguageMenu.classList.toggle('show');
-                    dashboardLanguageIcon.classList.toggle('rotate-180');
-                });
-                
-                document.querySelectorAll('#dashboard-language-menu .language-option').forEach(option => {
-                    option.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const lang = option.getAttribute('data-lang');
-                        changeLanguage(lang);
-                        dashboardLanguageMenu.classList.remove('show');
-                        dashboardLanguageIcon.classList.remove('rotate-180');
-                    });
-                });
-                
-                document.addEventListener('click', (e) => {
-                    if (!dashboardLanguageToggle.contains(e.target) && !dashboardLanguageMenu.contains(e.target)) {
-                        dashboardLanguageMenu.classList.remove('show');
-                        dashboardLanguageIcon.classList.remove('rotate-180');
-                    }
-                });
-            }
+    // Setup auth language selector
+    const authLanguageToggle = document.getElementById('auth-language-toggle');
+    const authLanguageMenu = document.getElementById('auth-language-menu');
+    const authLanguageIcon = document.getElementById('auth-language-icon');
+    
+    // Setup dashboard language selector
+    const dashboardLanguageToggle = document.getElementById('dashboard-language-toggle');
+    const dashboardLanguageMenu = document.getElementById('dashboard-language-menu');
+    const dashboardLanguageIcon = document.getElementById('dashboard-language-icon');
+
+    // Fonction pour fermer tous les menus de langue
+    function closeAllLanguageMenus() {
+        if (authLanguageMenu) {
+            authLanguageMenu.classList.remove('show');
         }
+        if (authLanguageIcon) {
+            authLanguageIcon.classList.remove('rotate-180');
+        }
+        if (dashboardLanguageMenu) {
+            dashboardLanguageMenu.classList.remove('show');
+        }
+        if (dashboardLanguageIcon) {
+            dashboardLanguageIcon.classList.remove('rotate-180');
+        }
+    }
+
+    // Auth language selector
+    if (authLanguageToggle) {
+        authLanguageToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Fermer l'autre menu si ouvert
+            if (dashboardLanguageMenu && dashboardLanguageMenu.classList.contains('show')) {
+                dashboardLanguageMenu.classList.remove('show');
+                dashboardLanguageIcon.classList.remove('rotate-180');
+            }
+            
+            // Basculer le menu actuel
+            const isOpening = !authLanguageMenu.classList.contains('show');
+            closeAllLanguageMenus();
+            
+            if (isOpening) {
+                authLanguageMenu.classList.add('show');
+                authLanguageIcon.classList.add('rotate-180');
+            }
+        });
+
+        // Options du menu auth
+        document.querySelectorAll('#auth-language-menu .language-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const lang = option.getAttribute('data-lang');
+                changeLanguage(lang);
+                closeAllLanguageMenus();
+            });
+        });
+    }
+
+    // Dashboard language selector
+    if (dashboardLanguageToggle) {
+        dashboardLanguageToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Fermer l'autre menu si ouvert
+            if (authLanguageMenu && authLanguageMenu.classList.contains('show')) {
+                authLanguageMenu.classList.remove('show');
+                authLanguageIcon.classList.remove('rotate-180');
+            }
+            
+            // Basculer le menu actuel
+            const isOpening = !dashboardLanguageMenu.classList.contains('show');
+            closeAllLanguageMenus();
+            
+            if (isOpening) {
+                dashboardLanguageMenu.classList.add('show');
+                dashboardLanguageIcon.classList.add('rotate-180');
+            }
+        });
+
+        // Options du menu dashboard
+        document.querySelectorAll('#dashboard-language-menu .language-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const lang = option.getAttribute('data-lang');
+                changeLanguage(lang);
+                closeAllLanguageMenus();
+            });
+        });
+    }
+
+    // Fermer les menus en cliquant ailleurs sur la page
+    document.addEventListener('click', (e) => {
+        // Vérifier si le clic est en dehors des menus
+        const isClickInsideAuthMenu = authLanguageMenu && 
+            (authLanguageToggle.contains(e.target) || authLanguageMenu.contains(e.target));
+        
+        const isClickInsideDashboardMenu = dashboardLanguageMenu && 
+            (dashboardLanguageToggle.contains(e.target) || dashboardLanguageMenu.contains(e.target));
+        
+        if (!isClickInsideAuthMenu && !isClickInsideDashboardMenu) {
+            closeAllLanguageMenus();
+        }
+    });
+
+    // Empêcher la fermeture lorsque le menu est cliqué
+    if (authLanguageMenu) {
+        authLanguageMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    if (dashboardLanguageMenu) {
+        dashboardLanguageMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+}
 
         // Authentication State Observer
         onAuthStateChanged(auth, (user) => {
