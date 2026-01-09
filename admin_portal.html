@@ -6,6 +6,133 @@
     <title>Admin Portal | Amaru Resorts</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .image-preview {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .remove-image:hover {
+            background: rgb(220, 38, 38);
+        }
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .upload-area.dragover {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #10b981;
+            transition: width 0.3s;
+        }
+        .existing-image {
+            position: relative;
+            transition: all 0.3s;
+        }
+        .existing-image:hover {
+            transform: scale(1.05);
+        }
+        /* Language Selector Styles */
+        #language-selector {
+            position: relative;
+            z-index: 1000;
+        }
+        
+        #language-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 0.5rem;
+            width: 140px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1001;
+        }
+        
+        #language-menu.show {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        .language-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+        }
+        
+        .language-option:last-child {
+            border-bottom: none;
+        }
+        
+        .language-option:hover {
+            background-color: #fffbeb;
+            color: #b45309;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div id="app">
@@ -16,8 +143,8 @@
                     <div class="w-16 h-16 bg-gradient-to-r from-red-600 to-red-800 rounded-xl flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-cogs text-white text-2xl"></i>
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-800">Admin Portal</h1>
-                    <p class="text-gray-600">Amaru Resorts - Property Management</p>
+                    <h1 class="text-2xl font-bold text-gray-800" data-lang-key="auth_title">Admin Portal</h1>
+                    <p class="text-gray-600" data-lang-key="auth_subtitle">Amaru Resorts - Property Management</p>
                 </div>
                 
                 <div class="bg-white rounded-xl shadow-lg p-8">
@@ -25,14 +152,14 @@
                     
                     <form id="login-form">
                         <div class="mb-6">
-                            <label class="block text-gray-700 text-sm font-medium mb-2">Admin Email</label>
+                            <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="auth_email">Admin Email</label>
                             <input type="email" id="email" required 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                    placeholder="admin@amaruresorts.com">
                         </div>
                         
                         <div class="mb-6">
-                            <label class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                            <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="auth_password">Password</label>
                             <input type="password" id="password" required 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                    placeholder="••••••••">
@@ -40,9 +167,41 @@
                         
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 rounded-lg transition duration-200">
-                            <i class="fas fa-lock mr-2"></i>Admin Login
+                            <i class="fas fa-lock mr-2"></i><span data-lang-key="auth_login">Admin Login</span>
                         </button>
                     </form>
+                    
+                    <!-- Language Selector for Auth Screen -->
+                    <div class="mt-6 flex justify-center">
+                        <div class="relative" id="auth-language-selector">
+                            <button id="auth-language-toggle" class="flex items-center text-gray-600 hover:text-red-700 transition px-3 py-2 rounded-lg hover:bg-red-50">
+                                <span class="mr-2" id="auth-current-lang">EN</span>
+                                <i class="fas fa-chevron-down text-xs transition-transform duration-200" id="auth-language-icon"></i>
+                            </button>
+                            <div id="auth-language-menu" class="absolute left-0 mt-1 w-32 bg-white rounded-lg shadow-xl border border-gray-100 py-1">
+                                <a href="#" class="language-option" data-lang="en">
+                                    <span class="flex items-center">
+                                        <span class="mr-2">🇬🇧</span> English
+                                    </span>
+                                </a>
+                                <a href="#" class="language-option" data-lang="fr">
+                                    <span class="flex items-center">
+                                        <span class="mr-2">🇫🇷</span> Français
+                                    </span>
+                                </a>
+                                <a href="#" class="language-option" data-lang="es">
+                                    <span class="flex items-center">
+                                        <span class="mr-2">🇪🇸</span> Español
+                                    </span>
+                                </a>
+                                <a href="#" class="language-option" data-lang="nl">
+                                    <span class="flex items-center">
+                                        <span class="mr-2">🇳🇱</span> Nederlands
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,24 +213,54 @@
                 <div class="container mx-auto px-4 py-4">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                         <div>
-                            <h1 class="text-xl font-bold text-gray-800">Property Management</h1>
-                            <p class="text-gray-600">Manage properties displayed on the public website</p>
+                            <h1 class="text-xl font-bold text-gray-800" data-lang-key="dashboard_title">Property Management</h1>
+                            <p class="text-gray-600" data-lang-key="dashboard_subtitle">Manage properties displayed on the public website</p>
                         </div>
                         
                         <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                        <div class="text-right">
-                        <p class="text-sm text-gray-600">Admin</p>
-                        <p id="admin-email" class="font-medium"></p>
-                        </div>
-                    <!-- AJOUTEZ CE BOUTON -->
-                    <button onclick="window.location.href='index.html'" 
-                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
-                    <i class="fas fa-home mr-2"></i>Back to Home
-                    </button>
-                    <!-- BOUTON LOGOUT EXISTANT -->
-                    <button id="logout-btn" 
-                            class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            <!-- Language Selector -->
+                            <div class="relative" id="dashboard-language-selector">
+                                <button id="dashboard-language-toggle" class="flex items-center text-gray-600 hover:text-red-700 transition px-3 py-2 rounded-lg hover:bg-red-50">
+                                    <span class="mr-2" id="dashboard-current-lang">EN</span>
+                                    <i class="fas fa-chevron-down text-xs transition-transform duration-200" id="dashboard-language-icon"></i>
+                                </button>
+                                <div id="dashboard-language-menu" class="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-xl border border-gray-100 py-1">
+                                    <a href="#" class="language-option" data-lang="en">
+                                        <span class="flex items-center">
+                                            <span class="mr-2">🇬🇧</span> English
+                                        </span>
+                                    </a>
+                                    <a href="#" class="language-option" data-lang="fr">
+                                        <span class="flex items-center">
+                                            <span class="mr-2">🇫🇷</span> Français
+                                        </span>
+                                    </a>
+                                    <a href="#" class="language-option" data-lang="es">
+                                        <span class="flex items-center">
+                                            <span class="mr-2">🇪🇸</span> Español
+                                        </span>
+                                    </a>
+                                    <a href="#" class="language-option" data-lang="nl">
+                                        <span class="flex items-center">
+                                            <span class="mr-2">🇳🇱</span> Nederlands
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="text-right hidden md:block">
+                                <p class="text-sm text-gray-600" data-lang-key="admin_label">Admin</p>
+                                <p id="admin-email" class="font-medium"></p>
+                            </div>
+                            
+                            <button onclick="window.location.href='index.html'" 
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
+                                <i class="fas fa-home mr-2"></i><span data-lang-key="back_home">Back to Home</span>
+                            </button>
+                            
+                            <button id="logout-btn" 
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm transition">
+                                <i class="fas fa-sign-out-alt mr-2"></i><span data-lang-key="logout">Logout</span>
                             </button>
                         </div>
                     </div>
@@ -85,7 +274,7 @@
                     <div class="lg:col-span-1">
                         <div class="bg-white rounded-xl shadow-lg p-6 sticky top-8">
                             <h2 class="text-xl font-bold text-gray-800 mb-4" id="form-title">
-                                <i class="fas fa-plus-circle text-red-600 mr-2"></i>Add New Property
+                                <i class="fas fa-plus-circle text-red-600 mr-2"></i><span data-lang-key="form_add_title">Add New Property</span>
                             </h2>
                             
                             <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4"></div>
@@ -95,42 +284,95 @@
                                 <input type="hidden" id="property-id">
                                 
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Title *</label>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_title">Title *</label>
                                     <input type="text" id="property-title" required 
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                           placeholder="Villa Serenity">
+                                           data-placeholder="form_title_placeholder">
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Description *</label>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_description">Description *</label>
                                     <textarea id="property-description" required rows="4"
                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                              placeholder="Beautiful villa with sea view..."></textarea>
+                                              data-placeholder="form_description_placeholder"></textarea>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Price per Night (€) *</label>
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_location">Location *</label>
+                                    <input type="text" id="property-location" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           data-placeholder="form_location_placeholder">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_price">Price per Night (€) *</label>
                                     <input type="number" id="property-price" required min="0" step="10"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                            placeholder="450">
                                 </div>
                                 
-                                <div class="mb-6">
-                                    <label class="block text-gray-700 text-sm font-medium mb-2">Image URL *</label>
-                                    <input type="url" id="property-image" required 
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_guests">Maximum Guests *</label>
+                                    <input type="number" id="property-guests" required min="1" max="50"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                           placeholder="https://example.com/image.jpg">
-                                    <p class="text-xs text-gray-500 mt-2">Use high-quality images (min. 1200x800px)</p>
+                                           placeholder="8">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_bedrooms">Bedrooms *</label>
+                                    <input type="number" id="property-bedrooms" required min="1" max="20"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           placeholder="4">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_bathrooms">Bathrooms *</label>
+                                    <input type="number" id="property-bathrooms" required min="1" max="20"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                           placeholder="3">
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 text-sm font-medium mb-2" data-lang-key="form_images">Property Images *</label>
+                                    <p class="text-xs text-gray-500 mb-2" data-lang-key="form_images_note">Upload multiple high-quality images (JPG, PNG, max 5MB each)</p>
+                                    
+                                    <!-- Drag & Drop Upload Area -->
+                                    <div class="upload-area" id="upload-area">
+                                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                        <p class="text-gray-600" data-lang-key="form_upload_text">Drag & drop images here or click to browse</p>
+                                        <p class="text-sm text-gray-500 mt-2" data-lang-key="form_upload_formats">Supports JPG, PNG, WebP</p>
+                                        <input type="file" id="image-upload" multiple accept="image/*" class="hidden">
+                                    </div>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div id="upload-progress" class="hidden">
+                                        <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                            <span data-lang-key="uploading">Uploading...</span>
+                                            <span id="upload-percentage">0%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Image Previews -->
+                                    <div id="image-preview-container" class="image-preview-container"></div>
+                                    
+                                    <!-- Existing Images (for edit mode) -->
+                                    <div id="existing-images-container" class="hidden mt-4">
+                                        <h3 class="text-sm font-medium text-gray-700 mb-2" data-lang-key="existing_images">Existing Images</h3>
+                                        <div id="existing-images" class="image-preview-container"></div>
+                                    </div>
                                 </div>
                                 
                                 <div class="flex space-x-3">
                                     <button type="submit" id="submit-btn"
                                             class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 rounded-lg transition duration-200">
-                                        <i class="fas fa-save mr-2"></i>Save Property
+                                        <i class="fas fa-save mr-2"></i><span id="submit-btn-text" data-lang-key="save_property">Save Property</span>
                                     </button>
                                     
                                     <button type="button" id="cancel-edit-btn" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-4 rounded-lg transition">
-                                        Cancel
+                                        <span data-lang-key="cancel">Cancel</span>
                                     </button>
                                 </div>
                             </form>
@@ -147,7 +389,7 @@
                                         <i class="fas fa-home text-blue-600 text-xl"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm text-gray-500">Total Properties</p>
+                                        <p class="text-sm text-gray-500" data-lang-key="stats_total">Total Properties</p>
                                         <p id="total-properties" class="text-2xl font-bold text-gray-800">0</p>
                                     </div>
                                 </div>
@@ -159,7 +401,7 @@
                                         <i class="fas fa-euro-sign text-green-600 text-xl"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm text-gray-500">Avg. Price</p>
+                                        <p class="text-sm text-gray-500" data-lang-key="stats_avg_price">Avg. Price</p>
                                         <p id="avg-price" class="text-2xl font-bold text-gray-800">€0</p>
                                     </div>
                                 </div>
@@ -171,8 +413,8 @@
                                         <i class="fas fa-sync-alt text-purple-600 text-xl"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm text-gray-500">Last Updated</p>
-                                        <p id="last-updated" class="text-2xl font-bold text-gray-800">Now</p>
+                                        <p class="text-sm text-gray-500" data-lang-key="stats_last_updated">Last Updated</p>
+                                        <p id="last-updated" class="text-2xl font-bold text-gray-800" data-lang-key="now">Now</p>
                                     </div>
                                 </div>
                             </div>
@@ -182,27 +424,26 @@
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                             <div class="px-6 py-4 border-b border-gray-200">
                                 <h2 class="text-xl font-bold text-gray-800">
-                                    <i class="fas fa-list text-red-600 mr-2"></i>Properties List
+                                    <i class="fas fa-list text-red-600 mr-2"></i><span data-lang-key="properties_list">Properties List</span>
                                 </h2>
-                                <p class="text-gray-600 text-sm">Real-time updates from Firestore</p>
+                                <p class="text-gray-600 text-sm" data-lang-key="properties_note">Click on a property to edit details</p>
                             </div>
                             
                             <div class="overflow-x-auto">
                                 <table class="w-full">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-lang-key="table_images">Images</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-lang-key="table_details">Property Details</th>
+                                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-lang-key="table_actions">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="properties-table-body" class="divide-y divide-gray-200">
                                         <tr id="no-properties-row">
-                                            <td colspan="4" class="py-12 text-center text-gray-500">
+                                            <td colspan="3" class="py-12 text-center text-gray-500">
                                                 <i class="fas fa-home text-3xl mb-4"></i>
-                                                <p>No properties found</p>
-                                                <p class="text-sm mt-2">Add your first property using the form</p>
+                                                <p data-lang-key="no_properties">No properties found</p>
+                                                <p class="text-sm mt-2" data-lang-key="add_first_property">Add your first property using the form</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -212,6 +453,42 @@
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- Modal for Image Gallery -->
+    <div id="image-gallery-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black bg-opacity-75">
+        <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div class="flex justify-between items-center px-6 py-4 border-b">
+                <h3 class="text-lg font-bold text-gray-800" data-lang-key="gallery_title">Property Images</h3>
+                <button id="close-gallery" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <div id="gallery-images" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Delete Confirmation -->
+    <div id="delete-confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black bg-opacity-75">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
+            <div class="p-6">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 text-center mb-2" data-lang-key="delete_confirm_title">Delete Property</h3>
+                <p class="text-gray-600 text-center mb-6" data-lang-key="delete_confirm_message">Are you sure you want to delete this property? This action cannot be undone.</p>
+                <div class="flex space-x-3">
+                    <button id="cancel-delete" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 rounded-lg transition">
+                        <span data-lang-key="cancel">Cancel</span>
+                    </button>
+                    <button id="confirm-delete" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-3 rounded-lg transition">
+                        <i class="fas fa-trash mr-2"></i><span data-lang-key="delete">Delete</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -238,11 +515,350 @@
             orderBy,
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import {
+            getStorage,
+            ref,
+            uploadBytesResumable,
+            getDownloadURL,
+            deleteObject
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js";
 
-        // Firebase Configuration - Utilise les clés du fichier partagé
+        // Firebase Configuration
         const app = initializeApp(window.firebaseConfig);
         const auth = getAuth(app);       
         const db = getFirestore(app);    
+        const storage = getStorage(app);
+
+        // Multilingual Translations
+        const translations = {
+            'en': {
+                // Auth Screen
+                'auth_title': 'Admin Portal',
+                'auth_subtitle': 'Amaru Resorts - Property Management',
+                'auth_email': 'Admin Email',
+                'auth_password': 'Password',
+                'auth_login': 'Admin Login',
+                
+                // Dashboard
+                'dashboard_title': 'Property Management',
+                'dashboard_subtitle': 'Manage properties displayed on the public website',
+                'admin_label': 'Admin',
+                'back_home': 'Back to Home',
+                'logout': 'Logout',
+                
+                // Form
+                'form_add_title': 'Add New Property',
+                'form_edit_title': 'Edit Property',
+                'form_title': 'Title',
+                'form_title_placeholder': 'Villa Serenity',
+                'form_description': 'Description',
+                'form_description_placeholder': 'Beautiful villa with sea view...',
+                'form_location': 'Location',
+                'form_location_placeholder': 'Costa del Sol, Spain',
+                'form_price': 'Price per Night (€)',
+                'form_guests': 'Maximum Guests',
+                'form_bedrooms': 'Bedrooms',
+                'form_bathrooms': 'Bathrooms',
+                'form_images': 'Property Images',
+                'form_images_note': 'Upload multiple high-quality images (JPG, PNG, max 5MB each)',
+                'form_upload_text': 'Drag & drop images here or click to browse',
+                'form_upload_formats': 'Supports JPG, PNG, WebP',
+                'existing_images': 'Existing Images',
+                'save_property': 'Save Property',
+                'update_property': 'Update Property',
+                'cancel': 'Cancel',
+                
+                // Stats
+                'stats_total': 'Total Properties',
+                'stats_avg_price': 'Avg. Price',
+                'stats_last_updated': 'Last Updated',
+                'now': 'Now',
+                
+                // Table
+                'properties_list': 'Properties List',
+                'properties_note': 'Click on a property to edit details',
+                'table_images': 'Images',
+                'table_details': 'Property Details',
+                'table_actions': 'Actions',
+                'no_properties': 'No properties found',
+                'add_first_property': 'Add your first property using the form',
+                
+                // Messages
+                'uploading': 'Uploading...',
+                'saving': 'Saving...',
+                'property_saved': 'Property saved successfully!',
+                'property_updated': 'Property updated successfully!',
+                'property_deleted': 'Property deleted successfully!',
+                'error_saving': 'Error saving property. Please try again.',
+                'error_deleting': 'Error deleting property. Please try again.',
+                'error_required': 'All fields are required',
+                'error_numeric': 'Numeric values must be greater than 0',
+                'error_images': 'Please upload at least one image',
+                
+                // Gallery
+                'gallery_title': 'Property Images',
+                'view_images': 'View Images',
+                'edit': 'Edit',
+                'delete': 'Delete',
+                
+                // Delete Confirmation
+                'delete_confirm_title': 'Delete Property',
+                'delete_confirm_message': 'Are you sure you want to delete this property? This action cannot be undone.',
+                
+                // Property Details
+                'guests': 'guests',
+                'beds': 'beds',
+                'baths': 'baths',
+                'night': 'night',
+                'images': 'images'
+            },
+            'fr': {
+                // Auth Screen
+                'auth_title': 'Portail Admin',
+                'auth_subtitle': 'Amaru Resorts - Gestion des propriétés',
+                'auth_email': 'Email Admin',
+                'auth_password': 'Mot de passe',
+                'auth_login': 'Connexion Admin',
+                
+                // Dashboard
+                'dashboard_title': 'Gestion des propriétés',
+                'dashboard_subtitle': 'Gérez les propriétés affichées sur le site public',
+                'admin_label': 'Administrateur',
+                'back_home': 'Retour à l\'accueil',
+                'logout': 'Déconnexion',
+                
+                // Form
+                'form_add_title': 'Ajouter une nouvelle propriété',
+                'form_edit_title': 'Modifier la propriété',
+                'form_title': 'Titre',
+                'form_title_placeholder': 'Villa Sérénité',
+                'form_description': 'Description',
+                'form_description_placeholder': 'Magnifique villa avec vue sur mer...',
+                'form_location': 'Emplacement',
+                'form_location_placeholder': 'Costa del Sol, Espagne',
+                'form_price': 'Prix par nuit (€)',
+                'form_guests': 'Nombre maximum d\'invités',
+                'form_bedrooms': 'Chambres',
+                'form_bathrooms': 'Salles de bain',
+                'form_images': 'Images de la propriété',
+                'form_images_note': 'Téléchargez plusieurs images de haute qualité (JPG, PNG, max 5MB chacune)',
+                'form_upload_text': 'Glissez-déposez des images ici ou cliquez pour parcourir',
+                'form_upload_formats': 'Supporte JPG, PNG, WebP',
+                'existing_images': 'Images existantes',
+                'save_property': 'Enregistrer la propriété',
+                'update_property': 'Mettre à jour la propriété',
+                'cancel': 'Annuler',
+                
+                // Stats
+                'stats_total': 'Total des propriétés',
+                'stats_avg_price': 'Prix moyen',
+                'stats_last_updated': 'Dernière mise à jour',
+                'now': 'Maintenant',
+                
+                // Table
+                'properties_list': 'Liste des propriétés',
+                'properties_note': 'Cliquez sur une propriété pour modifier les détails',
+                'table_images': 'Images',
+                'table_details': 'Détails de la propriété',
+                'table_actions': 'Actions',
+                'no_properties': 'Aucune propriété trouvée',
+                'add_first_property': 'Ajoutez votre première propriété en utilisant le formulaire',
+                
+                // Messages
+                'uploading': 'Téléchargement...',
+                'saving': 'Enregistrement...',
+                'property_saved': 'Propriété enregistrée avec succès !',
+                'property_updated': 'Propriété mise à jour avec succès !',
+                'property_deleted': 'Propriété supprimée avec succès !',
+                'error_saving': 'Erreur lors de l\'enregistrement. Veuillez réessayer.',
+                'error_deleting': 'Erreur lors de la suppression. Veuillez réessayer.',
+                'error_required': 'Tous les champs sont obligatoires',
+                'error_numeric': 'Les valeurs numériques doivent être supérieures à 0',
+                'error_images': 'Veuillez télécharger au moins une image',
+                
+                // Gallery
+                'gallery_title': 'Images de la propriété',
+                'view_images': 'Voir les images',
+                'edit': 'Modifier',
+                'delete': 'Supprimer',
+                
+                // Delete Confirmation
+                'delete_confirm_title': 'Supprimer la propriété',
+                'delete_confirm_message': 'Êtes-vous sûr de vouloir supprimer cette propriété ? Cette action est irréversible.',
+                
+                // Property Details
+                'guests': 'invités',
+                'beds': 'lits',
+                'baths': 'salles de bain',
+                'night': 'nuit',
+                'images': 'images'
+            },
+            'es': {
+                // Auth Screen
+                'auth_title': 'Portal de Administración',
+                'auth_subtitle': 'Amaru Resorts - Gestión de propiedades',
+                'auth_email': 'Email de Administrador',
+                'auth_password': 'Contraseña',
+                'auth_login': 'Inicio de sesión Admin',
+                
+                // Dashboard
+                'dashboard_title': 'Gestión de propiedades',
+                'dashboard_subtitle': 'Administre las propiedades mostradas en el sitio web público',
+                'admin_label': 'Administrador',
+                'back_home': 'Volver al inicio',
+                'logout': 'Cerrar sesión',
+                
+                // Form
+                'form_add_title': 'Agregar nueva propiedad',
+                'form_edit_title': 'Editar propiedad',
+                'form_title': 'Título',
+                'form_title_placeholder': 'Villa Serenidad',
+                'form_description': 'Descripción',
+                'form_description_placeholder': 'Hermosa villa con vista al mar...',
+                'form_location': 'Ubicación',
+                'form_location_placeholder': 'Costa del Sol, España',
+                'form_price': 'Precio por noche (€)',
+                'form_guests': 'Máximo de huéspedes',
+                'form_bedrooms': 'Dormitorios',
+                'form_bathrooms': 'Baños',
+                'form_images': 'Imágenes de la propiedad',
+                'form_images_note': 'Suba varias imágenes de alta calidad (JPG, PNG, máximo 5MB cada una)',
+                'form_upload_text': 'Arrastra y suelta imágenes aquí o haz clic para explorar',
+                'form_upload_formats': 'Soporta JPG, PNG, WebP',
+                'existing_images': 'Imágenes existentes',
+                'save_property': 'Guardar propiedad',
+                'update_property': 'Actualizar propiedad',
+                'cancel': 'Cancelar',
+                
+                // Stats
+                'stats_total': 'Total de propiedades',
+                'stats_avg_price': 'Precio promedio',
+                'stats_last_updated': 'Última actualización',
+                'now': 'Ahora',
+                
+                // Table
+                'properties_list': 'Lista de propiedades',
+                'properties_note': 'Haga clic en una propiedad para editar los detalles',
+                'table_images': 'Imágenes',
+                'table_details': 'Detalles de la propiedad',
+                'table_actions': 'Acciones',
+                'no_properties': 'No se encontraron propiedades',
+                'add_first_property': 'Agregue su primera propiedad usando el formulario',
+                
+                // Messages
+                'uploading': 'Subiendo...',
+                'saving': 'Guardando...',
+                'property_saved': '¡Propiedad guardada exitosamente!',
+                'property_updated': '¡Propiedad actualizada exitosamente!',
+                'property_deleted': '¡Propiedad eliminada exitosamente!',
+                'error_saving': 'Error al guardar la propiedad. Por favor, intente nuevamente.',
+                'error_deleting': 'Error al eliminar la propiedad. Por favor, intente nuevamente.',
+                'error_required': 'Todos los campos son obligatorios',
+                'error_numeric': 'Los valores numéricos deben ser mayores a 0',
+                'error_images': 'Por favor, suba al menos una imagen',
+                
+                // Gallery
+                'gallery_title': 'Imágenes de la propiedad',
+                'view_images': 'Ver imágenes',
+                'edit': 'Editar',
+                'delete': 'Eliminar',
+                
+                // Delete Confirmation
+                'delete_confirm_title': 'Eliminar propiedad',
+                'delete_confirm_message': '¿Está seguro de que desea eliminar esta propiedad? Esta acción no se puede deshacer.',
+                
+                // Property Details
+                'guests': 'huéspedes',
+                'beds': 'camas',
+                'baths': 'baños',
+                'night': 'noche',
+                'images': 'imágenes'
+            },
+            'nl': {
+                // Auth Screen
+                'auth_title': 'Admin Portaal',
+                'auth_subtitle': 'Amaru Resorts - Eigendomsbeheer',
+                'auth_email': 'Admin Email',
+                'auth_password': 'Wachtwoord',
+                'auth_login': 'Admin Login',
+                
+                // Dashboard
+                'dashboard_title': 'Eigendomsbeheer',
+                'dashboard_subtitle': 'Beheer eigendommen weergegeven op de openbare website',
+                'admin_label': 'Beheerder',
+                'back_home': 'Terug naar home',
+                'logout': 'Uitloggen',
+                
+                // Form
+                'form_add_title': 'Nieuw eigendom toevoegen',
+                'form_edit_title': 'Eigendom bewerken',
+                'form_title': 'Titel',
+                'form_title_placeholder': 'Villa Sereniteit',
+                'form_description': 'Beschrijving',
+                'form_description_placeholder': 'Prachtige villa met uitzicht op zee...',
+                'form_location': 'Locatie',
+                'form_location_placeholder': 'Costa del Sol, Spanje',
+                'form_price': 'Prijs per nacht (€)',
+                'form_guests': 'Maximaal aantal gasten',
+                'form_bedrooms': 'Slaapkamers',
+                'form_bathrooms': 'Badkamers',
+                'form_images': 'Eigendom afbeeldingen',
+                'form_images_note': 'Upload meerdere hoogwaardige afbeeldingen (JPG, PNG, max 5MB per stuk)',
+                'form_upload_text': 'Sleep afbeeldingen hierheen of klik om te bladeren',
+                'form_upload_formats': 'Ondersteunt JPG, PNG, WebP',
+                'existing_images': 'Bestaande afbeeldingen',
+                'save_property': 'Eigendom opslaan',
+                'update_property': 'Eigendom bijwerken',
+                'cancel': 'Annuleren',
+                
+                // Stats
+                'stats_total': 'Totaal eigendommen',
+                'stats_avg_price': 'Gem. prijs',
+                'stats_last_updated': 'Laatst bijgewerkt',
+                'now': 'Nu',
+                
+                // Table
+                'properties_list': 'Eigendommen lijst',
+                'properties_note': 'Klik op een eigendom om details te bewerken',
+                'table_images': 'Afbeeldingen',
+                'table_details': 'Eigendom details',
+                'table_actions': 'Acties',
+                'no_properties': 'Geen eigendommen gevonden',
+                'add_first_property': 'Voeg uw eerste eigendom toe met behulp van het formulier',
+                
+                // Messages
+                'uploading': 'Uploaden...',
+                'saving': 'Opslaan...',
+                'property_saved': 'Eigendom succesvol opgeslagen!',
+                'property_updated': 'Eigendom succesvol bijgewerkt!',
+                'property_deleted': 'Eigendom succesvol verwijderd!',
+                'error_saving': 'Fout bij opslaan eigendom. Probeer het opnieuw.',
+                'error_deleting': 'Fout bij verwijderen eigendom. Probeer het opnieuw.',
+                'error_required': 'Alle velden zijn verplicht',
+                'error_numeric': 'Numerieke waarden moeten groter zijn dan 0',
+                'error_images': 'Upload minimaal één afbeelding',
+                
+                // Gallery
+                'gallery_title': 'Eigendom afbeeldingen',
+                'view_images': 'Bekijk afbeeldingen',
+                'edit': 'Bewerken',
+                'delete': 'Verwijderen',
+                
+                // Delete Confirmation
+                'delete_confirm_title': 'Eigendom verwijderen',
+                'delete_confirm_message': 'Weet u zeker dat u dit eigendom wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.',
+                
+                // Property Details
+                'guests': 'gasten',
+                'beds': 'bedden',
+                'baths': 'badkamers',
+                'night': 'nacht',
+                'images': 'afbeeldingen'
+            }
+        };
+
+        let currentLang = 'en';
+        let currentPropertyToDelete = null;
 
         // DOM Elements
         const authScreen = document.getElementById('auth-screen');
@@ -252,6 +868,7 @@
         const propertyForm = document.getElementById('property-form');
         const formTitle = document.getElementById('form-title');
         const submitBtn = document.getElementById('submit-btn');
+        const submitBtnText = document.getElementById('submit-btn-text');
         const cancelEditBtn = document.getElementById('cancel-edit-btn');
         const adminEmail = document.getElementById('admin-email');
         const authError = document.getElementById('auth-error');
@@ -262,17 +879,139 @@
         const totalProperties = document.getElementById('total-properties');
         const avgPrice = document.getElementById('avg-price');
         const lastUpdated = document.getElementById('last-updated');
+        const uploadArea = document.getElementById('upload-area');
+        const imageUpload = document.getElementById('image-upload');
+        const uploadProgress = document.getElementById('upload-progress');
+        const uploadPercentage = document.getElementById('upload-percentage');
+        const progressFill = document.getElementById('progress-fill');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const existingImagesContainer = document.getElementById('existing-images-container');
+        const existingImages = document.getElementById('existing-images');
+        const galleryModal = document.getElementById('image-gallery-modal');
+        const closeGallery = document.getElementById('close-gallery');
+        const galleryImages = document.getElementById('gallery-images');
+        const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+        const cancelDeleteBtn = document.getElementById('cancel-delete');
+        const confirmDeleteBtn = document.getElementById('confirm-delete');
 
         // Form fields
         const propertyId = document.getElementById('property-id');
         const propertyTitle = document.getElementById('property-title');
         const propertyDescription = document.getElementById('property-description');
+        const propertyLocation = document.getElementById('property-location');
         const propertyPrice = document.getElementById('property-price');
-        const propertyImage = document.getElementById('property-image');
+        const propertyGuests = document.getElementById('property-guests');
+        const propertyBedrooms = document.getElementById('property-bedrooms');
+        const propertyBathrooms = document.getElementById('property-bathrooms');
 
+        // State management
         let unsubscribeProperties = null;
         let currentUser = null;
         let isEditing = false;
+        let selectedFiles = [];
+        let existingPropertyImages = [];
+        let imagesToDelete = [];
+
+        // Language Functions
+        function changeLanguage(lang) {
+            if (!translations[lang]) return;
+            
+            currentLang = lang;
+            
+            // Update language indicators
+            document.querySelectorAll('[id$="-current-lang"]').forEach(el => {
+                el.textContent = lang.toUpperCase();
+            });
+            
+            // Update all elements with data-lang-key
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-placeholder');
+                if (translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update submit button text based on mode
+            if (isEditing) {
+                submitBtnText.textContent = translations[lang]['update_property'];
+            }
+            
+            localStorage.setItem('admin_language', lang);
+        }
+
+        function setupLanguageSelectors() {
+            // Setup auth language selector
+            const authLanguageToggle = document.getElementById('auth-language-toggle');
+            const authLanguageMenu = document.getElementById('auth-language-menu');
+            const authLanguageIcon = document.getElementById('auth-language-icon');
+            
+            if (authLanguageToggle) {
+                authLanguageToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    authLanguageMenu.classList.toggle('show');
+                    authLanguageIcon.classList.toggle('rotate-180');
+                });
+                
+                document.querySelectorAll('#auth-language-menu .language-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const lang = option.getAttribute('data-lang');
+                        changeLanguage(lang);
+                        authLanguageMenu.classList.remove('show');
+                        authLanguageIcon.classList.remove('rotate-180');
+                    });
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!authLanguageToggle.contains(e.target) && !authLanguageMenu.contains(e.target)) {
+                        authLanguageMenu.classList.remove('show');
+                        authLanguageIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
+            
+            // Setup dashboard language selector
+            const dashboardLanguageToggle = document.getElementById('dashboard-language-toggle');
+            const dashboardLanguageMenu = document.getElementById('dashboard-language-menu');
+            const dashboardLanguageIcon = document.getElementById('dashboard-language-icon');
+            
+            if (dashboardLanguageToggle) {
+                dashboardLanguageToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dashboardLanguageMenu.classList.toggle('show');
+                    dashboardLanguageIcon.classList.toggle('rotate-180');
+                });
+                
+                document.querySelectorAll('#dashboard-language-menu .language-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const lang = option.getAttribute('data-lang');
+                        changeLanguage(lang);
+                        dashboardLanguageMenu.classList.remove('show');
+                        dashboardLanguageIcon.classList.remove('rotate-180');
+                    });
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!dashboardLanguageToggle.contains(e.target) && !dashboardLanguageMenu.contains(e.target)) {
+                        dashboardLanguageMenu.classList.remove('show');
+                        dashboardLanguageIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
+        }
 
         // Authentication State Observer
         onAuthStateChanged(auth, (user) => {
@@ -290,6 +1029,13 @@
             }
         });
 
+        // Initialize language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('admin_language') || 'en';
+            changeLanguage(savedLang);
+            setupLanguageSelectors();
+        });
+
         // Login Form Submission
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -301,49 +1047,185 @@
                 await signInWithEmailAndPassword(auth, email, password);
                 authError.classList.add('hidden');
             } catch (error) {
-                authError.textContent = getAuthErrorMessage(error.code);
+                authError.textContent = getAuthErrorMessage(error.code, currentLang);
                 authError.classList.remove('hidden');
             }
         });
 
         // Logout
-                logoutBtn.addEventListener('click', async (e) => { // ✅ CHANGER À 'click'
-                e.preventDefault();
-                try {
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
                 await signOut(auth);
-        // Rediriger vers index.html
                 window.location.href = 'index.html';
-                } catch (error) {
+            } catch (error) {
                 console.error('Logout error:', error);
-                }
+            }
+        });
+
+        // File Upload Handling
+        uploadArea.addEventListener('click', () => {
+            imageUpload.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        imageUpload.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+            // Filter only image files
+            const imageFiles = files.filter(file => file.type.startsWith('image/'));
+            
+            // Check file sizes (max 5MB)
+            const oversizedFiles = imageFiles.filter(file => file.size > 5 * 1024 * 1024);
+            
+            if (oversizedFiles.length > 0) {
+                showFormError(translations[currentLang]['error_images']);
+                return;
+            }
+            
+            // Add to selected files
+            selectedFiles = [...selectedFiles, ...imageFiles];
+            
+            // Update preview
+            updateImagePreviews();
+        }
+
+        function updateImagePreviews() {
+            imagePreviewContainer.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'image-preview';
+                    previewDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="remove-image" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    imagePreviewContainer.appendChild(previewDiv);
+                    
+                    // Add event listener to remove button
+                    previewDiv.querySelector('.remove-image').addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        removeSelectedImage(index);
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function removeSelectedImage(index) {
+            selectedFiles.splice(index, 1);
+            updateImagePreviews();
+        }
+
+        function showExistingImages(images) {
+            existingImages.innerHTML = '';
+            
+            images.forEach((imageUrl, index) => {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image-preview existing-image';
+                imageDiv.innerHTML = `
+                    <img src="${imageUrl}" alt="Existing image">
+                    <button type="button" class="remove-image" data-existing-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                existingImages.appendChild(imageDiv);
+                
+                // Add event listener to remove button
+                imageDiv.querySelector('.remove-image').addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    removeExistingImage(index);
                 });
+            });
+            
+            existingImagesContainer.classList.remove('hidden');
+        }
+
+        function removeExistingImage(index) {
+            // Add to deletion list and remove from display
+            imagesToDelete.push(existingPropertyImages[index]);
+            existingPropertyImages.splice(index, 1);
+            showExistingImages(existingPropertyImages);
+        }
 
         // Property Form Submission
         propertyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const title = propertyTitle.value.trim();
-            const description = propertyDescription.value.trim();
-            const price = parseInt(propertyPrice.value);
-            const imageUrl = propertyImage.value.trim();
-            
-            // Validation
-            if (!title || !description || !price || !imageUrl) {
-                showFormError('All fields are required');
+            if (selectedFiles.length === 0 && existingPropertyImages.length === 0) {
+                showFormError(translations[currentLang]['error_images']);
                 return;
             }
             
-            if (price <= 0) {
-                showFormError('Price must be greater than 0');
+            const title = propertyTitle.value.trim();
+            const description = propertyDescription.value.trim();
+            const location = propertyLocation.value.trim();
+            const price = parseInt(propertyPrice.value);
+            const guests = parseInt(propertyGuests.value);
+            const bedrooms = parseInt(propertyBedrooms.value);
+            const bathrooms = parseInt(propertyBathrooms.value);
+            
+            // Validation
+            if (!title || !description || !location || !price || !guests || !bedrooms || !bathrooms) {
+                showFormError(translations[currentLang]['error_required']);
+                return;
+            }
+            
+            if (price <= 0 || guests <= 0 || bedrooms <= 0 || bathrooms <= 0) {
+                showFormError(translations[currentLang]['error_numeric']);
                 return;
             }
             
             try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${translations[currentLang]['saving']}`;
+                
+                let imageUrls = [...existingPropertyImages];
+                
+                // Upload new images if any
+                if (selectedFiles.length > 0) {
+                    uploadProgress.classList.remove('hidden');
+                    const uploadedUrls = await uploadImages(selectedFiles, isEditing && propertyId.value ? propertyId.value : null);
+                    imageUrls = [...imageUrls, ...uploadedUrls];
+                }
+                
+                // Delete marked images
+                if (imagesToDelete.length > 0) {
+                    await deleteImagesFromStorage(imagesToDelete);
+                }
+                
                 const propertyData = {
                     title: title,
                     description: description,
+                    location: location,
                     pricePerNight: price,
-                    imageUrl: imageUrl,
+                    guests: guests,
+                    bedrooms: bedrooms,
+                    bathrooms: bathrooms,
+                    imageUrls: imageUrls,
                     updatedAt: serverTimestamp(),
                     updatedBy: currentUser.email
                 };
@@ -352,12 +1234,20 @@
                     // Update existing property
                     const propertyRef = doc(db, 'public/data/properties', propertyId.value);
                     await updateDoc(propertyRef, propertyData);
-                    showFormSuccess('Property updated successfully!');
+                    showFormSuccess(translations[currentLang]['property_updated']);
                 } else {
                     // Add new property
                     propertyData.createdAt = serverTimestamp();
-                    await addDoc(collection(db, 'public/data/properties'), propertyData);
-                    showFormSuccess('Property added successfully!');
+                    const docRef = await addDoc(collection(db, 'public/data/properties'), propertyData);
+                    
+                    // If we have files, we should update the property with the correct storage path
+                    if (selectedFiles.length > 0) {
+                        // Re-upload with correct property ID
+                        const finalImageUrls = await uploadImages(selectedFiles, docRef.id);
+                        await updateDoc(docRef, { imageUrls: finalImageUrls });
+                    }
+                    
+                    showFormSuccess(translations[currentLang]['property_saved']);
                 }
                 
                 // Reset form
@@ -365,15 +1255,96 @@
                 
             } catch (error) {
                 console.error('Error saving property:', error);
-                showFormError('Error saving property. Please try again.');
+                showFormError(translations[currentLang]['error_saving']);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fas fa-save mr-2"></i>${translations[currentLang][isEditing ? 'update_property' : 'save_property']}`;
+                uploadProgress.classList.add('hidden');
             }
         });
 
-        // Cancel Edit
-                cancelEditBtn.addEventListener('click', (e) => { // ✅ CHANGER À 'click'
-                e.preventDefault();
-                resetForm();
+        // Upload images to Firebase Storage
+        async function uploadImages(files, propertyId) {
+            const uploadPromises = [];
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const storagePath = propertyId 
+                    ? `properties/${propertyId}/${Date.now()}_${file.name}`
+                    : `properties/temp/${Date.now()}_${file.name}`;
+                
+                const storageRef = ref(storage, storagePath);
+                const uploadTask = uploadBytesResumable(storageRef, file);
+                
+                uploadPromises.push(
+                    new Promise((resolve, reject) => {
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                updateUploadProgress(progress);
+                            },
+                            (error) => {
+                                reject(error);
+                            },
+                            async () => {
+                                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                                resolve(downloadURL);
+                            }
+                        );
+                    })
+                );
+            }
+            
+            const urls = await Promise.all(uploadPromises);
+            return urls;
+        }
+
+        function updateUploadProgress(progress) {
+            const percentage = Math.round(progress);
+            uploadPercentage.textContent = `${percentage}%`;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        async function deleteImagesFromStorage(imageUrls) {
+            const deletePromises = imageUrls.map(async (url) => {
+                try {
+                    // Extract path from URL
+                    const path = decodeURIComponent(url.split('/o/')[1].split('?')[0]);
+                    const imageRef = ref(storage, path);
+                    await deleteObject(imageRef);
+                } catch (error) {
+                    console.error('Error deleting image:', error);
+                }
             });
+            
+            await Promise.all(deletePromises);
+        }
+
+        // Cancel Edit
+        cancelEditBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetForm();
+        });
+
+        // Close Gallery
+        closeGallery.addEventListener('click', () => {
+            galleryModal.classList.add('hidden');
+        });
+
+        // Delete Confirmation Modal
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteConfirmModal.classList.add('hidden');
+            currentPropertyToDelete = null;
+        });
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+            if (currentPropertyToDelete) {
+                await deleteProperty(currentPropertyToDelete.id, currentPropertyToDelete.imageUrls);
+                deleteConfirmModal.classList.add('hidden');
+                currentPropertyToDelete = null;
+            }
+        });
+
         // Load Properties
         function loadProperties() {
             const q = query(
@@ -423,46 +1394,79 @@
             propertyId.value = property.id;
             propertyTitle.value = property.title || '';
             propertyDescription.value = property.description || '';
+            propertyLocation.value = property.location || '';
             propertyPrice.value = property.pricePerNight || '';
-            propertyImage.value = property.imageUrl || '';
+            propertyGuests.value = property.guests || '';
+            propertyBedrooms.value = property.bedrooms || '';
+            propertyBathrooms.value = property.bathrooms || '';
+            
+            // Reset image arrays
+            selectedFiles = [];
+            existingPropertyImages = property.imageUrls || [];
+            imagesToDelete = [];
             
             // Update UI
-            formTitle.innerHTML = '<i class="fas fa-edit text-red-600 mr-2"></i>Edit Property';
-            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Update Property';
+            formTitle.innerHTML = `<i class="fas fa-edit text-red-600 mr-2"></i>${translations[currentLang]['form_edit_title']}`;
+            submitBtnText.textContent = translations[currentLang]['update_property'];
             cancelEditBtn.classList.remove('hidden');
+            
+            // Clear and update image previews
+            imagePreviewContainer.innerHTML = '';
+            if (existingPropertyImages.length > 0) {
+                showExistingImages(existingPropertyImages);
+            }
+        }
+
+        // Show Image Gallery
+        function showImageGallery(images) {
+            galleryImages.innerHTML = '';
+            
+            images.forEach((imageUrl, index) => {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = `Property image ${index + 1}`;
+                img.className = 'w-full h-64 object-cover rounded-lg';
+                galleryImages.appendChild(img);
+            });
+            
+            galleryModal.classList.remove('hidden');
+        }
+
+        // Show Delete Confirmation
+        function showDeleteConfirmation(property) {
+            currentPropertyToDelete = property;
+            deleteConfirmModal.classList.remove('hidden');
         }
 
         // Delete Property
-        async function deleteProperty(propertyId) {
-            if (!confirm('Are you sure you want to delete this property?')) return;
-            
+        async function deleteProperty(propertyId, imageUrls) {
             try {
+                // Delete images from storage first
+                if (imageUrls && imageUrls.length > 0) {
+                    await deleteImagesFromStorage(imageUrls);
+                }
+                
+                // Delete property document
                 await deleteDoc(doc(db, 'public/data/properties', propertyId));
-                showFormSuccess('Property deleted successfully!');
+                showFormSuccess(translations[currentLang]['property_deleted']);
             } catch (error) {
                 console.error('Error deleting property:', error);
-                showFormError('Error deleting property. Please try again.');
+                showFormError(translations[currentLang]['error_deleting']);
             }
         }
 
         // Helper Functions
         function showAuthScreen() {
-                authScreen.classList.remove('hidden');
-                dashboardScreen.classList.add('hidden');
-    
-        // Nettoyer le formulaire
-                loginForm.reset();
-                authError.classList.add('hidden');
+            authScreen.classList.remove('hidden');
+            dashboardScreen.classList.add('hidden');
+            loginForm.reset();
+            authError.classList.add('hidden');
         }
 
         function showDashboard(user) {
             authScreen.classList.add('hidden');
             dashboardScreen.classList.remove('hidden');
-            
-            // Display user info
             adminEmail.textContent = user.email;
-            
-            // Load properties
             loadProperties();
         }
 
@@ -470,6 +1474,11 @@
             formError.textContent = message;
             formError.classList.remove('hidden');
             formSuccess.classList.add('hidden');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                formError.classList.add('hidden');
+            }, 5000);
         }
 
         function showFormSuccess(message) {
@@ -477,6 +1486,7 @@
             formSuccess.classList.remove('hidden');
             formError.classList.add('hidden');
             
+            // Auto-hide after 3 seconds
             setTimeout(() => {
                 formSuccess.classList.add('hidden');
             }, 3000);
@@ -486,61 +1496,117 @@
             isEditing = false;
             propertyForm.reset();
             propertyId.value = '';
+            selectedFiles = [];
+            existingPropertyImages = [];
+            imagesToDelete = [];
+            imagePreviewContainer.innerHTML = '';
+            existingImagesContainer.classList.add('hidden');
+            existingImages.innerHTML = '';
             
             // Reset UI
-            formTitle.innerHTML = '<i class="fas fa-plus-circle text-red-600 mr-2"></i>Add New Property';
-            submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Property';
+            formTitle.innerHTML = `<i class="fas fa-plus-circle text-red-600 mr-2"></i>${translations[currentLang]['form_add_title']}`;
+            submitBtnText.textContent = translations[currentLang]['save_property'];
             cancelEditBtn.classList.add('hidden');
         }
 
         function createPropertyRow(property) {
             const row = document.createElement('tr');
-            row.className = 'hover:bg-gray-50';
+            row.className = 'hover:bg-gray-50 cursor-pointer';
+            
+            // Create image gallery preview
+            const imageUrls = property.imageUrls || [];
+            const firstImage = imageUrls.length > 0 ? imageUrls[0] : '';
+            const imageCount = imageUrls.length;
             
             row.innerHTML = `
                 <td class="py-4 px-6">
-                    <div class="w-16 h-16 bg-gray-200 rounded-lg bg-cover bg-center" 
-                         style="background-image: url('${property.imageUrl || ''}')">
+                    <div class="relative w-24 h-24 bg-gray-200 rounded-lg bg-cover bg-center group"
+                         style="background-image: url('${firstImage}')">
+                        ${imageCount > 0 ? `
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">
+                                    <i class="fas fa-images mr-1"></i>${imageCount} ${translations[currentLang]['images']}
+                                </span>
+                            </div>
+                        ` : ''}
                     </div>
                 </td>
                 <td class="py-4 px-6">
-                    <div class="font-medium text-gray-900">${property.title || 'Untitled'}</div>
-                    <div class="text-sm text-gray-500 truncate max-w-xs">${property.description || ''}</div>
-                </td>
-                <td class="py-4 px-6 whitespace-nowrap">
-                    <span class="font-bold text-red-600">€${property.pricePerNight || '0'}</span>
-                    <span class="text-sm text-gray-500">/night</span>
+                    <div class="font-bold text-lg text-gray-900">${property.title || 'Untitled'}</div>
+                    <div class="text-sm text-gray-600 mb-2">${property.location || ''}</div>
+                    <div class="text-gray-700 line-clamp-2">${property.description || ''}</div>
+                    <div class="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                        <span><i class="fas fa-user-friends mr-1"></i>${property.guests || 'N/A'} ${translations[currentLang]['guests']}</span>
+                        <span><i class="fas fa-bed mr-1"></i>${property.bedrooms || 'N/A'} ${translations[currentLang]['beds']}</span>
+                        <span><i class="fas fa-bath mr-1"></i>${property.bathrooms || 'N/A'} ${translations[currentLang]['baths']}</span>
+                    </div>
+                    <div class="mt-2 font-bold text-red-600">€${property.pricePerNight || '0'}/${translations[currentLang]['night']}</div>
                 </td>
                 <td class="py-4 px-6 whitespace-nowrap">
                     <div class="flex space-x-2">
-                        <button onclick="window.editProperty(${JSON.stringify(property).replace(/"/g, '&quot;')})"
-                                class="text-blue-600 hover:text-blue-800">
-                            <i class="fas fa-edit"></i>
+                        <button onclick="event.stopPropagation(); window.editProperty(${JSON.stringify(property).replace(/"/g, '&quot;')})"
+                                class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-2 rounded-lg text-sm transition">
+                            <i class="fas fa-edit mr-1"></i>${translations[currentLang]['edit']}
                         </button>
-                        <button onclick="window.deleteProperty('${property.id}')"
-                                class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
+                        ${imageCount > 0 ? `
+                            <button onclick="event.stopPropagation(); window.showImageGallery(${JSON.stringify(imageUrls)})"
+                                    class="bg-gray-50 hover:bg-gray-100 text-gray-600 px-3 py-2 rounded-lg text-sm transition">
+                                <i class="fas fa-images mr-1"></i>${translations[currentLang]['view_images']}
+                            </button>
+                        ` : ''}
+                        <button onclick="event.stopPropagation(); window.showDeleteConfirmation(${JSON.stringify({id: property.id, imageUrls: imageUrls})})"
+                                class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm transition">
+                            <i class="fas fa-trash mr-1"></i>${translations[currentLang]['delete']}
                         </button>
                     </div>
                 </td>
             `;
             
+            // Add click handler for the entire row
+            row.addEventListener('click', (e) => {
+                if (!e.target.closest('button')) {
+                    editProperty(property);
+                }
+            });
+            
             return row;
         }
 
-        function getAuthErrorMessage(errorCode) {
+        function getAuthErrorMessage(errorCode, lang) {
             const messages = {
-                'auth/invalid-email': 'Invalid email address',
-                'auth/user-disabled': 'Account disabled',
-                'auth/user-not-found': 'No admin account found',
-                'auth/wrong-password': 'Incorrect password'
+                'en': {
+                    'auth/invalid-email': 'Invalid email address',
+                    'auth/user-disabled': 'Account disabled',
+                    'auth/user-not-found': 'No admin account found',
+                    'auth/wrong-password': 'Incorrect password'
+                },
+                'fr': {
+                    'auth/invalid-email': 'Adresse email invalide',
+                    'auth/user-disabled': 'Compte désactivé',
+                    'auth/user-not-found': 'Aucun compte admin trouvé',
+                    'auth/wrong-password': 'Mot de passe incorrect'
+                },
+                'es': {
+                    'auth/invalid-email': 'Dirección de correo electrónico no válida',
+                    'auth/user-disabled': 'Cuenta deshabilitada',
+                    'auth/user-not-found': 'No se encontró cuenta de administrador',
+                    'auth/wrong-password': 'Contraseña incorrecta'
+                },
+                'nl': {
+                    'auth/invalid-email': 'Ongeldig e-mailadres',
+                    'auth/user-disabled': 'Account uitgeschakeld',
+                    'auth/user-not-found': 'Geen admin account gevonden',
+                    'auth/wrong-password': 'Onjuist wachtwoord'
+                }
             };
             
-            return messages[errorCode] || 'Authentication failed';
+            return messages[lang][errorCode] || messages[lang]['auth/wrong-password'] || 'Authentication failed';
         }
 
         // Expose functions to global scope for inline onclick handlers
         window.editProperty = editProperty;
+        window.showImageGallery = showImageGallery;
+        window.showDeleteConfirmation = showDeleteConfirmation;
         window.deleteProperty = deleteProperty;
     </script>
 </body>
