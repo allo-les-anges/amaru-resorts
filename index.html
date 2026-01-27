@@ -943,21 +943,42 @@
     
     // Fonction pour charger les propriétés depuis le XML
     async function loadXMLProperties() {
-        const propertiesContainer = document.getElementById('properties-container');
-        const loadingSpinner = document.getElementById('loading-spinner');
+    console.log('Chargement des propriétés...');
+    
+    // Essayer le XML, mais basculer rapidement sur les démos en cas d'erreur
+    try {
+        // Désactivé temporairement - activez quand le CORS sera résolu
+        throw new Error('XML loading disabled due to CORS issues');
+        
+        /* Code XML (à activer plus tard)
         const xmlUrl = 'https://medianewbuild.com/file/hh-media-bucket/agents/6d5cb68a-3636-4095-b0ce-7dc9ec2df2d2/feed_blanca_calida.xml';
         
-        try {
-            console.log('Chargement des propriétés depuis:', xmlUrl);
-            
-            // Utiliser un proxy CORS
-            const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(xmlUrl);
-            
-            const response = await fetch(proxyUrl);
-            
-            if (!response.ok) {
-                throw new Error(`Erreur HTTP: ${response.status}`);
+        // Créer une promesse avec timeout
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Timeout')), 3000)
+        );
+        
+        const fetchPromise = fetch(xmlUrl, {
+            mode: 'no-cors', // Mode no-cors mais attention aux limitations
+            headers: {
+                'Accept': 'application/xml, text/xml'
             }
+        });
+        
+        const response = await Promise.race([fetchPromise, timeoutPromise]);
+        
+        if (!response.ok && response.type !== 'opaque') {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        
+        // Continuez avec le parsing...
+        */
+        
+    } catch (error) {
+        console.log('Utilisation des propriétés de démo:', error.message);
+        showDemoProperties();
+    }
+}
             
             const data = await response.json();
             const xmlText = data.contents;
