@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Ajoutez ceci dans votre <head> -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏡</text></svg>">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .brand-font { font-family: 'Playfair Display', serif; }
@@ -557,12 +557,12 @@
                 
                 <!-- Properties Grid (Loaded dynamically) -->
                 <div id="properties-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-    <!-- Les propriétés seront chargées ici dynamiquement -->
-    <div id="loading-spinner" class="col-span-3 text-center py-16">
-        <i class="fas fa-spinner fa-spin text-4xl text-amber-600 mb-6"></i>
-        <p class="text-gray-600 text-lg" data-lang-key="loading">Loading properties...</p>
-    </div>
-</div>
+                    <!-- Les propriétés seront chargées ici dynamiquement -->
+                    <div id="loading-spinner" class="col-span-3 text-center py-16">
+                        <i class="fas fa-spinner fa-spin text-4xl text-amber-600 mb-6"></i>
+                        <p class="text-gray-600 text-lg" data-lang-key="loading">Loading properties...</p>
+                    </div>
+                </div>
                 
                 <div class="text-center mt-16">
                     <button id="view-all-btn" class="modern-btn text-white px-8 py-4 rounded-lg font-medium text-lg">
@@ -617,1279 +617,419 @@
         </div>
     </footer>
 
-    <!-- Firebase and Language Script -->
-    <script type="module">
-    // ========== CONFIGURATION DES LANGUES ==========
-    const translations = {
-        'en': {
-            'nav_home': 'Home', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
-            'nav_experiences': 'Experiences', 'nav_about': 'About', 'nav_contact': 'Contact',
-            'hero_title': 'Book Direct: 0% Commission & Best Price Guarantee',
-            'hero_subtitle': 'Discover luxury villas in Spain\'s most beautiful destinations',
-            'tab_booking': 'Book Now', 'tab_availability': 'Check Availability', 'tab_widget': 'Integration',
-            'booking_title': 'Direct Booking Engine - AvaiBook Integration Ready',
-            'booking_subtitle': 'Search availability and book directly with 0% commission',
-            'form_destination': 'Destination / Villa', 'form_checkin': 'Check-in',
-            'form_checkout': 'Check-out', 'form_guests': 'Guests',
-            'form_note': 'Real-time prices and availability from AvaiBook',
-            'form_search': 'Search',
-            'properties_title': 'Featured Luxury Villas',
-            'properties_subtitle': 'Experience unparalleled comfort in our handpicked selection of premium properties',
-            'view_details': 'View Details', 'view_all': 'View All Properties',
-            'loading': 'Loading properties...',
-            'footer_description': 'Luxury villa rentals in Spain\'s most beautiful destinations',
-            'footer_explore': 'Explore', 'footer_support': 'Support',
-            'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.',
-            'construction_title': 'Page under construction',
-            'construction_message': 'This section is currently under development. It will be available soon.'
-        },
-        'fr': {
-            'nav_home': 'Accueil', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
-            'nav_experiences': 'Expériences', 'nav_about': 'À propos', 'nav_contact': 'Contact',
-            'hero_title': 'Réservez Direct : 0% Commission & Meilleur Prix Garanti',
-            'hero_subtitle': 'Découvrez des villas de luxe dans les plus belles destinations d\'Espagne',
-            'tab_booking': 'Réserver', 'tab_availability': 'Vérifier Disponibilité', 'tab_widget': 'Intégration',
-            'booking_title': 'Moteur de Réservation Directe - Prêt pour AvaiBook',
-            'booking_subtitle': 'Vérifiez les disponibilités et réservez directement avec 0% commission',
-            'form_destination': 'Destination / Villa', 'form_checkin': 'Arrivée',
-            'form_checkout': 'Départ', 'form_guests': 'Voyageurs',
-            'form_note': 'Prix et disponibilités en temps réel depuis AvaiBook',
-            'form_search': 'Rechercher',
-            'properties_title': 'Villas de Luxe en Vedette',
-            'properties_subtitle': 'Vivez un confort incomparable dans notre sélection de propriétés premium',
-            'view_details': 'Voir Détails', 'view_all': 'Voir Toutes les Propriétés',
-            'loading': 'Chargement des propriétés...',
-            'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
-            'footer_explore': 'Explorer', 'footer_support': 'Support',
-            'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.',
-            'construction_title': 'Page en construction',
-            'construction_message': 'Cette section est actuellement en développement. Elle sera disponible très bientôt.'
-        },
-        'es': {
-            'nav_home': 'Inicio', 'nav_villas': 'Villas', 'nav_destinations': 'Destinos',
-            'nav_experiences': 'Experiencias', 'nav_about': 'Acerca de', 'nav_contact': 'Contacto',
-            'hero_title': 'Reserva Directa: 0% Comisión & Garantía del Mejor Precio',
-            'hero_subtitle': 'Descubre villas de lujo en los destinos más bellos de España',
-            'tab_booking': 'Reservar', 'tab_availability': 'Ver Disponibilidad', 'tab_widget': 'Integración',
-            'booking_title': 'Motor de Reserva Directa - Listo para AvaiBook',
-            'booking_subtitle': 'Consulta disponibilidad y reserva directamente con 0% comisión',
-            'form_destination': 'Destino / Villa', 'form_checkin': 'Entrada',
-            'form_checkout': 'Salida', 'form_guests': 'Huéspedes',
-            'form_note': 'Precios y disponibilidad en temps réel desde AvaiBook',
-            'form_search': 'Buscar',
-            'properties_title': 'Villas de Lujo Destacadas',
-            'properties_subtitle': 'Experimenta un confort inigualable en nuestra selección de propiedades premium',
-            'view_details': 'Ver Detalles', 'view_all': 'Ver Todas las Propiedades',
-            'loading': 'Cargando propiedades...',
-            'footer_description': 'Alquiler de villas de lujo en los destinos más bellos de España',
-            'footer_explore': 'Explorar', 'footer_support': 'Soporte',
-            'footer_portals': 'Portales para Socios', 'rights_reserved': 'Todos los derechos reservados.',
-            'construction_title': 'Página en construcción',
-            'construction_message': 'Esta sección está actualmente en desarrollo. Estará disponible pronto.'
-        },
-        'nl': {
-            'nav_home': 'Home', 'nav_villas': 'Villa\'s', 'nav_destinations': 'Bestemmingen',
-            'nav_experiences': 'Ervaringen', 'nav_about': 'Over', 'nav_contact': 'Contact',
-            'hero_title': 'Boek Direct: 0% Commissie & Beste Prijs Garantie',
-            'hero_subtitle': 'Ontdek luxe villa\'s in de mooiste bestemmingen van Spanje',
-            'tab_booking': 'Boek Nu', 'tab_availability': 'Beschikbaarheid', 'tab_widget': 'Integratie',
-            'booking_title': 'Direct Boekingssysteem - Klaar voor AvaiBook',
-            'booking_subtitle': 'Zoek beschikbaarheid en boek direct met 0% commissie',
-            'form_destination': 'Bestemming / Villa', 'form_checkin': 'Check-in',
-            'form_checkout': 'Check-out', 'form_guests': 'Gasten',
-            'form_note': 'Realtime prijzen en beschikbaarheid van AvaiBook',
-            'form_search': 'Zoeken',
-            'properties_title': 'Uitgelichte Luxe Villa\'s',
-            'properties_subtitle': 'Ervaar ongeëvenaard comfort in onze zorgvuldig geselecteerde premium eigendommen',
-            'view_details': 'Bekijk Details', 'view_all': 'Bekijk Alle Eigendommen',
-            'loading': 'Eigendommen laden...',
-            'footer_description': 'Luxe villaverhuur in de mooiste bestemmingen van Spanje',
-            'footer_explore': 'Ontdekken', 'footer_support': 'Ondersteuning',
-            'footer_portals': 'Partner Portalen', 'rights_reserved': 'Alle rechten voorbehouden.',
-            'construction_title': 'Pagina in aanbouw',
-            'construction_message': 'Deze sectie is momenteel in ontwikkeling. Ze zal binnenkort beschikbaar zijn.'
-        }
-    };
-
-    let currentLang = 'en';
-
-    // ========== FONCTIONS DE BASE ==========
-    
-    // Fonction pour changer la langue
-    function changeLanguage(lang) {
-        if (!translations[lang]) return;
-        
-        currentLang = lang;
-        const currentLangElement = document.querySelector('#current-lang');
-        if (currentLangElement) {
-            currentLangElement.textContent = lang.toUpperCase();
-        }
-        
-        // Mettre à jour tous les textes avec data-lang-key
-        document.querySelectorAll('[data-lang-key]').forEach(element => {
-            const key = element.getAttribute('data-lang-key');
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
+    <!-- Script principal unique et corrigé -->
+    <script>
+        // ========== CONFIGURATION DES LANGUES ==========
+        const translations = {
+            'en': {
+                'nav_home': 'Home', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
+                'nav_experiences': 'Experiences', 'nav_about': 'About', 'nav_contact': 'Contact',
+                'hero_title': 'Book Direct: 0% Commission & Best Price Guarantee',
+                'hero_subtitle': 'Discover luxury villas in Spain\'s most beautiful destinations',
+                'tab_booking': 'Book Now', 'tab_availability': 'Check Availability', 'tab_widget': 'Integration',
+                'booking_title': 'Direct Booking Engine - AvaiBook Integration Ready',
+                'booking_subtitle': 'Search availability and book directly with 0% commission',
+                'form_destination': 'Destination / Villa', 'form_checkin': 'Check-in',
+                'form_checkout': 'Check-out', 'form_guests': 'Guests',
+                'form_note': 'Real-time prices and availability from AvaiBook',
+                'form_search': 'Search',
+                'properties_title': 'Featured Luxury Villas',
+                'properties_subtitle': 'Experience unparalleled comfort in our handpicked selection of premium properties',
+                'view_details': 'View Details', 'view_all': 'View All Properties',
+                'loading': 'Loading properties...',
+                'footer_description': 'Luxury villa rentals in Spain\'s most beautiful destinations',
+                'footer_explore': 'Explore', 'footer_support': 'Support',
+                'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.',
+                'construction_title': 'Page under construction',
+                'construction_message': 'This section is currently under development. It will be available soon.'
+            },
+            'fr': {
+                'nav_home': 'Accueil', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
+                'nav_experiences': 'Expériences', 'nav_about': 'À propos', 'nav_contact': 'Contact',
+                'hero_title': 'Réservez Direct : 0% Commission & Meilleur Prix Garanti',
+                'hero_subtitle': 'Découvrez des villas de luxe dans les plus belles destinations d\'Espagne',
+                'tab_booking': 'Réserver', 'tab_availability': 'Vérifier Disponibilité', 'tab_widget': 'Intégration',
+                'booking_title': 'Moteur de Réservation Directe - Prêt pour AvaiBook',
+                'booking_subtitle': 'Vérifiez les disponibilités et réservez directement avec 0% commission',
+                'form_destination': 'Destination / Villa', 'form_checkin': 'Arrivée',
+                'form_checkout': 'Départ', 'form_guests': 'Voyageurs',
+                'form_note': 'Prix et disponibilités en temps réel depuis AvaiBook',
+                'form_search': 'Rechercher',
+                'properties_title': 'Villas de Luxe en Vedette',
+                'properties_subtitle': 'Vivez un confort incomparable dans notre sélection de propriétés premium',
+                'view_details': 'Voir Détails', 'view_all': 'Voir Toutes les Propriétés',
+                'loading': 'Chargement des propriétés...',
+                'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
+                'footer_explore': 'Explorer', 'footer_support': 'Support',
+                'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.',
+                'construction_title': 'Page en construction',
+                'construction_message': 'Cette section est actuellement en développement. Elle sera disponible très bientôt.'
+            },
+            'es': {
+                'nav_home': 'Inicio', 'nav_villas': 'Villas', 'nav_destinations': 'Destinos',
+                'nav_experiences': 'Experiencias', 'nav_about': 'Acerca de', 'nav_contact': 'Contacto',
+                'hero_title': 'Reserva Directa: 0% Comisión & Garantía del Mejor Precio',
+                'hero_subtitle': 'Descubre villas de lujo en los destinos más bellos de España',
+                'tab_booking': 'Reservar', 'tab_availability': 'Ver Disponibilidad', 'tab_widget': 'Integración',
+                'booking_title': 'Motor de Reserva Directa - Listo para AvaiBook',
+                'booking_subtitle': 'Consulta disponibilidad y reserva directamente con 0% comisión',
+                'form_destination': 'Destino / Villa', 'form_checkin': 'Entrada',
+                'form_checkout': 'Salida', 'form_guests': 'Huéspedes',
+                'form_note': 'Precios y disponibilidad en temps réel desde AvaiBook',
+                'form_search': 'Buscar',
+                'properties_title': 'Villas de Lujo Destacadas',
+                'properties_subtitle': 'Experimenta un confort inigualable en nuestra selección de propiedades premium',
+                'view_details': 'Ver Detalles', 'view_all': 'Ver Todas las Propiedades',
+                'loading': 'Cargando propiedades...',
+                'footer_description': 'Alquiler de villas de lujo en los destinos más bellos de España',
+                'footer_explore': 'Explorar', 'footer_support': 'Soporte',
+                'footer_portals': 'Portales para Socios', 'rights_reserved': 'Todos los derechos reservados.',
+                'construction_title': 'Página en construcción',
+                'construction_message': 'Esta sección está actualmente en desarrollo. Estará disponible pronto.'
+            },
+            'nl': {
+                'nav_home': 'Home', 'nav_villas': 'Villa\'s', 'nav_destinations': 'Bestemmingen',
+                'nav_experiences': 'Ervaringen', 'nav_about': 'Over', 'nav_contact': 'Contact',
+                'hero_title': 'Boek Direct: 0% Commissie & Beste Prijs Garantie',
+                'hero_subtitle': 'Ontdek luxe villa\'s in de mooiste bestemmingen van Spanje',
+                'tab_booking': 'Boek Nu', 'tab_availability': 'Beschikbaarheid', 'tab_widget': 'Integratie',
+                'booking_title': 'Direct Boekingssysteem - Klaar voor AvaiBook',
+                'booking_subtitle': 'Zoek beschikbaarheid en boek direct met 0% commissie',
+                'form_destination': 'Bestemming / Villa', 'form_checkin': 'Check-in',
+                'form_checkout': 'Check-out', 'form_guests': 'Gasten',
+                'form_note': 'Realtime prijzen en beschikbaarheid van AvaiBook',
+                'form_search': 'Zoeken',
+                'properties_title': 'Uitgelichte Luxe Villa\'s',
+                'properties_subtitle': 'Ervaar ongeëvenaard comfort in onze zorgvuldig geselecteerde premium eigendommen',
+                'view_details': 'Bekijk Details', 'view_all': 'Bekijk Alle Eigendommen',
+                'loading': 'Eigendommen laden...',
+                'footer_description': 'Luxe villaverhuur in de mooiste bestemmingen van Spanje',
+                'footer_explore': 'Ontdekken', 'footer_support': 'Ondersteuning',
+                'footer_portals': 'Partner Portalen', 'rights_reserved': 'Alle rechten voorbehouden.',
+                'construction_title': 'Pagina in aanbouw',
+                'construction_message': 'Deze sectie is momenteel in ontwikkeling. Ze zal binnenkort beschikbaar zijn.'
             }
-        });
-        
-        localStorage.setItem('amaru_language', lang);
-        
-        // Mettre à jour les boutons "View Details"
-        document.querySelectorAll('.book-now-btn').forEach(btn => {
-            btn.textContent = translations[lang]?.view_details || 'View Details';
-        });
-    }
+        };
 
-    // Configuration des onglets
-    function setupTabs() {
-        const tabs = document.querySelectorAll('[data-tab]');
-        const tabContents = document.querySelectorAll('.tab-content');
+        let currentLang = 'en';
+
+        // ========== FONCTIONS DE BASE ==========
         
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                // Supprimer les classes actives
-                tabs.forEach(t => {
-                    t.classList.remove('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
-                    t.classList.add('text-gray-700', 'hover:bg-amber-50');
-                });
-                
-                tabContents.forEach(content => {
-                    content.classList.remove('active');
-                    content.classList.add('hidden');
-                });
-                
-                // Ajouter les classes actives
-                tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
-                tab.classList.add('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
-                
-                const activeContent = document.getElementById(`tab-${tabId}-content`);
-                if (activeContent) {
-                    activeContent.classList.remove('hidden');
-                    activeContent.classList.add('active');
+        function changeLanguage(lang) {
+            if (!translations[lang]) return;
+            
+            currentLang = lang;
+            const currentLangElement = document.querySelector('#current-lang');
+            if (currentLangElement) {
+                currentLangElement.textContent = lang.toUpperCase();
+            }
+            
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
                 }
             });
-        });
-    }
+            
+            localStorage.setItem('amaru_language', lang);
+        }
 
-    // Configuration du sélecteur de langue
-    function setupLanguageSelector() {
-        const languageToggle = document.getElementById('language-toggle');
-        const languageMenu = document.getElementById('language-menu');
-        const languageIcon = document.getElementById('language-icon');
-        
-        if (!languageToggle || !languageMenu) return;
-        
-        let isMenuOpen = false;
-        
-        languageToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        function setupTabs() {
+            const tabs = document.querySelectorAll('[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
             
-            isMenuOpen = !isMenuOpen;
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
+                        t.classList.add('text-gray-700', 'hover:bg-amber-50');
+                    });
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        content.classList.add('hidden');
+                    });
+                    
+                    tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
+                    tab.classList.add('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
+                    
+                    const activeContent = document.getElementById(`tab-${tabId}-content`);
+                    if (activeContent) {
+                        activeContent.classList.remove('hidden');
+                        activeContent.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        function setupLanguageSelector() {
+            const languageToggle = document.getElementById('language-toggle');
+            const languageMenu = document.getElementById('language-menu');
+            const languageIcon = document.getElementById('language-icon');
             
-            if (isMenuOpen) {
-                languageMenu.classList.add('show');
-                languageIcon.classList.add('rotate-180');
-            } else {
-                languageMenu.classList.remove('show');
-                languageIcon.classList.remove('rotate-180');
-            }
-        });
-        
-        document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', function(e) {
+            if (!languageToggle || !languageMenu) return;
+            
+            let isMenuOpen = false;
+            
+            languageToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                isMenuOpen = !isMenuOpen;
                 
-                const lang = this.getAttribute('data-lang');
-                if (lang) {
-                    changeLanguage(lang);
+                if (isMenuOpen) {
+                    languageMenu.classList.add('show');
+                    languageIcon.classList.add('rotate-180');
+                } else {
+                    languageMenu.classList.remove('show');
+                    languageIcon.classList.remove('rotate-180');
+                }
+            });
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const lang = this.getAttribute('data-lang');
+                    if (lang) {
+                        changeLanguage(lang);
+                        languageMenu.classList.remove('show');
+                        languageIcon.classList.remove('rotate-180');
+                        isMenuOpen = false;
+                    }
+                });
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (isMenuOpen && !languageToggle.contains(e.target) && !languageMenu.contains(e.target)) {
                     languageMenu.classList.remove('show');
                     languageIcon.classList.remove('rotate-180');
                     isMenuOpen = false;
                 }
             });
-        });
-        
-        document.addEventListener('click', function(e) {
-            if (isMenuOpen && !languageToggle.contains(e.target) && !languageMenu.contains(e.target)) {
-                languageMenu.classList.remove('show');
-                languageIcon.classList.remove('rotate-180');
-                isMenuOpen = false;
-            }
-        });
-        
-        languageMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
+        }
 
-    // Pages en construction
-    function setupConstructionPages() {
-        const modal = document.getElementById('construction-modal');
-        const closeBtn = document.getElementById('close-construction');
-        const title = document.getElementById('construction-title');
-        const message = document.getElementById('construction-message');
-        
-        document.querySelectorAll('.under-construction').forEach(link => {
-            link.addEventListener('click', (e) => {
+        function setupConstructionPages() {
+            const modal = document.getElementById('construction-modal');
+            const closeBtn = document.getElementById('close-construction');
+            const title = document.getElementById('construction-title');
+            const message = document.getElementById('construction-message');
+            
+            document.querySelectorAll('.under-construction').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
+                    message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                });
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        }
+
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (!menuBtn || !mobileMenu) return;
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        function setupBookingForm() {
+            const form = document.getElementById('demo-booking-form');
+            if (!form) return;
+            
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                e.stopPropagation();
-                
-                title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
-                message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
-                
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
+                alert('This is a demo booking form. With AvaiBook integration, you would see real availability and prices.');
             });
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-        
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        });
-    }
-
-    // Menu mobile
-    function setupMobileMenu() {
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (!menuBtn || !mobileMenu) return;
-        
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    }
-
-    // Formulaire de réservation
-    function setupBookingForm() {
-        const form = document.getElementById('demo-booking-form');
-        const destinationSelect = document.getElementById('destination');
-        
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
             
-            const destination = destinationSelect.value;
-            const checkin = document.getElementById('checkin').value;
-            const checkout = document.getElementById('checkout').value;
-            const guests = document.getElementById('guests').value;
+            // Définir les dates par défaut
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 4);
             
-            if (!destination || !checkin || !checkout) {
-                alert('Please fill in all required fields');
-                return;
-            }
+            const checkinInput = document.getElementById('checkin');
+            const checkoutInput = document.getElementById('checkout');
             
-            alert(`Demo booking search:\n\nDestination: ${destination}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\n\nNote: This is a demo. With AvaiBook, you would see real availability and prices.`);
-        });
-        
-        // Définir les dates par défaut
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const nextWeek = new Date();
-        nextWeek.setDate(nextWeek.getDate() + 4);
-        
-        const checkinInput = document.getElementById('checkin');
-        const checkoutInput = document.getElementById('checkout');
-        
-        if (checkinInput) {
-            checkinInput.value = tomorrow.toISOString().split('T')[0];
+            if (checkinInput) checkinInput.value = tomorrow.toISOString().split('T')[0];
+            if (checkoutInput) checkoutInput.value = nextWeek.toISOString().split('T')[0];
         }
-        if (checkoutInput) {
-            checkoutInput.value = nextWeek.toISOString().split('T')[0];
-        }
+
+        // ========== PROPRIÉTÉS SIMPLIFIÉES ==========
         
-        // Ajouter des options de démo
-        if (destinationSelect) {
-            const demoProperties = [
-                'Villa Serenity - Costa Blanca',
-                'Casa del Mar - Ibiza',
-                'Finca Andalucía - Marbella'
+        function getDemoProperties() {
+            return [
+                {
+                    id: 'demo-1',
+                    title: 'Villa Serenity',
+                    description: 'Luxury villa with panoramic sea views in Costa Blanca, featuring infinity pool, modern architecture, and private beach access.',
+                    price: 1250000,
+                    currency: 'EUR',
+                    bedrooms: 5,
+                    bathrooms: 4,
+                    location: 'Costa Blanca, Spain',
+                    area: '350',
+                    areaUnit: 'm²',
+                    type: 'Villa',
+                    status: 'For Sale',
+                    images: [
+                        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200'
+                    ]
+                },
+                {
+                    id: 'demo-2',
+                    title: 'Modern Beach House',
+                    description: 'Contemporary beachfront property in Ibiza with sustainable design, solar panels, and direct access to crystal-clear waters.',
+                    price: 850000,
+                    currency: 'EUR',
+                    bedrooms: 4,
+                    bathrooms: 3,
+                    location: 'Ibiza, Balearic Islands',
+                    area: '280',
+                    areaUnit: 'm²',
+                    type: 'Beach House',
+                    status: 'For Sale',
+                    images: [
+                        'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1487956382158-bb926046304a?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=1200'
+                    ]
+                },
+                {
+                    id: 'demo-3',
+                    title: 'Traditional Finca',
+                    description: 'Authentic Spanish finca restored with modern amenities, featuring olive groves, vineyard, and stunning mountain views.',
+                    price: 950000,
+                    currency: 'EUR',
+                    bedrooms: 6,
+                    bathrooms: 4,
+                    location: 'Andalusia, Spain',
+                    area: '420',
+                    areaUnit: 'm²',
+                    type: 'Finca',
+                    status: 'For Sale',
+                    images: [
+                        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=1200',
+                        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200'
+                    ]
+                }
             ];
+        }
+
+        function displayProperties(properties) {
+            const container = document.getElementById('properties-container');
+            const spinner = document.getElementById('loading-spinner');
             
-            demoProperties.forEach(prop => {
-                const option = document.createElement('option');
-                option.value = prop;
-                option.textContent = prop;
-                destinationSelect.appendChild(option);
+            if (spinner) spinner.remove();
+            container.innerHTML = '';
+            
+            properties.forEach(property => {
+                const card = createPropertyCard(property);
+                container.appendChild(card);
             });
         }
-    }
 
-    // ========== CHARGEMENT DES PROPRIÉTÉS XML ==========
-    
-    // Fonction pour charger les propriétés depuis le XML
-    async function loadXMLProperties() {
-    console.log('Chargement des propriétés...');
-    
-    // Essayer le XML, mais basculer rapidement sur les démos en cas d'erreur
-    try {
-        // Désactivé temporairement - activez quand le CORS sera résolu
-        throw new Error('XML loading disabled due to CORS issues');
-        
-        /* Code XML (à activer plus tard)
-        const xmlUrl = 'https://medianewbuild.com/file/hh-media-bucket/agents/6d5cb68a-3636-4095-b0ce-7dc9ec2df2d2/feed_blanca_calida.xml';
-        
-        // Créer une promesse avec timeout
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Timeout')), 3000)
-        );
-        
-        const fetchPromise = fetch(xmlUrl, {
-            mode: 'no-cors', // Mode no-cors mais attention aux limitations
-            headers: {
-                'Accept': 'application/xml, text/xml'
-            }
-        });
-        
-        const response = await Promise.race([fetchPromise, timeoutPromise]);
-        
-        if (!response.ok && response.type !== 'opaque') {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        
-        // Continuez avec le parsing...
-        */
-        
-    } catch (error) {
-        console.log('Utilisation des propriétés de démo:', error.message);
-        showDemoProperties();
-    }
-}
+        function createPropertyCard(property) {
+            const card = document.createElement('div');
+            card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1';
             
-            const data = await response.json();
-            const xmlText = data.contents;
+            const mainImage = property.images[0] || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200';
+            const price = property.price ? 
+                new Intl.NumberFormat(currentLang === 'fr' ? 'fr-FR' : 'en-US', {
+                    style: 'currency',
+                    currency: property.currency,
+                    minimumFractionDigits: 0
+                }).format(property.price) : 'Price on request';
             
-            // Parser le XML
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-            
-            // Extraire les propriétés
-            const properties = extractPropertiesFromXML(xmlDoc);
-            
-            // Mettre à jour l'interface
-            updatePropertiesUI(properties);
-            
-        } catch (error) {
-            console.error('Erreur lors du chargement des propriétés:', error);
-            showDemoProperties(); // Fallback
-        }
-    }
-    
-    // Extraire les propriétés du XML
-    function extractPropertiesFromXML(xmlDoc) {
-        const properties = [];
-        const propertyElements = xmlDoc.getElementsByTagName('property');
-        
-        console.log(`Nombre de propriétés trouvées: ${propertyElements.length}`);
-        
-        for (let i = 0; i < Math.min(propertyElements.length, 12); i++) {
-            const propertyElement = propertyElements[i];
-            
-            try {
-                const property = {
-                    id: getText(propertyElement, 'id') || `prop-${i}`,
-                    title: getText(propertyElement, 'title') || 'Villa de Luxe',
-                    description: getText(propertyElement, 'description') || 'Magnifique villa en Espagne',
-                    price: parseFloat(getText(propertyElement, 'price') || '0'),
-                    currency: getText(propertyElement, 'currency') || 'EUR',
-                    bedrooms: parseInt(getText(propertyElement, 'bedrooms') || '3'),
-                    bathrooms: parseInt(getText(propertyElement, 'bathrooms') || '2'),
-                    location: getText(propertyElement, 'location') || 'Costa Blanca',
-                    area: getText(propertyElement, 'area') || '200',
-                    areaUnit: getText(propertyElement, 'area_unit') || 'm²',
-                    type: getText(propertyElement, 'type') || 'Villa',
-                    status: getText(propertyElement, 'status') || 'For Sale',
-                    images: []
-                };
-                
-                // Extraire les images
-                const photosElement = propertyElement.getElementsByTagName('photos')[0];
-                if (photosElement) {
-                    const photoElements = photosElement.getElementsByTagName('photo');
-                    for (let j = 0; j < Math.min(photoElements.length, 3); j++) {
-                        const photoUrl = photoElements[j].textContent;
-                        if (photoUrl && photoUrl.startsWith('http')) {
-                            property.images.push(photoUrl);
-                        }
-                    }
-                }
-                
-                // Image par défaut si aucune
-                if (property.images.length === 0) {
-                    property.images = [
-                        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800',
-                        'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800',
-                        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800'
-                    ];
-                }
-                
-                properties.push(property);
-                console.log(`Propriété chargée: ${property.title} - ${property.price} ${property.currency}`);
-                
-            } catch (err) {
-                console.warn(`Erreur lors du traitement de la propriété ${i}:`, err);
-            }
-        }
-        
-        return properties;
-    }
-    
-    // Fonction utilitaire pour extraire le texte d'un élément XML
-    function getText(parentElement, tagName) {
-        const element = parentElement.getElementsByTagName(tagName)[0];
-        return element ? element.textContent.trim() : null;
-    }
-    
-    // Mettre à jour l'interface avec les propriétés
-    function updatePropertiesUI(properties) {
-        const propertiesContainer = document.getElementById('properties-container');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        
-        // Supprimer le spinner
-        if (loadingSpinner && loadingSpinner.parentNode) {
-            loadingSpinner.remove();
-        }
-        
-        // Vider le conteneur
-        propertiesContainer.innerHTML = '';
-        
-        // Ajouter chaque propriété
-        properties.forEach(property => {
-            const propertyCard = createPropertyCard(property);
-            propertiesContainer.appendChild(propertyCard);
-        });
-        
-        // Si aucune propriété
-        if (properties.length === 0) {
-            propertiesContainer.innerHTML = `
-                <div class="col-span-3 text-center py-16">
-                    <i class="fas fa-home text-4xl text-amber-600 mb-6"></i>
-                    <p class="text-gray-600 text-lg">Aucune propriété disponible pour le moment</p>
-                </div>
-            `;
-        }
-    }
-    
-    // Créer une carte de propriété
-    function createPropertyCard(property) {
-        const card = document.createElement('div');
-        card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1';
-        
-        const mainImage = property.images && property.images.length > 0 
-            ? property.images[0] 
-            : 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800';
-        
-        // Formater le prix
-        const formattedPrice = property.price ? 
-            new Intl.NumberFormat(currentLang === 'en' ? 'en-US' : currentLang === 'es' ? 'es-ES' : 'fr-FR', {
-                style: 'currency',
-                currency: property.currency || 'EUR',
-                minimumFractionDigits: 0
-            }).format(property.price) : 'Prix sur demande';
-        
-        card.innerHTML = `
-            <div class="h-64 bg-gray-300 bg-cover bg-center relative overflow-hidden group" 
-                 style="background-image: url('${mainImage}')">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold text-amber-700">
-                    ${formattedPrice}
-                </div>
-                <div class="absolute bottom-4 left-4 bg-black/60 text-white px-3 py-1 rounded-lg text-sm">
-                    ${property.status || 'For Sale'}
-                </div>
-                ${property.images.length > 1 ? `
-                    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium">
-                        <i class="fas fa-images mr-1"></i> ${property.images.length}
-                    </div>
-                ` : ''}
-            </div>
-            <div class="p-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-3">${property.title || 'Luxury Villa'}</h3>
-                <p class="text-gray-600 mb-4 line-clamp-2">${property.description || 'Beautiful property in Spain'}</p>
-                
-                <!-- Détails -->
-                <div class="grid grid-cols-3 gap-3 mb-6">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-amber-600">${property.bedrooms || '3'}</div>
-                        <div class="text-xs text-gray-500">${currentLang === 'fr' ? 'Chambres' : currentLang === 'es' ? 'Habitaciones' : 'Bedrooms'}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-amber-600">${property.bathrooms || '2'}</div>
-                        <div class="text-xs text-gray-500">${currentLang === 'fr' ? 'Salles de bain' : currentLang === 'es' ? 'Baños' : 'Bathrooms'}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-amber-600">${property.area || '200'}</div>
-                        <div class="text-xs text-gray-500">${property.areaUnit || 'm²'}</div>
+            card.innerHTML = `
+                <div class="h-64 bg-cover bg-center relative" style="background-image: url('${mainImage}')">
+                    <div class="absolute top-4 right-4 bg-white/90 px-4 py-2 rounded-full text-sm font-bold text-amber-700">
+                        ${price}
                     </div>
                 </div>
-                
-                <!-- Localisation -->
-                <div class="flex items-center text-gray-500 text-sm mb-6">
-                    <i class="fas fa-map-marker-alt mr-2 text-amber-600"></i>
-                    <span>${property.location || 'Costa Blanca, Spain'}</span>
-                </div>
-                
-                <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-500">
-                        ${property.type || 'Villa'}
-                    </span>
-                    <button class="modern-btn text-white px-6 py-3 rounded-lg transition book-now-btn" 
-                            data-property-id="${property.id}"
-                            data-property-title="${property.title}">
-                        <i class="fas fa-info-circle mr-2"></i>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${property.title}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">${property.description}</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4">
+                        <div class="text-center">
+                            <div class="text-amber-600 font-bold">${property.bedrooms}</div>
+                            <div class="text-gray-500 text-xs">Bedrooms</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-amber-600 font-bold">${property.bathrooms}</div>
+                            <div class="text-gray-500 text-xs">Bathrooms</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-amber-600 font-bold">${property.area}</div>
+                            <div class="text-gray-500 text-xs">m²</div>
+                        </div>
+                    </div>
+                    <button class="modern-btn w-full text-white py-3 rounded-lg transition book-now-btn">
                         ${translations[currentLang]?.view_details || 'View Details'}
                     </button>
                 </div>
-            </div>
-        `;
-        
-        // Ajouter l'événement au bouton
-        const detailBtn = card.querySelector('.book-now-btn');
-        if (detailBtn) {
-            detailBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPropertyDetails(property);
-            });
-        }
-        
-        return card;
-    }
-    
-    // Afficher les détails d'une propriété
-    function showPropertyDetails(property) {
-        const modalHTML = `
-            <div id="property-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50" style="display: flex;">
-                <div class="glass-card max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl">
-                    <div class="p-8">
-                        <!-- En-tête -->
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-2xl font-bold text-gray-800">${property.title}</h3>
-                            <button id="close-property-modal" class="text-gray-500 hover:text-gray-700 text-2xl">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Galerie -->
-                        <div class="mb-8">
-                            <div class="grid grid-cols-3 gap-4 mb-4">
-                                ${property.images.slice(0, 3).map(img => `
-                                    <div class="h-48 rounded-lg overflow-hidden">
-                                        <img src="${img}" alt="${property.title}" class="w-full h-full object-cover">
-                                    </div>
-                                `).join('')}
-                            </div>
-                            ${property.images.length > 3 ? `
-                                <div class="text-center text-sm text-gray-500">
-                                    + ${property.images.length - 3} more images
-                                </div>
-                            ` : ''}
-                        </div>
-                        
-                        <!-- Détails -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                            <div>
-                                <h4 class="text-lg font-semibold mb-4">Description</h4>
-                                <p class="text-gray-600">${property.description}</p>
-                            </div>
-                            
-                            <div>
-                                <h4 class="text-lg font-semibold mb-4">Caractéristiques</h4>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="text-amber-600 font-bold text-2xl">${property.bedrooms}</div>
-                                        <div class="text-gray-600 text-sm">Bedrooms</div>
-                                    </div>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="text-amber-600 font-bold text-2xl">${property.bathrooms}</div>
-                                        <div class="text-gray-600 text-sm">Bathrooms</div>
-                                    </div>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="text-amber-600 font-bold text-2xl">${property.area}</div>
-                                        <div class="text-gray-600 text-sm">Surface (${property.areaUnit})</div>
-                                    </div>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="text-amber-600 font-bold text-xl">${property.type}</div>
-                                        <div class="text-gray-600 text-sm">Type</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Prix et localisation -->
-                        <div class="bg-gradient-to-r from-amber-50 to-white p-6 rounded-xl mb-8">
-                            <div class="flex flex-col md:flex-row justify-between items-center">
-                                <div class="mb-4 md:mb-0">
-                                    <div class="text-3xl font-bold text-amber-700 mb-2">
-                                        ${property.price ? 
-                                            new Intl.NumberFormat(currentLang === 'en' ? 'en-US' : currentLang === 'es' ? 'es-ES' : 'fr-FR', {
-                                                style: 'currency',
-                                                currency: property.currency || 'EUR'
-                                            }).format(property.price) : 
-                                            'Prix sur demande'}
-                                    </div>
-                                    <div class="flex items-center text-gray-600">
-                                        <i class="fas fa-map-marker-alt mr-2"></i>
-                                        ${property.location}
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="modern-btn text-white px-8 py-3 rounded-lg font-medium text-lg" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                                        <i class="fas fa-calendar-alt mr-2"></i>
-                                        ${translations[currentLang]?.tab_booking || 'Book Now'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Bouton de fermeture -->
-                        <div class="text-center">
-                            <button id="close-modal-btn" class="border-2 border-gray-800 text-gray-800 px-8 py-3 rounded-lg font-medium hover:bg-gray-800 hover:text-white transition-colors">
-                                ${translations[currentLang]?.nav_home || 'Close'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Ajouter la modal
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = modalHTML;
-        document.body.appendChild(modalContainer.firstElementChild);
-        
-        // Événements pour fermer
-        document.getElementById('close-property-modal').addEventListener('click', closePropertyModal);
-        document.getElementById('close-modal-btn').addEventListener('click', closePropertyModal);
-        document.getElementById('property-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'property-modal') {
-                closePropertyModal();
-            }
-        });
-        
-        // Fermer avec Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && document.getElementById('property-modal')) {
-                closePropertyModal();
-            }
-        });
-    }
-    
-    function closePropertyModal() {
-        const modal = document.getElementById('property-modal');
-        if (modal) {
-            modal.remove();
-        }
-    }
-    
-    // Propriétés de démo (fallback)
-    function showDemoProperties() {
-        console.log('Affichage des propriétés de démo');
-        const demoProperties = [
-            {
-                id: 'demo-1',
-                title: 'Villa Serenity',
-                description: 'Luxury villa with panoramic sea views in Costa Blanca, featuring infinity pool, modern architecture, and private beach access.',
-                price: 1250000,
-                currency: 'EUR',
-                bedrooms: 5,
-                bathrooms: 4,
-                location: 'Costa Blanca, Spain',
-                area: '350',
-                areaUnit: 'm²',
-                type: 'Villa',
-                status: 'For Sale',
-                images: [
-                    'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200'
-                ]
-            },
-            {
-                id: 'demo-2',
-                title: 'Modern Beach House',
-                description: 'Contemporary beachfront property in Ibiza with sustainable design, solar panels, and direct access to crystal-clear waters.',
-                price: 850000,
-                currency: 'EUR',
-                bedrooms: 4,
-                bathrooms: 3,
-                location: 'Ibiza, Balearic Islands',
-                area: '280',
-                areaUnit: 'm²',
-                type: 'Beach House',
-                status: 'For Sale',
-                images: [
-                    'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1487956382158-bb926046304a?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=1200'
-                ]
-            }
-        ];
-        
-        updatePropertiesUI(demoProperties);
-    }
-
-    // ========== INITIALISATION ==========
-    
-    document.addEventListener('DOMContentLoaded', async () => {
-        // Configurer les onglets
-        setupTabs();
-        
-        // Configurer le sélecteur de langue
-        setupLanguageSelector();
-        
-        // Configurer les pages en construction
-        setupConstructionPages();
-        
-        // Configurer le menu mobile
-        setupMobileMenu();
-        
-        // Configurer le formulaire
-        setupBookingForm();
-        
-        // Initialiser la langue
-        const savedLang = localStorage.getItem('amaru_language') || 'en';
-        changeLanguage(savedLang);
-        
-        // Charger les propriétés
-        try {
-            await loadXMLProperties();
-        } catch (error) {
-            console.error('Failed to load XML properties:', error);
-            showDemoProperties();
-        }
-    });
-</script>
-        <!-- Script pour charger les propriétés depuis le flux XML -->
-   <!-- Script principal simplifié -->
-<script>
-    // ========== CONFIGURATION DES LANGUES ==========
-    const translations = {
-        'en': {
-            'nav_home': 'Home', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
-            'nav_experiences': 'Experiences', 'nav_about': 'About', 'nav_contact': 'Contact',
-            'hero_title': 'Book Direct: 0% Commission & Best Price Guarantee',
-            'hero_subtitle': 'Discover luxury villas in Spain\'s most beautiful destinations',
-            'tab_booking': 'Book Now', 'tab_availability': 'Check Availability', 'tab_widget': 'Integration',
-            'booking_title': 'Direct Booking Engine - AvaiBook Integration Ready',
-            'booking_subtitle': 'Search availability and book directly with 0% commission',
-            'form_destination': 'Destination / Villa', 'form_checkin': 'Check-in',
-            'form_checkout': 'Check-out', 'form_guests': 'Guests',
-            'form_note': 'Real-time prices and availability from AvaiBook',
-            'form_search': 'Search',
-            'properties_title': 'Featured Luxury Villas',
-            'properties_subtitle': 'Experience unparalleled comfort in our handpicked selection of premium properties',
-            'view_details': 'View Details', 'view_all': 'View All Properties',
-            'loading': 'Loading properties...',
-            'footer_description': 'Luxury villa rentals in Spain\'s most beautiful destinations',
-            'footer_explore': 'Explore', 'footer_support': 'Support',
-            'footer_portals': 'Partner Portals', 'rights_reserved': 'All rights reserved.',
-            'construction_title': 'Page under construction',
-            'construction_message': 'This section is currently under development. It will be available soon.'
-        },
-        'fr': {
-            'nav_home': 'Accueil', 'nav_villas': 'Villas', 'nav_destinations': 'Destinations',
-            'nav_experiences': 'Expériences', 'nav_about': 'À propos', 'nav_contact': 'Contact',
-            'hero_title': 'Réservez Direct : 0% Commission & Meilleur Prix Garanti',
-            'hero_subtitle': 'Découvrez des villas de luxe dans les plus belles destinations d\'Espagne',
-            'tab_booking': 'Réserver', 'tab_availability': 'Vérifier Disponibilité', 'tab_widget': 'Intégration',
-            'booking_title': 'Moteur de Réservation Directe - Prêt pour AvaiBook',
-            'booking_subtitle': 'Vérifiez les disponibilités et réservez directement avec 0% commission',
-            'form_destination': 'Destination / Villa', 'form_checkin': 'Arrivée',
-            'form_checkout': 'Départ', 'form_guests': 'Voyageurs',
-            'form_note': 'Prix et disponibilités en temps réel depuis AvaiBook',
-            'form_search': 'Rechercher',
-            'properties_title': 'Villas de Luxe en Vedette',
-            'properties_subtitle': 'Vivez un confort incomparable dans notre sélection de propriétés premium',
-            'view_details': 'Voir Détails', 'view_all': 'Voir Toutes les Propriétés',
-            'loading': 'Chargement des propriétés...',
-            'footer_description': 'Location de villas de luxe dans les plus belles destinations d\'Espagne',
-            'footer_explore': 'Explorer', 'footer_support': 'Support',
-            'footer_portals': 'Portails Partenaires', 'rights_reserved': 'Tous droits réservés.',
-            'construction_title': 'Page en construction',
-            'construction_message': 'Cette section est actuellement en développement. Elle sera disponible très bientôt.'
-        }
-    };
-
-    let currentLang = 'en';
-
-    // ========== FONCTIONS DE BASE ==========
-    
-    function changeLanguage(lang) {
-        if (!translations[lang]) return;
-        
-        currentLang = lang;
-        const currentLangElement = document.querySelector('#current-lang');
-        if (currentLangElement) {
-            currentLangElement.textContent = lang.toUpperCase();
-        }
-        
-        document.querySelectorAll('[data-lang-key]').forEach(element => {
-            const key = element.getAttribute('data-lang-key');
-            if (translations[lang] && translations[lang][key]) {
-                element.textContent = translations[lang][key];
-            }
-        });
-        
-        localStorage.setItem('amaru_language', lang);
-    }
-
-    function setupTabs() {
-        const tabs = document.querySelectorAll('[data-tab]');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                tabs.forEach(t => {
-                    t.classList.remove('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
-                    t.classList.add('text-gray-700', 'hover:bg-amber-50');
-                });
-                
-                tabContents.forEach(content => {
-                    content.classList.remove('active');
-                    content.classList.add('hidden');
-                });
-                
-                tab.classList.remove('text-gray-700', 'hover:bg-amber-50');
-                tab.classList.add('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white');
-                
-                const activeContent = document.getElementById(`tab-${tabId}-content`);
-                if (activeContent) {
-                    activeContent.classList.remove('hidden');
-                    activeContent.classList.add('active');
-                }
-            });
-        });
-    }
-
-    function setupLanguageSelector() {
-        const languageToggle = document.getElementById('language-toggle');
-        const languageMenu = document.getElementById('language-menu');
-        const languageIcon = document.getElementById('language-icon');
-        
-        if (!languageToggle || !languageMenu) return;
-        
-        let isMenuOpen = false;
-        
-        languageToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            isMenuOpen = !isMenuOpen;
+            `;
             
-            if (isMenuOpen) {
-                languageMenu.classList.add('show');
-                languageIcon.classList.add('rotate-180');
-            } else {
-                languageMenu.classList.remove('show');
-                languageIcon.classList.remove('rotate-180');
-            }
-        });
-        
-        document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const lang = this.getAttribute('data-lang');
-                if (lang) {
-                    changeLanguage(lang);
-                    languageMenu.classList.remove('show');
-                    languageIcon.classList.remove('rotate-180');
-                    isMenuOpen = false;
-                }
-            });
-        });
-        
-        document.addEventListener('click', function(e) {
-            if (isMenuOpen && !languageToggle.contains(e.target) && !languageMenu.contains(e.target)) {
-                languageMenu.classList.remove('show');
-                languageIcon.classList.remove('rotate-180');
-                isMenuOpen = false;
-            }
-        });
-    }
-
-    function setupConstructionPages() {
-        const modal = document.getElementById('construction-modal');
-        const closeBtn = document.getElementById('close-construction');
-        const title = document.getElementById('construction-title');
-        const message = document.getElementById('construction-message');
-        
-        document.querySelectorAll('.under-construction').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                title.textContent = translations[currentLang]?.construction_title || 'Page under construction';
-                message.textContent = translations[currentLang]?.construction_message || 'This section is currently under development.';
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            });
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-        
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        });
-    }
-
-    function setupMobileMenu() {
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (!menuBtn || !mobileMenu) return;
-        
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    }
-
-    function setupBookingForm() {
-        const form = document.getElementById('demo-booking-form');
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('This is a demo booking form. With AvaiBook integration, you would see real availability and prices.');
-        });
-        
-        // Définir les dates par défaut
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const nextWeek = new Date();
-        nextWeek.setDate(nextWeek.getDate() + 4);
-        
-        const checkinInput = document.getElementById('checkin');
-        const checkoutInput = document.getElementById('checkout');
-        
-        if (checkinInput) checkinInput.value = tomorrow.toISOString().split('T')[0];
-        if (checkoutInput) checkoutInput.value = nextWeek.toISOString().split('T')[0];
-    }
-
-    // ========== SOLUTION SIMPLE POUR CONTOURNER CORS ==========
-    
-    // Méthode 1: Créer un proxy simple via votre propre serveur (exemple avec Cloudflare Workers)
-    async function loadPropertiesViaProxy() {
-        try {
-            // URL de votre flux XML
-            const xmlUrl = 'https://medianewbuild.com/file/hh-media-bucket/agents/6d5cb68a-3636-4095-b0ce-7dc9ec2df2d2/feed_blanca_calida.xml';
-            
-            // Créer un proxy simple avec une fonction serverless
-            // Note: Pour production, créez votre propre proxy
-            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(xmlUrl)}`;
-            
-            // Utiliser XMLHttpRequest qui a moins de restrictions CORS que fetch
-            const xhr = new XMLHttpRequest();
-            
-            return new Promise((resolve, reject) => {
-                xhr.open('GET', proxyUrl, true);
-                xhr.timeout = 10000; // 10 secondes timeout
-                
-                xhr.onload = function() {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        try {
-                            const xmlText = xhr.responseText;
-                            const parser = new DOMParser();
-                            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-                            const properties = extractPropertiesFromXML(xmlDoc);
-                            resolve(properties);
-                        } catch (e) {
-                            console.error('Erreur parsing XML:', e);
-                            reject(e);
-                        }
-                    } else {
-                        reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`));
-                    }
-                };
-                
-                xhr.onerror = function() {
-                    reject(new Error('Network error'));
-                };
-                
-                xhr.ontimeout = function() {
-                    reject(new Error('Request timeout'));
-                };
-                
-                xhr.send();
+            card.querySelector('button').addEventListener('click', () => {
+                alert(`Property: ${property.title}\nPrice: ${price}\nLocation: ${property.location}`);
             });
             
-        } catch (error) {
-            console.error('Erreur proxy:', error);
-            throw error;
+            return card;
         }
-    }
-    
-    // Méthode 2: Utiliser JSONP si disponible (adapté à votre cas)
-    function loadPropertiesViaJSONP() {
-        return new Promise((resolve) => {
-            // Si vous avez un endpoint JSONP, utilisez-le
-            // const jsonpUrl = 'https://votre-domaine.com/properties?callback=handleProperties';
+
+        // ========== INITIALISATION ==========
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup basic functionality
+            setupTabs();
+            setupLanguageSelector();
+            setupConstructionPages();
+            setupMobileMenu();
+            setupBookingForm();
             
-            // Pour l'instant, on retourne les propriétés de démo
-            setTimeout(() => {
-                resolve(getDemoProperties());
-            }, 500);
-        });
-    }
-    
-    // Fonction d'extraction XML
-    function extractPropertiesFromXML(xmlDoc) {
-        const properties = [];
-        try {
-            const propertyElements = xmlDoc.getElementsByTagName('property');
+            // Initialize language
+            const savedLang = localStorage.getItem('amaru_language') || 'en';
+            changeLanguage(savedLang);
             
-            for (let i = 0; i < Math.min(propertyElements.length, 12); i++) {
-                const element = propertyElements[i];
-                const get = (tag) => {
-                    const el = element.getElementsByTagName(tag)[0];
-                    return el ? el.textContent.trim() : '';
-                };
-                
-                const property = {
-                    id: get('id') || `prop-${i}`,
-                    title: get('title') || 'Luxury Villa',
-                    description: get('description') || 'Beautiful property in Spain',
-                    price: parseFloat(get('price')) || 0,
-                    currency: get('currency') || 'EUR',
-                    bedrooms: parseInt(get('bedrooms')) || 3,
-                    bathrooms: parseInt(get('bathrooms')) || 2,
-                    location: get('location') || 'Costa Blanca',
-                    area: get('area') || '200',
-                    areaUnit: get('area_unit') || 'm²',
-                    type: get('type') || 'Villa',
-                    status: get('status') || 'For Sale',
-                    images: []
-                };
-                
-                // Extraire les images
-                const photos = element.getElementsByTagName('photos')[0];
-                if (photos) {
-                    const photosList = photos.getElementsByTagName('photo');
-                    for (let j = 0; j < Math.min(photosList.length, 3); j++) {
-                        const imgUrl = photosList[j].textContent.trim();
-                        if (imgUrl) property.images.push(imgUrl);
-                    }
-                }
-                
-                // Images par défaut
-                if (property.images.length === 0) {
-                    property.images = [
-                        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200',
-                        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200'
-                    ];
-                }
-                
-                properties.push(property);
-            }
-        } catch (error) {
-            console.error('Erreur extraction XML:', error);
-        }
-        
-        return properties.length > 0 ? properties : getDemoProperties();
-    }
-    
-    // Propriétés de démo
-    function getDemoProperties() {
-        return [
-            {
-                id: 'demo-1',
-                title: 'Villa Serenity',
-                description: 'Luxury villa with panoramic sea views in Costa Blanca, featuring infinity pool, modern architecture, and private beach access.',
-                price: 1250000,
-                currency: 'EUR',
-                bedrooms: 5,
-                bathrooms: 4,
-                location: 'Costa Blanca, Spain',
-                area: '350',
-                areaUnit: 'm²',
-                type: 'Villa',
-                status: 'For Sale',
-                images: [
-                    'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200'
-                ]
-            },
-            {
-                id: 'demo-2',
-                title: 'Modern Beach House',
-                description: 'Contemporary beachfront property in Ibiza with sustainable design, solar panels, and direct access to crystal-clear waters.',
-                price: 850000,
-                currency: 'EUR',
-                bedrooms: 4,
-                bathrooms: 3,
-                location: 'Ibiza, Balearic Islands',
-                area: '280',
-                areaUnit: 'm²',
-                type: 'Beach House',
-                status: 'For Sale',
-                images: [
-                    'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1487956382158-bb926046304a?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=1200'
-                ]
-            },
-            {
-                id: 'demo-3',
-                title: 'Traditional Finca',
-                description: 'Authentic Spanish finca restored with modern amenities, featuring olive groves, vineyard, and stunning mountain views.',
-                price: 950000,
-                currency: 'EUR',
-                bedrooms: 6,
-                bathrooms: 4,
-                location: 'Andalusia, Spain',
-                area: '420',
-                areaUnit: 'm²',
-                type: 'Finca',
-                status: 'For Sale',
-                images: [
-                    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=1200',
-                    'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200'
-                ]
-            }
-        ];
-    }
-    
-    // Afficher les propriétés
-    function displayProperties(properties) {
-        const container = document.getElementById('properties-container');
-        const spinner = document.getElementById('loading-spinner');
-        
-        if (spinner) spinner.remove();
-        container.innerHTML = '';
-        
-        properties.forEach(property => {
-            const card = createPropertyCard(property);
-            container.appendChild(card);
-        });
-    }
-    
-    function createPropertyCard(property) {
-        const card = document.createElement('div');
-        card.className = 'glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1';
-        
-        const mainImage = property.images[0] || 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200';
-        const price = property.price ? 
-            new Intl.NumberFormat(currentLang === 'fr' ? 'fr-FR' : 'en-US', {
-                style: 'currency',
-                currency: property.currency,
-                minimumFractionDigits: 0
-            }).format(property.price) : 'Price on request';
-        
-        card.innerHTML = `
-            <div class="h-64 bg-cover bg-center relative" style="background-image: url('${mainImage}')">
-                <div class="absolute top-4 right-4 bg-white/90 px-4 py-2 rounded-full text-sm font-bold text-amber-700">
-                    ${price}
-                </div>
-            </div>
-            <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">${property.title}</h3>
-                <p class="text-gray-600 text-sm mb-4 line-clamp-2">${property.description}</p>
-                <div class="grid grid-cols-3 gap-2 mb-4">
-                    <div class="text-center">
-                        <div class="text-amber-600 font-bold">${property.bedrooms}</div>
-                        <div class="text-gray-500 text-xs">Bedrooms</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-amber-600 font-bold">${property.bathrooms}</div>
-                        <div class="text-gray-500 text-xs">Bathrooms</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-amber-600 font-bold">${property.area}</div>
-                        <div class="text-gray-500 text-xs">m²</div>
-                    </div>
-                </div>
-                <button class="modern-btn w-full text-white py-3 rounded-lg transition book-now-btn">
-                    ${translations[currentLang]?.view_details || 'View Details'}
-                </button>
-            </div>
-        `;
-        
-        card.querySelector('button').addEventListener('click', () => {
-            alert(`Property: ${property.title}\nPrice: ${price}\nLocation: ${property.location}`);
-        });
-        
-        return card;
-    }
-    
-    // Charger les propriétés
-    async function loadProperties() {
-        try {
-            // Essayer d'abord le proxy
-            const properties = await loadPropertiesViaProxy();
-            displayProperties(properties);
-        } catch (error) {
-            console.log('Using demo properties:', error.message);
-            // Fallback aux propriétés de démo
+            // Load properties
             displayProperties(getDemoProperties());
-        }
-    }
-
-    // ========== INITIALISATION ==========
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        // Setup basic functionality
-        setupTabs();
-        setupLanguageSelector();
-        setupConstructionPages();
-        setupMobileMenu();
-        setupBookingForm();
-        
-        // Initialize language
-        const savedLang = localStorage.getItem('amaru_language') || 'en';
-        changeLanguage(savedLang);
-        
-        // Load properties
-        loadProperties();
-        
-        // Setup "View All" button
-        const viewAllBtn = document.getElementById('view-all-btn');
-        if (viewAllBtn) {
-            viewAllBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert('More properties coming soon!');
-            });
-        }
-    });
-</script>
+            
+            // Setup "View All" button
+            const viewAllBtn = document.getElementById('view-all-btn');
+            if (viewAllBtn) {
+                viewAllBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('More properties coming soon!');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
